@@ -7,7 +7,21 @@ This repository adapts the official [LEAD](https://github.com/HKUSTDial/LEAD) im
 - Official LEAD source is tracked as a Git submodule in `external/LEAD`.
 - One real BIRD training example is stored in `data/sample/bird_sample.jsonl`.
 - A concise Chinese code guide is available in `notes/LEAD_CODE_GUIDE_CN.md`.
+- `src/data/prepare_bird.py` converts BIRD JSON/JSONL plus `tables.json` into Qwen/LEAD chat JSONL.
 - GPU training and environment setup will be completed on UQ Bunya after access is approved.
+
+## Run the CPU-only preprocessing demo
+
+```bash
+python3 src/data/prepare_bird.py \
+  --input data/sample/bird_sample.jsonl \
+  --tables-json data/sample/tables_demo.json \
+  --output data/sample/bird_sample_qwen.jsonl
+
+python3 -m unittest discover -s tests -v
+```
+
+`tables_demo.json` is only a minimal test fixture. Replace it with the official BIRD `tables.json` when the full dataset is available.
 
 ## Planned experiment
 

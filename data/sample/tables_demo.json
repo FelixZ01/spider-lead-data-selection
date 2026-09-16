@@ -1,0 +1,10 @@
+[
+  {
+    "db_id": "movie_platform",
+    "table_names_original": ["movies"],
+    "column_names_original": [[-1, "*"], [0, "movie_title"], [0, "director_name"]],
+    "column_types": ["text", "text", "text"],
+    "primary_keys": [],
+    "foreign_keys": []
+  }
+]
