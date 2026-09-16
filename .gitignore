@@ -8,6 +8,7 @@ logs/
 checkpoints/
 models/
 wandb/
+*.sqlite-journal
 data/raw/
 data/processed/
 *.slurm.out

@@ -1,0 +1,11 @@
+{
+  "model": "Qwen/Qwen3-1.7B",
+  "max_length": 2048,
+  "epochs": 3,
+  "learning_rate": 0.0002,
+  "batch_size": 1,
+  "gradient_accumulation": 8,
+  "lora_rank": 16,
+  "lora_alpha": 32,
+  "seed": 42
+}

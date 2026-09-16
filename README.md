@@ -33,6 +33,20 @@ Compare the same Qwen3 model under three training-data strategies:
 
 Primary quality metric: execution accuracy (EX). Efficiency metrics: selected sample count, selection time, training time, peak GPU memory, and total end-to-end time.
 
+## Prepared experiment tools
+
+- `src/data/create_baselines.py`: creates deterministic Full and Random baselines.
+- `src/training/train_qwen_lora.py`: Qwen3-1.7B LoRA training entry point for Bunya.
+- `src/metrics/run_and_record.py`: records wall time, exit status, and observed GPU memory.
+- `src/eval/generate_sql.py`: deterministic Qwen generation in official BIRD prediction format.
+- `scripts/run_official_bird_ex.sh`: wrapper around BIRD's official EX evaluator.
+- `scripts/bunya_smoke.slurm`: one-example, one-epoch Bunya smoke-test template.
+- `scripts/local_smoke_test.sh`: CPU-only validation that is safe to run locally.
+
+The final EX score is produced with the official BIRD evaluation package. A custom SQL-result comparison is intentionally not presented as official EX.
+
+Official evaluator source: `AlibabaResearch/DAMO-ConvAI/bird/llm/src/evaluation.py`.
+
 ## Important boundary
 
 The official LEAD code targets general instruction-tuning datasets. It cannot be run on BIRD unchanged. BIRD formatting, schema injection, Text-to-SQL evaluation, and Bunya job scripts still need to be added and verified.

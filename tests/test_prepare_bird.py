@@ -10,6 +10,14 @@ prepare_bird = importlib.util.module_from_spec(SPEC)
 assert SPEC.loader is not None
 SPEC.loader.exec_module(prepare_bird)
 
+BASELINE_SCRIPT = Path(__file__).parents[1] / "src" / "data" / "create_baselines.py"
+BASELINE_SPEC = importlib.util.spec_from_file_location("create_baselines", BASELINE_SCRIPT)
+create_baselines = importlib.util.module_from_spec(BASELINE_SPEC)
+assert BASELINE_SPEC.loader is not None
+BASELINE_SPEC.loader.exec_module(create_baselines)
+
+GENERATION_SCRIPT = Path(__file__).parents[1] / "src" / "eval" / "generate_sql.py"
+
 
 class PrepareBirdTests(unittest.TestCase):
     def test_convert_record_contains_schema_question_and_sql(self):
@@ -38,6 +46,17 @@ class PrepareBirdTests(unittest.TestCase):
         rows = prepare_bird.read_records(sample)
         self.assertEqual(len(rows), 1)
         self.assertEqual(rows[0]["db_id"], "movie_platform")
+
+    def test_random_baseline_is_reproducible(self):
+        rows = [{"id": number} for number in range(10)]
+        first = create_baselines.sample_random(rows, 4, seed=42)
+        second = create_baselines.sample_random(rows, 4, seed=42)
+        self.assertEqual(first, second)
+        self.assertEqual(len(first), 4)
+
+    def test_bird_prediction_separator_is_exact(self):
+        source = GENERATION_SCRIPT.read_text(encoding="utf-8")
+        self.assertIn('SEPARATOR = "\\t----- bird -----\\t"', source)
 
 
 if __name__ == "__main__":
