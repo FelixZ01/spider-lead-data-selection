@@ -1,0 +1,1 @@
+{"db_id":"movie_platform","question":"Who is the director of the movie Sex, Drink and Bloodshed?","evidence":"Sex, Drink and Bloodshed refers to movie title = 'Sex, Drink and Bloodshed';","SQL":"SELECT director_name FROM movies WHERE movie_title = 'Sex, Drink and Bloodshed'"}
