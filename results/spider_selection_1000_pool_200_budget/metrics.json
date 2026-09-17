@@ -1,0 +1,48 @@
+{
+  "run_date": "2026-09-17",
+  "hardware": "Apple M3 MacBook Air, 16 GB unified memory",
+  "model": "Salesforce/codet5-small",
+  "device": "mps",
+  "candidate_pool": {
+    "samples": 1000,
+    "databases": 137,
+    "scoring_seconds": 18.621784792048857,
+    "mean_pretrained_target_loss": 7.5565138938426974,
+    "seed": 42
+  },
+  "shared_setup": {
+    "selection_budget": 200,
+    "epochs": 1,
+    "eval_samples": 50,
+    "eval_databases": 16,
+    "eval_seed": 42
+  },
+  "methods": {
+    "random": {
+      "selected_databases": 94,
+      "selected_mean_pretrained_target_loss": 7.426740421056747,
+      "train_seconds": 28.30310020793695,
+      "mean_train_loss": 1.9459033735841513,
+      "normalized_exact_matches": 1,
+      "normalized_exact_match": 0.02
+    },
+    "uncertainty": {
+      "selected_databases": 78,
+      "selected_mean_pretrained_target_loss": 9.670312809944154,
+      "train_seconds": 25.977099084062502,
+      "mean_train_loss": 2.176811585277319,
+      "normalized_exact_matches": 2,
+      "normalized_exact_match": 0.04
+    },
+    "uncertainty_schema_diverse": {
+      "selected_databases": 120,
+      "selected_mean_pretrained_target_loss": 9.014479064941407,
+      "train_seconds": 26.7807046250673,
+      "mean_train_loss": 2.089974825680256,
+      "normalized_exact_matches": 2,
+      "normalized_exact_match": 0.04
+    }
+  },
+  "metric_boundary": "Diagnostic normalized string match; not official Spider execution accuracy.",
+  "method_boundary": "Static uncertainty methods inspired by LEAD concepts; not an official reproduction of LEAD IDU or its online bandit algorithm."
+}

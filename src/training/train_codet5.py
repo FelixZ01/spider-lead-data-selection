@@ -69,6 +69,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--sample-strategy", choices=("random", "head"), default="random")
     parser.add_argument("--device", default="auto")
+    parser.add_argument("--log-every", type=int, default=10)
     return parser.parse_args()
 
 
@@ -102,7 +103,8 @@ def main() -> None:
             loss.backward()
             optimizer.step()
             losses.append(float(loss.detach().cpu()))
-            print(f"epoch={epoch + 1} step={step}/{len(loader)} loss={losses[-1]:.4f}")
+            if step == 1 or step % args.log_every == 0 or step == len(loader):
+                print(f"epoch={epoch + 1} step={step}/{len(loader)} loss={losses[-1]:.4f}")
 
     elapsed = time.perf_counter() - started
     args.output_dir.mkdir(parents=True, exist_ok=True)
