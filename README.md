@@ -62,6 +62,13 @@ The official evaluator is tracked as the `external/spider` Git submodule.
 `match` is the default because some original Spider SQLite rows contain legacy
 text encodings that can make execution evaluation fail under modern Python.
 
+For an unattended three-seed robustness run:
+
+```bash
+POOL_SIZE=1000 BUDGET=200 EVAL_SAMPLES=100 SEEDS="11 42 73" \
+  scripts/run_mac_multiseed_experiment.sh
+```
+
 ## Run the CPU-only preprocessing demo
 
 ```bash
