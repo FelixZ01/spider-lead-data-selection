@@ -1,0 +1,22 @@
+{
+  "run_date": "2026-09-17",
+  "hardware": "Apple M3 MacBook Air, 16 GB unified memory",
+  "model": "Salesforce/codet5-small",
+  "device": "mps",
+  "train_samples": 200,
+  "train_databases": 103,
+  "epochs": 1,
+  "steps": 200,
+  "initial_loss": 7.745614528656006,
+  "final_loss": 0.8424975872039795,
+  "mean_loss": 1.9106394559144975,
+  "train_seconds": 37.331674915971234,
+  "eval_samples": 20,
+  "eval_databases": 9,
+  "normalized_exact_matches": 1,
+  "normalized_exact_match": 0.05,
+  "generation_seconds": 6.549431333085522,
+  "sample_strategy": "random",
+  "seed": 42,
+  "metric_boundary": "Diagnostic normalized string match; not official Spider execution accuracy."
+}

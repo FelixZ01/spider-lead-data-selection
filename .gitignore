@@ -13,3 +13,4 @@ data/raw/
 data/processed/
 *.slurm.out
 *.slurm.err
+.cache/

@@ -1,6 +1,9 @@
 # BIRD + LEAD Mini Project
 
-This repository adapts the official [LEAD](https://github.com/HKUSTDial/LEAD) implementation to the BIRD Text-to-SQL dataset for a UQ mini-project.
+This repository contains two staged routes for a UQ Text-to-SQL mini-project:
+
+1. A Mac-feasible Spider 1.0 + CodeT5-small baseline.
+2. A later BIRD + Qwen3 + LEAD extension when suitable GPU compute is available.
 
 ## Current status
 
@@ -8,7 +11,28 @@ This repository adapts the official [LEAD](https://github.com/HKUSTDial/LEAD) im
 - One real BIRD training example is stored in `data/sample/bird_sample.jsonl`.
 - A concise Chinese code guide is available in `notes/LEAD_CODE_GUIDE_CN.md`.
 - `src/data/prepare_bird.py` converts BIRD JSON/JSONL plus `tables.json` into Qwen/LEAD chat JSONL.
-- GPU training and environment setup will be completed on UQ Bunya after access is approved.
+- A local Spider + CodeT5-small smoke pipeline is available for Apple Silicon.
+- The BIRD/Qwen path remains prepared for later GPU access.
+- A verified 200-example Apple-MPS run is recorded in
+  `results/spider_codet5_200/` (37.33 seconds training; 1/20 diagnostic match).
+
+## Run the local Mac baseline
+
+Create a Python 3.12 environment and install the small local stack:
+
+```bash
+/Users/Zhuanz/miniforge3/bin/python3.12 -m venv .venv
+.venv/bin/python -m pip install -r requirements-mac.txt
+scripts/run_mac_spider_smoke.sh
+```
+
+The script downloads the official Spider `train_spider.json`, `dev.json`, and
+`tables.json`, prepares schema-aware CodeT5 inputs, fine-tunes on 20 examples,
+and generates five development predictions. Raw data, processed data, and model
+checkpoints are ignored by Git.
+
+The local exact-match number is only a pipeline diagnostic. It is not presented
+as official Spider execution accuracy.
 
 ## Run the CPU-only preprocessing demo
 
