@@ -1,0 +1,147 @@
+{
+  "seeds": [
+    11,
+    42,
+    73
+  ],
+  "methods": {
+    "random": {
+      "runs": [
+        {
+          "seed": 11,
+          "selected_databases": 95,
+          "selected_mean_pretrained_target_loss": 7.517072821855545,
+          "train_seconds": 26.114194834022783,
+          "mean_train_loss": 1.824662689268589,
+          "diagnostic_normalized_exact_match": 0.05,
+          "official_spider_exact_match": 0.05
+        },
+        {
+          "seed": 42,
+          "selected_databases": 94,
+          "selected_mean_pretrained_target_loss": 7.426740421056747,
+          "train_seconds": 24.363401375012472,
+          "mean_train_loss": 1.9533785270154476,
+          "diagnostic_normalized_exact_match": 0.02,
+          "official_spider_exact_match": 0.02
+        },
+        {
+          "seed": 73,
+          "selected_databases": 96,
+          "selected_mean_pretrained_target_loss": 7.614323925971985,
+          "train_seconds": 27.079043374978937,
+          "mean_train_loss": 1.9865333792567252,
+          "diagnostic_normalized_exact_match": 0.0,
+          "official_spider_exact_match": 0.01
+        }
+      ],
+      "aggregate": {
+        "selected_databases": {
+          "mean": 95.0,
+          "sample_std": 1.0
+        },
+        "train_seconds": {
+          "mean": 25.852213194671396,
+          "sample_std": 1.3766457977684001
+        },
+        "official_spider_exact_match": {
+          "mean": 0.02666666666666667,
+          "sample_std": 0.02081665999466133
+        }
+      }
+    },
+    "uncertainty": {
+      "runs": [
+        {
+          "seed": 11,
+          "selected_databases": 78,
+          "selected_mean_pretrained_target_loss": 9.670312809944154,
+          "train_seconds": 23.244934499962255,
+          "mean_train_loss": 2.2602872130274774,
+          "diagnostic_normalized_exact_match": 0.01,
+          "official_spider_exact_match": 0.01
+        },
+        {
+          "seed": 42,
+          "selected_databases": 78,
+          "selected_mean_pretrained_target_loss": 9.670312809944154,
+          "train_seconds": 25.906676166923717,
+          "mean_train_loss": 2.204968838095665,
+          "diagnostic_normalized_exact_match": 0.01,
+          "official_spider_exact_match": 0.01
+        },
+        {
+          "seed": 73,
+          "selected_databases": 78,
+          "selected_mean_pretrained_target_loss": 9.670312809944154,
+          "train_seconds": 25.40175049996469,
+          "mean_train_loss": 2.188799615651369,
+          "diagnostic_normalized_exact_match": 0.01,
+          "official_spider_exact_match": 0.02
+        }
+      ],
+      "aggregate": {
+        "selected_databases": {
+          "mean": 78.0,
+          "sample_std": 0.0
+        },
+        "train_seconds": {
+          "mean": 24.85112038895022,
+          "sample_std": 1.4137228564243243
+        },
+        "official_spider_exact_match": {
+          "mean": 0.013333333333333334,
+          "sample_std": 0.005773502691896258
+        }
+      }
+    },
+    "uncertainty_schema_diverse": {
+      "runs": [
+        {
+          "seed": 11,
+          "selected_databases": 120,
+          "selected_mean_pretrained_target_loss": 9.014479064941407,
+          "train_seconds": 23.819368417025544,
+          "mean_train_loss": 2.0407199203968047,
+          "diagnostic_normalized_exact_match": 0.0,
+          "official_spider_exact_match": 0.0
+        },
+        {
+          "seed": 42,
+          "selected_databases": 120,
+          "selected_mean_pretrained_target_loss": 9.014479064941407,
+          "train_seconds": 26.099367125076242,
+          "mean_train_loss": 2.081429947912693,
+          "diagnostic_normalized_exact_match": 0.04,
+          "official_spider_exact_match": 0.04
+        },
+        {
+          "seed": 73,
+          "selected_databases": 120,
+          "selected_mean_pretrained_target_loss": 9.014479064941407,
+          "train_seconds": 26.296897124964744,
+          "mean_train_loss": 2.0886750027537344,
+          "diagnostic_normalized_exact_match": 0.02,
+          "official_spider_exact_match": 0.02
+        }
+      ],
+      "aggregate": {
+        "selected_databases": {
+          "mean": 120.0,
+          "sample_std": 0.0
+        },
+        "train_seconds": {
+          "mean": 25.405210889022175,
+          "sample_std": 1.3769265720092996
+        },
+        "official_spider_exact_match": {
+          "mean": 0.02,
+          "sample_std": 0.02
+        }
+      }
+    }
+  },
+  "standard_deviation": "sample standard deviation across training seeds",
+  "metric_boundary": "Official Spider exact match on the same fixed 100-example development subset. Execution accuracy is not reported because the legacy Spider database package triggered a text-decoding failure under modern Python.",
+  "method_boundary": "Static pretrained-loss uncertainty methods inspired by LEAD concepts; not an official reproduction of LEAD IDU or its online bandit algorithm."
+}

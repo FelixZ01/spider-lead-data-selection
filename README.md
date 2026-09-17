@@ -20,6 +20,13 @@ This repository contains two staged routes for a UQ Text-to-SQL mini-project:
   uncertainty-plus-schema-diversity both reached 2/50 official Spider exact
   matches versus 1/50 for random selection; this is preliminary and not
   official LEAD.
+- A three-seed robustness experiment is recorded in
+  `results/spider_multiseed_1000_pool_200_budget/`. The earlier accuracy gain
+  did not reproduce consistently: random, uncertainty, and
+  uncertainty-plus-schema-diversity averaged 2.67%, 1.33%, and 2.00% official
+  exact match, respectively. The reliable result was broader database coverage
+  from the schema-diversity constraint (120 databases versus 78 for pure
+  uncertainty and 95 for random selection).
 
 ## Run the local Mac baseline
 
@@ -67,6 +74,15 @@ For an unattended three-seed robustness run:
 ```bash
 POOL_SIZE=1000 BUDGET=200 EVAL_SAMPLES=100 SEEDS="11 42 73" \
   scripts/run_mac_multiseed_experiment.sh
+```
+
+Then run official Spider exact match and build the compact result file:
+
+```bash
+bash scripts/run_official_spider_multiseed_eval.sh
+.venv/bin/python src/analysis/summarize_multiseed.py \
+  --experiment-dir outputs/spider_multiseed_experiment \
+  --output results/spider_multiseed_1000_pool_200_budget/metrics.json
 ```
 
 ## Run the CPU-only preprocessing demo

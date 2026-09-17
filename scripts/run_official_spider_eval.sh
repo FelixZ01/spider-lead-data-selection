@@ -5,12 +5,13 @@ method="${1:?Usage: scripts/run_official_spider_eval.sh METHOD}"
 evaluation_type="${2:-match}"
 python_bin="${PYTHON_BIN:-.venv/bin/python}"
 export NLTK_DATA="${NLTK_DATA:-$PWD/.cache/nltk}"
-experiment_dir="outputs/spider_selection_experiment"
-format_dir="$experiment_dir/$method/official"
+experiment_dir="${EXPERIMENT_DIR:-outputs/spider_selection_experiment}"
+prediction_jsonl="${PREDICTION_JSONL:-$experiment_dir/$method/eval/predictions.jsonl}"
+format_dir="${OFFICIAL_OUTPUT_DIR:-$experiment_dir/$method/official}"
 database_package="${SPIDER_PACKAGE_DIR:-data/raw/spider/databases_package/spider_data}"
 
 "$python_bin" src/eval/export_spider_official.py \
-  --input "$experiment_dir/$method/eval/predictions.jsonl" \
+  --input "$prediction_jsonl" \
   --gold-output "$format_dir/gold.txt" \
   --pred-output "$format_dir/pred.txt"
 
