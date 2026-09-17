@@ -24,7 +24,8 @@
       "train_seconds": 28.30310020793695,
       "mean_train_loss": 1.9459033735841513,
       "normalized_exact_matches": 1,
-      "normalized_exact_match": 0.02
+      "normalized_exact_match": 0.02,
+      "official_spider_exact_match": 0.02
     },
     "uncertainty": {
       "selected_databases": 78,
@@ -32,7 +33,8 @@
       "train_seconds": 25.977099084062502,
       "mean_train_loss": 2.176811585277319,
       "normalized_exact_matches": 2,
-      "normalized_exact_match": 0.04
+      "normalized_exact_match": 0.04,
+      "official_spider_exact_match": 0.04
     },
     "uncertainty_schema_diverse": {
       "selected_databases": 120,
@@ -40,9 +42,10 @@
       "train_seconds": 26.7807046250673,
       "mean_train_loss": 2.089974825680256,
       "normalized_exact_matches": 2,
-      "normalized_exact_match": 0.04
+      "normalized_exact_match": 0.04,
+      "official_spider_exact_match": 0.04
     }
   },
-  "metric_boundary": "Diagnostic normalized string match; not official Spider execution accuracy.",
+  "metric_boundary": "Official Spider exact match was run on the same 50-example subset. Execution accuracy is not reported because the legacy Spider database package triggered a text-decoding failure on one SQLite row under modern Python.",
   "method_boundary": "Static uncertainty methods inspired by LEAD concepts; not an official reproduction of LEAD IDU or its online bandit algorithm."
 }

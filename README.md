@@ -17,8 +17,9 @@ This repository contains two staged routes for a UQ Text-to-SQL mini-project:
   `results/spider_codet5_200/` (37.33 seconds training; 1/20 diagnostic match).
 - An equal-budget 1,000-pool/200-selected experiment is recorded in
   `results/spider_selection_1000_pool_200_budget/`. Static uncertainty and
-  uncertainty-plus-schema-diversity both reached 2/50 diagnostic matches versus
-  1/50 for random selection; this is preliminary and not official LEAD.
+  uncertainty-plus-schema-diversity both reached 2/50 official Spider exact
+  matches versus 1/50 for random selection; this is preliminary and not
+  official LEAD.
 
 ## Run the local Mac baseline
 
@@ -49,6 +50,17 @@ This compares random selection, pretrained-loss uncertainty selection, and a
 schema-diverse uncertainty variant. These lightweight methods are explicitly
 LEAD-inspired static baselines, not a reproduction of LEAD's online IDU and
 bandit algorithm.
+
+With the official Spider databases available locally, run official exact-match
+and execution evaluation for one method with:
+
+```bash
+scripts/run_official_spider_eval.sh uncertainty_schema_diverse match
+```
+
+The official evaluator is tracked as the `external/spider` Git submodule.
+`match` is the default because some original Spider SQLite rows contain legacy
+text encodings that can make execution evaluation fail under modern Python.
 
 ## Run the CPU-only preprocessing demo
 

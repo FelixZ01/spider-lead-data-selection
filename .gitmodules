@@ -1,3 +1,6 @@
 [submodule "external/LEAD"]
 	path = external/LEAD
 	url = https://github.com/HKUSTDial/LEAD.git
+[submodule "external/spider"]
+	path = external/spider
+	url = https://github.com/taoyds/spider.git
