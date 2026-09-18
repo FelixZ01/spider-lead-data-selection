@@ -33,9 +33,9 @@ This repository contains two staged routes for a UQ Text-to-SQL mini-project:
   15.33% +/- 1.53% official exact match, compared with 12.00% +/- 1.80% for
   random and 11.00% +/- 1.73% for pure uncertainty. It ranked first for all
   three training seeds while covering all 137 candidate-pool databases. On the
-  complete 1,034-example Spider development set, the seed-42 models achieved
-  19.7%, 18.0%, and 13.0% for schema-diverse uncertainty, random, and pure
-  uncertainty selection, respectively.
+  complete 1,034-example Spider development set, schema-diverse uncertainty
+  averaged 18.73% official exact match across three seeds, compared with 15.13%
+  for random and 12.90% for pure uncertainty selection.
 
 ## Run the local Mac baseline
 
@@ -104,6 +104,28 @@ SEEDS="11 42 73" BUDGET=500 EPOCHS=3 EVAL_SAMPLES=200 \
   --experiment-dir outputs/spider_scaled_multiseed_experiment \
   --output results/spider_scaled_multiseed_1000_pool_500_budget_3_epochs/metrics.json
 ```
+
+## Run unattended on a Mac
+
+The unattended runner resumes completed work instead of repeating it. By
+default it keeps seeds 11, 42, and 73, adds seeds 101 and 202, runs full
+development-set evaluation, builds aggregate JSON files, and creates a concise
+handoff for external analysis:
+
+```bash
+bash scripts/start_unattended_mac_pipeline.sh
+```
+
+This launches the pipeline in the background so closing the terminal does not
+stop it. Monitor it from another terminal with:
+
+```bash
+bash scripts/monitor_unattended_pipeline.sh
+```
+
+The runner uses `caffeinate` to prevent ordinary macOS sleep while it is active.
+Keep the Mac connected to power and leave the lid open. Logs are written under
+`logs/`; completed checkpoints and evaluation files are detected automatically.
 
 ## Run the CPU-only preprocessing demo
 

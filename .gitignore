@@ -14,3 +14,4 @@ data/processed/
 *.slurm.out
 *.slurm.err
 .cache/
+.idea/

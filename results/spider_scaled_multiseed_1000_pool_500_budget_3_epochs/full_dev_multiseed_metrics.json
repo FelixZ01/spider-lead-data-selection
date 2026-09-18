@@ -1,0 +1,101 @@
+{
+  "seeds": [
+    11,
+    42,
+    73
+  ],
+  "development_examples": 1034,
+  "methods": {
+    "random": {
+      "runs": [
+        {
+          "seed": 11,
+          "official_spider_exact_match": 0.137,
+          "diagnostic_normalized_exact_match": 0.109284332688588,
+          "generation_seconds": 296.0003374159569
+        },
+        {
+          "seed": 42,
+          "official_spider_exact_match": 0.18,
+          "diagnostic_normalized_exact_match": 0.14410058027079303,
+          "generation_seconds": 285.3473430419108
+        },
+        {
+          "seed": 73,
+          "official_spider_exact_match": 0.137,
+          "diagnostic_normalized_exact_match": 0.11121856866537717,
+          "generation_seconds": 307.17251654108986
+        }
+      ],
+      "official_spider_exact_match": {
+        "mean": 0.15133333333333335,
+        "sample_std": 0.024826061575153897,
+        "min": 0.137,
+        "max": 0.18
+      },
+      "absolute_gain_over_random": 0.0
+    },
+    "uncertainty": {
+      "runs": [
+        {
+          "seed": 11,
+          "official_spider_exact_match": 0.126,
+          "diagnostic_normalized_exact_match": 0.08994197292069632,
+          "generation_seconds": 377.1371988749597
+        },
+        {
+          "seed": 42,
+          "official_spider_exact_match": 0.13,
+          "diagnostic_normalized_exact_match": 0.109284332688588,
+          "generation_seconds": 281.38815975002944
+        },
+        {
+          "seed": 73,
+          "official_spider_exact_match": 0.131,
+          "diagnostic_normalized_exact_match": 0.109284332688588,
+          "generation_seconds": 264.3194345829543
+        }
+      ],
+      "official_spider_exact_match": {
+        "mean": 0.129,
+        "sample_std": 0.002645751311064593,
+        "min": 0.126,
+        "max": 0.131
+      },
+      "absolute_gain_over_random": -0.022333333333333344
+    },
+    "uncertainty_schema_diverse": {
+      "runs": [
+        {
+          "seed": 11,
+          "official_spider_exact_match": 0.174,
+          "diagnostic_normalized_exact_match": 0.14893617021276595,
+          "generation_seconds": 245.2126990420511
+        },
+        {
+          "seed": 42,
+          "official_spider_exact_match": 0.197,
+          "diagnostic_normalized_exact_match": 0.16827852998065765,
+          "generation_seconds": 282.34590537508484
+        },
+        {
+          "seed": 73,
+          "official_spider_exact_match": 0.191,
+          "diagnostic_normalized_exact_match": 0.16054158607350097,
+          "generation_seconds": 235.77148295904044
+        }
+      ],
+      "official_spider_exact_match": {
+        "mean": 0.18733333333333332,
+        "sample_std": 0.011930353445448865,
+        "min": 0.174,
+        "max": 0.197
+      },
+      "absolute_gain_over_random": 0.035999999999999976
+    }
+  },
+  "metric": "official Spider exact match",
+  "standard_deviation": "sample standard deviation across training seeds",
+  "metric_boundary": "Official Spider exact match on all 1,034 development examples. Execution accuracy is not reported because the legacy Spider database package triggered a text-decoding failure under modern Python.",
+  "method_boundary": "The uncertainty-based selectors are lightweight static methods inspired by LEAD concepts, not a reproduction of LEAD's online IDU and bandit method."
+}
