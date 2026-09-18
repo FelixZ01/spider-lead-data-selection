@@ -9,7 +9,7 @@ while true; do
   .venv/bin/python src/analysis/pipeline_status.py \
     --seeds ${SEEDS:-11 42 73 101 202}
   echo
-  latest_log="$(find logs -name 'unattended_*.log' -type f -print | sort | tail -n 1)"
+  latest_log="$(find logs -name 'unattended_*.log' ! -name '*launcher*' -type f -print | sort | tail -n 1)"
   if [[ -n "$latest_log" ]]; then
     echo "Latest log: $latest_log"
     echo "--- Last 12 log lines ---"
