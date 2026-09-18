@@ -33,7 +33,7 @@ cleanup() {
 }
 trap cleanup EXIT INT TERM
 
-exec > >(tee -a "$log_file") 2>&1
+exec >> "$log_file" 2>&1
 
 if command -v caffeinate >/dev/null 2>&1; then
   caffeinate -dimsu -w "$$" &
