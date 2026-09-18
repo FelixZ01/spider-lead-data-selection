@@ -27,6 +27,12 @@ This repository contains two staged routes for a UQ Text-to-SQL mini-project:
   exact match, respectively. The reliable result was broader database coverage
   from the schema-diversity constraint (120 databases versus 78 for pure
   uncertainty and 95 for random selection).
+- A scaled three-seed experiment is recorded in
+  `results/spider_scaled_multiseed_1000_pool_500_budget_3_epochs/`. With 500
+  selected examples and three epochs, uncertainty plus schema diversity reached
+  15.33% +/- 1.53% official exact match, compared with 12.00% +/- 1.80% for
+  random and 11.00% +/- 1.73% for pure uncertainty. It ranked first for all
+  three training seeds while covering all 137 candidate-pool databases.
 
 ## Run the local Mac baseline
 
@@ -83,6 +89,17 @@ bash scripts/run_official_spider_multiseed_eval.sh
 .venv/bin/python src/analysis/summarize_multiseed.py \
   --experiment-dir outputs/spider_multiseed_experiment \
   --output results/spider_multiseed_1000_pool_200_budget/metrics.json
+```
+
+For the scaled three-seed experiment:
+
+```bash
+SEEDS="11 42 73" BUDGET=500 EPOCHS=3 EVAL_SAMPLES=200 \
+  bash scripts/run_mac_scaled_multiseed_experiment.sh
+
+.venv/bin/python src/analysis/summarize_multiseed.py \
+  --experiment-dir outputs/spider_scaled_multiseed_experiment \
+  --output results/spider_scaled_multiseed_1000_pool_500_budget_3_epochs/metrics.json
 ```
 
 ## Run the CPU-only preprocessing demo

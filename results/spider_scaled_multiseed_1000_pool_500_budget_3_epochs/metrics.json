@@ -1,0 +1,156 @@
+{
+  "seeds": [
+    11,
+    42,
+    73
+  ],
+  "shared_setup": {
+    "model": "Salesforce/codet5-small",
+    "device": "mps",
+    "selection_budget": 500,
+    "epochs": 3,
+    "eval_samples": 200,
+    "eval_databases": 19,
+    "eval_seed": 2026
+  },
+  "methods": {
+    "random": {
+      "runs": [
+        {
+          "seed": 11,
+          "selected_databases": 128,
+          "selected_mean_pretrained_target_loss": 7.594540960788727,
+          "train_seconds": 249.856229832978,
+          "mean_train_loss": 0.8849125658857325,
+          "diagnostic_normalized_exact_match": 0.075,
+          "official_spider_exact_match": 0.115
+        },
+        {
+          "seed": 42,
+          "selected_databases": 125,
+          "selected_mean_pretrained_target_loss": 7.464569208621978,
+          "train_seconds": 173.39136837492697,
+          "mean_train_loss": 0.8896194698543598,
+          "diagnostic_normalized_exact_match": 0.115,
+          "official_spider_exact_match": 0.14
+        },
+        {
+          "seed": 73,
+          "selected_databases": 125,
+          "selected_mean_pretrained_target_loss": 7.623230587482452,
+          "train_seconds": 302.45791387499776,
+          "mean_train_loss": 0.9087814506193002,
+          "diagnostic_normalized_exact_match": 0.085,
+          "official_spider_exact_match": 0.105
+        }
+      ],
+      "aggregate": {
+        "selected_databases": {
+          "mean": 126.0,
+          "sample_std": 1.7320508075688772
+        },
+        "train_seconds": {
+          "mean": 241.90183736096756,
+          "sample_std": 64.89990417195963
+        },
+        "official_spider_exact_match": {
+          "mean": 0.12000000000000001,
+          "sample_std": 0.018027756377319955
+        }
+      }
+    },
+    "uncertainty": {
+      "runs": [
+        {
+          "seed": 11,
+          "selected_databases": 114,
+          "selected_mean_pretrained_target_loss": 8.661808867454528,
+          "train_seconds": 241.98296458402183,
+          "mean_train_loss": 0.894666487080045,
+          "diagnostic_normalized_exact_match": 0.095,
+          "official_spider_exact_match": 0.13
+        },
+        {
+          "seed": 42,
+          "selected_databases": 114,
+          "selected_mean_pretrained_target_loss": 8.661808867454528,
+          "train_seconds": 220.29214908310678,
+          "mean_train_loss": 0.9093191784316053,
+          "diagnostic_normalized_exact_match": 0.075,
+          "official_spider_exact_match": 0.1
+        },
+        {
+          "seed": 73,
+          "selected_databases": 114,
+          "selected_mean_pretrained_target_loss": 8.661808867454528,
+          "train_seconds": 309.7579943749588,
+          "mean_train_loss": 0.9569615051175158,
+          "diagnostic_normalized_exact_match": 0.09,
+          "official_spider_exact_match": 0.1
+        }
+      ],
+      "aggregate": {
+        "selected_databases": {
+          "mean": 114.0,
+          "sample_std": 0.0
+        },
+        "train_seconds": {
+          "mean": 257.3443693473625,
+          "sample_std": 46.66919686124659
+        },
+        "official_spider_exact_match": {
+          "mean": 0.11,
+          "sample_std": 0.017320508075688773
+        }
+      }
+    },
+    "uncertainty_schema_diverse": {
+      "runs": [
+        {
+          "seed": 11,
+          "selected_databases": 137,
+          "selected_mean_pretrained_target_loss": 8.081031275749206,
+          "train_seconds": 193.40118691697717,
+          "mean_train_loss": 0.8909774262414625,
+          "diagnostic_normalized_exact_match": 0.125,
+          "official_spider_exact_match": 0.14
+        },
+        {
+          "seed": 42,
+          "selected_databases": 137,
+          "selected_mean_pretrained_target_loss": 8.081031275749206,
+          "train_seconds": 259.4440730420174,
+          "mean_train_loss": 0.8834287046194077,
+          "diagnostic_normalized_exact_match": 0.15,
+          "official_spider_exact_match": 0.17
+        },
+        {
+          "seed": 73,
+          "selected_databases": 137,
+          "selected_mean_pretrained_target_loss": 8.081031275749206,
+          "train_seconds": 350.3499900830211,
+          "mean_train_loss": 0.8832445019806425,
+          "diagnostic_normalized_exact_match": 0.135,
+          "official_spider_exact_match": 0.15
+        }
+      ],
+      "aggregate": {
+        "selected_databases": {
+          "mean": 137.0,
+          "sample_std": 0.0
+        },
+        "train_seconds": {
+          "mean": 267.73175001400523,
+          "sample_std": 78.80194094061018
+        },
+        "official_spider_exact_match": {
+          "mean": 0.15333333333333335,
+          "sample_std": 0.015275252316519468
+        }
+      }
+    }
+  },
+  "standard_deviation": "sample standard deviation across training seeds",
+  "metric_boundary": "Official Spider exact match on the same fixed 200-example development subset. Execution accuracy is not reported because the legacy Spider database package triggered a text-decoding failure under modern Python.",
+  "method_boundary": "Static pretrained-loss uncertainty methods inspired by LEAD concepts; not an official reproduction of LEAD IDU or its online bandit algorithm."
+}

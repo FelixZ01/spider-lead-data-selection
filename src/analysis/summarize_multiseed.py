@@ -40,12 +40,26 @@ def main() -> None:
     parser.add_argument("--seeds", nargs="+", type=int, default=[11, 42, 73])
     args = parser.parse_args()
 
+    first_run = args.experiment_dir / f"seed_{args.seeds[0]}" / METHODS[0]
+    first_train = read_json(first_run / "model" / "train_metrics.json")
+    first_eval = read_json(first_run / "eval" / "eval_metrics.json")
+
     result: dict = {
         "seeds": args.seeds,
+        "shared_setup": {
+            "model": first_train["model"],
+            "device": first_train["device"],
+            "selection_budget": first_train["train_samples"],
+            "epochs": first_train["epochs"],
+            "eval_samples": first_eval["eval_samples"],
+            "eval_databases": first_eval["database_count"],
+            "eval_seed": first_eval["seed"],
+        },
         "methods": {},
         "standard_deviation": "sample standard deviation across training seeds",
         "metric_boundary": (
-            "Official Spider exact match on the same fixed 100-example development subset. "
+            "Official Spider exact match on the same fixed "
+            f"{first_eval['eval_samples']}-example development subset. "
             "Execution accuracy is not reported because the legacy Spider database package "
             "triggered a text-decoding failure under modern Python."
         ),
