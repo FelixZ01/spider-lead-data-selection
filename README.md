@@ -110,7 +110,9 @@ SEEDS="11 42 73" BUDGET=500 EPOCHS=3 EVAL_SAMPLES=200 \
 The unattended runner resumes completed work instead of repeating it. By
 default it keeps seeds 11, 42, and 73, adds seeds 101 and 202, runs full
 development-set evaluation, builds aggregate JSON files, and creates a concise
-handoff for external analysis:
+handoff for external analysis. Waiting and model execution use local Python and
+do not call Codex. After the local experiment finishes, the runner invokes Codex
+once with `gpt-6-astra` and `high` reasoning to create `FINAL_CODEX_ANALYSIS.md`:
 
 ```bash
 bash scripts/start_unattended_mac_pipeline.sh
@@ -126,6 +128,13 @@ bash scripts/monitor_unattended_pipeline.sh
 The runner uses `caffeinate` to prevent ordinary macOS sleep while it is active.
 Keep the Mac connected to power and leave the lid open. Logs are written under
 `logs/`; completed checkpoints and evaluation files are detected automatically.
+The monitor estimates the finish time from measured training and generation
+times in completed runs. Override the final analysis settings if needed:
+
+```bash
+ANALYSIS_MODEL=gpt-6-astra ANALYSIS_REASONING=high \
+  bash scripts/start_unattended_mac_pipeline.sh
+```
 
 ## Run the CPU-only preprocessing demo
 
