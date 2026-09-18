@@ -45,6 +45,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--device", default="auto")
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--sample-strategy", choices=("random", "head"), default="random")
+    parser.add_argument("--quiet", action="store_true", help="Do not print every prediction")
     return parser.parse_args()
 
 
@@ -72,7 +73,8 @@ def main() -> None:
         prediction = tokenizer.decode(generated[0], skip_special_tokens=True)
         exact = normalize_sql(prediction) == normalize_sql(row["target_sql"])
         predictions.append({**row, "prediction": prediction, "normalized_exact_match": exact})
-        print(f"{row['id']}: {prediction}")
+        if not args.quiet:
+            print(f"{row['id']}: {prediction}")
     elapsed = time.perf_counter() - started
     exact_count = sum(row["normalized_exact_match"] for row in predictions)
     metrics = {

@@ -32,7 +32,10 @@ This repository contains two staged routes for a UQ Text-to-SQL mini-project:
   selected examples and three epochs, uncertainty plus schema diversity reached
   15.33% +/- 1.53% official exact match, compared with 12.00% +/- 1.80% for
   random and 11.00% +/- 1.73% for pure uncertainty. It ranked first for all
-  three training seeds while covering all 137 candidate-pool databases.
+  three training seeds while covering all 137 candidate-pool databases. On the
+  complete 1,034-example Spider development set, the seed-42 models achieved
+  19.7%, 18.0%, and 13.0% for schema-diverse uncertainty, random, and pure
+  uncertainty selection, respectively.
 
 ## Run the local Mac baseline
 

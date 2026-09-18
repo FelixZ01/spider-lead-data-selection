@@ -29,6 +29,24 @@ beyond near-zero exact match.
 The schema-diverse method achieved the highest official exact match under all
 three training seeds.
 
+## Full development-set check
+
+To verify that the result was not caused by the fixed 200-example subset, the
+three seed-42 checkpoints were also evaluated on all 1,034 Spider development
+examples across 20 databases.
+
+| Method | Easy | Medium | Hard | Extra hard | Overall |
+|---|---:|---:|---:|---:|---:|
+| Random | **41.1%** | 13.7% | 11.5% | **1.8%** | 18.0% |
+| Uncertainty | 26.2% | 10.5% | **12.6%** | 0.0% | 13.0% |
+| Uncertainty + schema diversity | **41.1%** | **19.1%** | 9.8% | 0.0% | **19.7%** |
+
+The schema-diverse method retained a 1.7-percentage-point overall advantage
+over random selection on the complete development set. Its gain is concentrated
+in medium questions; it does not improve hard or extra-hard questions. This
+suggests that the next bottleneck is model/schema-linking capability rather than
+data coverage alone.
+
 ## Aggregate results
 
 Values are mean +/- sample standard deviation over the three training seeds.
@@ -61,8 +79,13 @@ result.
 
 Before increasing model size, perform error analysis on the three seed-42
 models and evaluate the selected approach on a larger or full Spider development
-set. This distinguishes data-selection effects from errors caused by schema
-linking, invalid SQL, joins, or unsupported query complexity.
+set. The full-set check above is now complete, so the next step is targeted error
+analysis of schema linking, invalid SQL, joins, and unsupported query complexity.
+
+CodeT5-small remains a reasonable lightweight generator for this feasibility
+study. Unlike encoder-only BERT, its encoder-decoder architecture directly
+generates SQL, while still fitting local Mac resources. A BERT-based method can
+be added later as a reference if the project specifically requires one.
 
 ## Reproduce
 
@@ -73,6 +96,11 @@ SEEDS="11 42 73" BUDGET=500 EPOCHS=3 EVAL_SAMPLES=200 \
 .venv/bin/python src/analysis/summarize_multiseed.py \
   --experiment-dir outputs/spider_scaled_multiseed_experiment \
   --output results/spider_scaled_multiseed_1000_pool_500_budget_3_epochs/metrics.json
+
+SEED=42 bash scripts/run_mac_full_dev_eval.sh
+.venv/bin/python src/analysis/summarize_full_dev.py \
+  --seed-dir outputs/spider_scaled_multiseed_experiment/seed_42 \
+  --output results/spider_scaled_multiseed_1000_pool_500_budget_3_epochs/full_dev_metrics.json
 ```
 
 ## Boundaries

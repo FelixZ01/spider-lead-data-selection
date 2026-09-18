@@ -1,0 +1,45 @@
+{
+  "seed": 42,
+  "methods": {
+    "random": {
+      "eval_samples": 1034,
+      "eval_databases": 20,
+      "generation_seconds": 285.3473430419108,
+      "diagnostic_normalized_exact_match": 0.14410058027079303,
+      "official_spider_exact_match": {
+        "easy": 0.411,
+        "medium": 0.137,
+        "hard": 0.115,
+        "extra": 0.018,
+        "all": 0.18
+      }
+    },
+    "uncertainty": {
+      "eval_samples": 1034,
+      "eval_databases": 20,
+      "generation_seconds": 281.38815975002944,
+      "diagnostic_normalized_exact_match": 0.109284332688588,
+      "official_spider_exact_match": {
+        "easy": 0.262,
+        "medium": 0.105,
+        "hard": 0.126,
+        "extra": 0.0,
+        "all": 0.13
+      }
+    },
+    "uncertainty_schema_diverse": {
+      "eval_samples": 1034,
+      "eval_databases": 20,
+      "generation_seconds": 282.34590537508484,
+      "diagnostic_normalized_exact_match": 0.16827852998065765,
+      "official_spider_exact_match": {
+        "easy": 0.411,
+        "medium": 0.191,
+        "hard": 0.098,
+        "extra": 0.0,
+        "all": 0.197
+      }
+    }
+  },
+  "metric_boundary": "Official Spider exact match on all 1,034 development examples. Execution accuracy is not reported because the legacy Spider database package triggered a text-decoding failure under modern Python."
+}
