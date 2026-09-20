@@ -244,7 +244,7 @@ def build_story(
         Spacer(1, 18 * mm),
         paragraph("Final Experiment Report", styles["title"]),
         paragraph("Iterative Data Selection for Spider Text-to-SQL", styles["subtitle"]),
-        paragraph("Spider 1.0 + CodeT5-small | 20 September 2026", styles["subtitle"]),
+        paragraph("Spider 1.0 + CodeT5-small | 21 September 2026", styles["subtitle"]),
         Spacer(1, 8 * mm),
         paragraph(
             "This mini-project studies whether iterative model-aware data selection can improve Text-to-SQL "
