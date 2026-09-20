@@ -6,7 +6,7 @@ Evaluate whether a lightweight schema-diversity constraint improves static uncer
 
 ## Current stage
 
-- Completed full Spider development-set evaluation: 3 training seeds x 3 methods x 1034 examples.
+- Completed full Spider development-set evaluation: 5 training seeds x 3 methods x 1034 examples.
 - Training pool: 1,000 examples.
 - Equal selection budget: 500 examples per method.
 - Training: CodeT5-small for 3 epochs on Apple MPS.
@@ -16,9 +16,9 @@ Evaluate whether a lightweight schema-diversity constraint improves static uncer
 
 | Method | Per-seed exact match | Mean | Sample SD | Gain vs random |
 |---|---:|---:|---:|---:|
-| Random | 13.7%, 18.0%, 13.7% | 15.13% | 2.48 pp | +0.00 pp |
-| Uncertainty | 12.6%, 13.0%, 13.1% | 12.90% | 0.26 pp | -2.23 pp |
-| Uncertainty + schema diversity | 17.4%, 19.7%, 19.1% | 18.73% | 1.19 pp | +3.60 pp |
+| Random | 13.7%, 18.0%, 13.7%, 15.5%, 15.9% | 15.36% | 1.79 pp | +0.00 pp |
+| Uncertainty | 12.6%, 13.0%, 13.1%, 15.4%, 13.5% | 13.52% | 1.10 pp | -1.84 pp |
+| Uncertainty + schema diversity | 17.4%, 19.7%, 19.1%, 16.4%, 12.4% | 17.00% | 2.89 pp | +1.64 pp |
 
 ## Evidence boundaries
 

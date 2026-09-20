@@ -1,0 +1,97 @@
+{
+  "question": "Does fresh retraining on the union of both iterative batches recover performance lost by sequential new-batch-only training?",
+  "controlled_setup": {
+    "model": "Salesforce/codet5-small",
+    "selected_budget": 500,
+    "fresh_training_epochs": 3,
+    "development_examples": 1034,
+    "seeds": [
+      11,
+      42,
+      73,
+      101,
+      202
+    ]
+  },
+  "runs": [
+    {
+      "seed": 11,
+      "official_spider_exact_match": 0.164,
+      "random_exact_match": 0.165,
+      "sequential_continuation_exact_match": 0.153,
+      "difference_vs_random": -0.0010000000000000009,
+      "difference_vs_sequential_continuation": 0.01100000000000001,
+      "selected_databases": 130,
+      "retrain_and_evaluate_seconds": 448.0584584570024
+    },
+    {
+      "seed": 42,
+      "official_spider_exact_match": 0.13,
+      "random_exact_match": 0.164,
+      "sequential_continuation_exact_match": 0.135,
+      "difference_vs_random": -0.034,
+      "difference_vs_sequential_continuation": -0.0050000000000000044,
+      "selected_databases": 130,
+      "retrain_and_evaluate_seconds": 408.623778249952
+    },
+    {
+      "seed": 73,
+      "official_spider_exact_match": 0.158,
+      "random_exact_match": 0.144,
+      "sequential_continuation_exact_match": 0.151,
+      "difference_vs_random": 0.014000000000000012,
+      "difference_vs_sequential_continuation": 0.007000000000000006,
+      "selected_databases": 116,
+      "retrain_and_evaluate_seconds": 452.4934211248765
+    },
+    {
+      "seed": 101,
+      "official_spider_exact_match": 0.118,
+      "random_exact_match": 0.144,
+      "sequential_continuation_exact_match": 0.105,
+      "difference_vs_random": -0.025999999999999995,
+      "difference_vs_sequential_continuation": 0.012999999999999998,
+      "selected_databases": 130,
+      "retrain_and_evaluate_seconds": 481.7739644581452
+    },
+    {
+      "seed": 202,
+      "official_spider_exact_match": 0.143,
+      "random_exact_match": 0.165,
+      "sequential_continuation_exact_match": 0.134,
+      "difference_vs_random": -0.02200000000000002,
+      "difference_vs_sequential_continuation": 0.00899999999999998,
+      "selected_databases": 114,
+      "retrain_and_evaluate_seconds": 395.66041087405756
+    }
+  ],
+  "aggregate": {
+    "official_spider_exact_match": {
+      "mean": 0.1426,
+      "sample_std": 0.01909973821810132,
+      "min": 0.118,
+      "max": 0.164
+    },
+    "difference_vs_random": {
+      "mean": -0.013800000000000002,
+      "sample_std": 0.019753480705941427,
+      "min": -0.034,
+      "max": 0.014000000000000012
+    },
+    "difference_vs_sequential_continuation": {
+      "mean": 0.0069999999999999975,
+      "sample_std": 0.007071067811865476,
+      "min": -0.0050000000000000044,
+      "max": 0.012999999999999998
+    },
+    "wins_vs_random": 1,
+    "wins_vs_sequential_continuation": 4,
+    "retrain_and_evaluate_seconds": {
+      "mean": 437.32200663280673,
+      "sample_std": 34.93099140966745,
+      "min": 395.66041087405756,
+      "max": 481.7739644581452
+    }
+  },
+  "interpretation_boundary": "This diagnostic isolates final training protocol from selected-subset quality. It does not erase the computational cost used to obtain the iterative selection."
+}

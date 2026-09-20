@@ -1,0 +1,177 @@
+{
+  "question": "Do difficulty clustering and EXP3 allocation improve the IDU-only method when database-group allocation is removed?",
+  "controlled_setup": {
+    "model": "Salesforce/codet5-small",
+    "candidate_pool": 1000,
+    "selected_budget": 500,
+    "selection_rounds": 5,
+    "budget_per_round": 100,
+    "difficulty_clusters": 2,
+    "training_mode": "cumulative_union",
+    "total_optimizer_steps": 1500,
+    "development_examples": 1034,
+    "seeds": [
+      11,
+      42,
+      73,
+      101,
+      202
+    ]
+  },
+  "runs": [
+    {
+      "seed": 11,
+      "official_spider_exact_match": 0.16,
+      "idu_only_exact_match": 0.183,
+      "full_adaptation_exact_match": 0.117,
+      "random_exact_match": 0.165,
+      "full_data_exact_match": 0.224,
+      "difference_vs_idu_only": -0.022999999999999993,
+      "difference_vs_full_adaptation": 0.043,
+      "difference_vs_random": -0.0050000000000000044,
+      "difference_vs_full_data": -0.064,
+      "selected_databases": 119,
+      "selection_or_scoring_seconds": 114.35112366697285,
+      "training_seconds": 208.94893304095604,
+      "evaluation_seconds": 289.1917052490171,
+      "end_to_end_seconds": 612.4930563749513
+    },
+    {
+      "seed": 42,
+      "official_spider_exact_match": 0.135,
+      "idu_only_exact_match": 0.14,
+      "full_adaptation_exact_match": 0.162,
+      "random_exact_match": 0.164,
+      "full_data_exact_match": 0.251,
+      "difference_vs_idu_only": -0.0050000000000000044,
+      "difference_vs_full_adaptation": -0.026999999999999996,
+      "difference_vs_random": -0.028999999999999998,
+      "difference_vs_full_data": -0.11599999999999999,
+      "selected_databases": 122,
+      "selection_or_scoring_seconds": 118.73932875215542,
+      "training_seconds": 211.70880074903835,
+      "evaluation_seconds": 278.84049195901025,
+      "end_to_end_seconds": 609.2900079570245
+    },
+    {
+      "seed": 73,
+      "official_spider_exact_match": 0.138,
+      "idu_only_exact_match": 0.179,
+      "full_adaptation_exact_match": 0.127,
+      "random_exact_match": 0.144,
+      "full_data_exact_match": 0.224,
+      "difference_vs_idu_only": -0.04099999999999998,
+      "difference_vs_full_adaptation": 0.01100000000000001,
+      "difference_vs_random": -0.005999999999999978,
+      "difference_vs_full_data": -0.086,
+      "selected_databases": 118,
+      "selection_or_scoring_seconds": 139.1857326249592,
+      "training_seconds": 230.81987050001044,
+      "evaluation_seconds": 279.3260199580109,
+      "end_to_end_seconds": 649.3331427070079
+    },
+    {
+      "seed": 101,
+      "official_spider_exact_match": 0.132,
+      "idu_only_exact_match": 0.199,
+      "full_adaptation_exact_match": 0.166,
+      "random_exact_match": 0.144,
+      "full_data_exact_match": 0.206,
+      "difference_vs_idu_only": -0.067,
+      "difference_vs_full_adaptation": -0.034,
+      "difference_vs_random": -0.011999999999999983,
+      "difference_vs_full_data": -0.07399999999999998,
+      "selected_databases": 118,
+      "selection_or_scoring_seconds": 126.18349587509874,
+      "training_seconds": 238.9597464989638,
+      "evaluation_seconds": 298.08065912500024,
+      "end_to_end_seconds": 663.2260209160158
+    },
+    {
+      "seed": 202,
+      "official_spider_exact_match": 0.147,
+      "idu_only_exact_match": 0.153,
+      "full_adaptation_exact_match": 0.189,
+      "random_exact_match": 0.165,
+      "full_data_exact_match": 0.246,
+      "difference_vs_idu_only": -0.006000000000000005,
+      "difference_vs_full_adaptation": -0.04200000000000001,
+      "difference_vs_random": -0.018000000000000016,
+      "difference_vs_full_data": -0.099,
+      "selected_databases": 124,
+      "selection_or_scoring_seconds": 126.55309270718135,
+      "training_seconds": 236.55077012488618,
+      "evaluation_seconds": 251.43812337401323,
+      "end_to_end_seconds": 614.5437331249705
+    }
+  ],
+  "aggregate": {
+    "official_spider_exact_match": {
+      "mean": 0.1424,
+      "sample_std": 0.011326958991715293,
+      "min": 0.132,
+      "max": 0.16
+    },
+    "difference_vs_idu_only": {
+      "mean": -0.028399999999999998,
+      "sample_std": 0.026111300235721696,
+      "min": -0.067,
+      "max": -0.0050000000000000044
+    },
+    "difference_vs_full_adaptation": {
+      "mean": -0.0098,
+      "sample_std": 0.0358427119509671,
+      "min": -0.04200000000000001,
+      "max": 0.043
+    },
+    "difference_vs_random": {
+      "mean": -0.013999999999999995,
+      "sample_std": 0.009874208829065754,
+      "min": -0.028999999999999998,
+      "max": -0.0050000000000000044
+    },
+    "difference_vs_full_data": {
+      "mean": -0.08779999999999999,
+      "sample_std": 0.020498780451529305,
+      "min": -0.11599999999999999,
+      "max": -0.064
+    },
+    "selected_databases": {
+      "mean": 120.2,
+      "sample_std": 2.6832815729997477,
+      "min": 118.0,
+      "max": 124.0
+    },
+    "selection_or_scoring_seconds": {
+      "mean": 125.00255472527351,
+      "sample_std": 9.45571663792458,
+      "min": 114.35112366697285,
+      "max": 139.1857326249592
+    },
+    "training_seconds": {
+      "mean": 225.39762418277095,
+      "sample_std": 14.10379300515505,
+      "min": 208.94893304095604,
+      "max": 238.9597464989638
+    },
+    "evaluation_seconds": {
+      "mean": 279.3753999330103,
+      "sample_std": 17.514469432108516,
+      "min": 251.43812337401323,
+      "max": 298.08065912500024
+    },
+    "end_to_end_seconds": {
+      "mean": 629.777192215994,
+      "sample_std": 24.757744684849964,
+      "min": 609.2900079570245,
+      "max": 663.2260209160158
+    }
+  },
+  "wins_vs_idu_only": 0,
+  "wins_vs_full_adaptation": 2,
+  "wins_vs_random": 0,
+  "offline_pretrained_scoring_seconds": 18.369470415986143,
+  "metric": "official Spider exact match",
+  "timing_boundary": "End-to-end time includes shared pretrained pool scoring, online rescoring and selection, cumulative training, generation, and official exact-match evaluation.",
+  "method_boundary": "Five-round observed-loss-change utility with two difficulty clusters and EXP3 allocation. Within the chosen cluster, samples are selected globally by utility; database-group quotas are removed."
+}

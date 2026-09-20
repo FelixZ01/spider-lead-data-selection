@@ -1,0 +1,1630 @@
+{
+  "scope": {
+    "dataset": "Spider 1.0",
+    "model": "Salesforce/codet5-small",
+    "candidate_pool": 1000,
+    "selected_budget": 500,
+    "development_examples": 1034,
+    "seeds": [
+      11,
+      42,
+      73,
+      101,
+      202
+    ],
+    "primary_metric": "official Spider exact match"
+  },
+  "methods": {
+    "Full Data": {
+      "official_spider_exact_match": {
+        "mean": 0.2302,
+        "sample_std": 0.01833575741549828,
+        "min": 0.206,
+        "max": 0.251
+      },
+      "end_to_end_seconds": {
+        "mean": 692.8319848418702,
+        "sample_std": 81.86914401398077,
+        "min": 602.2961905431002,
+        "max": 815.3427645829506
+      },
+      "selected_databases": {
+        "mean": 137.0,
+        "sample_std": 0.0,
+        "min": 137.0,
+        "max": 137.0
+      },
+      "runs": [
+        {
+          "seed": 11,
+          "official_spider_exact_match": 0.224,
+          "selected_samples": 1000,
+          "selected_databases": 137,
+          "selection_or_scoring_seconds": 0.009480500011704862,
+          "training_seconds": 350.19222908397205,
+          "evaluation_seconds": 252.09448095911648,
+          "end_to_end_seconds": 602.2961905431002
+        },
+        {
+          "seed": 42,
+          "official_spider_exact_match": 0.251,
+          "selected_samples": 1000,
+          "selected_databases": 137,
+          "selection_or_scoring_seconds": 0.009612791007384658,
+          "training_seconds": 416.291311457986,
+          "evaluation_seconds": 226.90185204113368,
+          "end_to_end_seconds": 643.2027762901271
+        },
+        {
+          "seed": 73,
+          "official_spider_exact_match": 0.224,
+          "selected_samples": 1000,
+          "selected_databases": 137,
+          "selection_or_scoring_seconds": 0.009584083105437458,
+          "training_seconds": 458.92760758299846,
+          "evaluation_seconds": 264.9222608760465,
+          "end_to_end_seconds": 723.8594525421504
+        },
+        {
+          "seed": 101,
+          "official_spider_exact_match": 0.206,
+          "selected_samples": 1000,
+          "selected_databases": 137,
+          "selection_or_scoring_seconds": 0.009301624959334731,
+          "training_seconds": 480.8219410419697,
+          "evaluation_seconds": 334.5115219160216,
+          "end_to_end_seconds": 815.3427645829506
+        },
+        {
+          "seed": 202,
+          "official_spider_exact_match": 0.246,
+          "selected_samples": 1000,
+          "selected_databases": 137,
+          "selection_or_scoring_seconds": 0.009582124999724329,
+          "training_seconds": 444.2313410419738,
+          "evaluation_seconds": 235.21781708404887,
+          "end_to_end_seconds": 679.4587402510224
+        }
+      ]
+    },
+    "Random": {
+      "official_spider_exact_match": {
+        "mean": 0.1564,
+        "sample_std": 0.011326958991715307,
+        "min": 0.144,
+        "max": 0.165
+      },
+      "end_to_end_seconds": {
+        "mean": 502.4184434830677,
+        "sample_std": 36.62835331262718,
+        "min": 463.3763973750174,
+        "max": 561.8302475421224
+      },
+      "selected_databases": {
+        "mean": 126.8,
+        "sample_std": 1.7888543819998317,
+        "min": 125.0,
+        "max": 129.0
+      },
+      "runs": [
+        {
+          "seed": 11,
+          "official_spider_exact_match": 0.165,
+          "selected_samples": 500,
+          "selected_databases": 128,
+          "selection_or_scoring_seconds": 0.007307042018510401,
+          "training_seconds": 194.19645883294288,
+          "evaluation_seconds": 269.172631500056,
+          "end_to_end_seconds": 463.3763973750174
+        },
+        {
+          "seed": 42,
+          "official_spider_exact_match": 0.164,
+          "selected_samples": 500,
+          "selected_databases": 125,
+          "selection_or_scoring_seconds": 0.007173000019975007,
+          "training_seconds": 231.74349766701926,
+          "evaluation_seconds": 270.80893162393477,
+          "end_to_end_seconds": 502.559602290974
+        },
+        {
+          "seed": 73,
+          "official_spider_exact_match": 0.144,
+          "selected_samples": 500,
+          "selected_databases": 125,
+          "selection_or_scoring_seconds": 0.006973291048780084,
+          "training_seconds": 212.34782362508122,
+          "evaluation_seconds": 286.95425216597505,
+          "end_to_end_seconds": 499.30904908210505
+        },
+        {
+          "seed": 101,
+          "official_spider_exact_match": 0.144,
+          "selected_samples": 500,
+          "selected_databases": 129,
+          "selection_or_scoring_seconds": 0.007375875022262335,
+          "training_seconds": 257.27662295801565,
+          "evaluation_seconds": 304.54624870908447,
+          "end_to_end_seconds": 561.8302475421224
+        },
+        {
+          "seed": 202,
+          "official_spider_exact_match": 0.165,
+          "selected_samples": 500,
+          "selected_databases": 127,
+          "selection_or_scoring_seconds": 0.0068930829875171185,
+          "training_seconds": 219.18935162504204,
+          "evaluation_seconds": 265.82067641709,
+          "end_to_end_seconds": 485.01692112511955
+        }
+      ]
+    },
+    "Two-round Iterative": {
+      "official_spider_exact_match": {
+        "mean": 0.1356,
+        "sample_std": 0.019230184606498193,
+        "min": 0.105,
+        "max": 0.153
+      },
+      "end_to_end_seconds": {
+        "mean": 510.3284480161965,
+        "sample_std": 76.83714265576587,
+        "min": 431.94259604089893,
+        "max": 607.2971798330545
+      },
+      "selected_databases": {
+        "mean": 124.0,
+        "sample_std": 8.246211251235321,
+        "min": 114.0,
+        "max": 130.0
+      },
+      "runs": [
+        {
+          "seed": 11,
+          "official_spider_exact_match": 0.153,
+          "selected_samples": 500,
+          "selected_databases": 130,
+          "selection_or_scoring_seconds": 49.91684195701964,
+          "training_seconds": 164.39716162602417,
+          "evaluation_seconds": 217.62753533397336,
+          "end_to_end_seconds": 431.94259604089893,
+          "selected_arms": [
+            0,
+            1
+          ],
+          "raw_rewards": [
+            6.2073322174072265,
+            0.814859692747593
+          ]
+        },
+        {
+          "seed": 42,
+          "official_spider_exact_match": 0.135,
+          "selected_samples": 500,
+          "selected_databases": 130,
+          "selection_or_scoring_seconds": 69.87528203986585,
+          "training_seconds": 223.42718466592487,
+          "evaluation_seconds": 313.993623833172,
+          "end_to_end_seconds": 607.2971798330545,
+          "selected_arms": [
+            1,
+            0
+          ],
+          "raw_rewards": [
+            8.323978621673584,
+            0.6133676651895047
+          ]
+        },
+        {
+          "seed": 73,
+          "official_spider_exact_match": 0.151,
+          "selected_samples": 500,
+          "selected_databases": 116,
+          "selection_or_scoring_seconds": 50.784953832044266,
+          "training_seconds": 174.27556133305188,
+          "evaluation_seconds": 211.0370917499531,
+          "end_to_end_seconds": 436.09870037506334,
+          "selected_arms": [
+            0,
+            0
+          ],
+          "raw_rewards": [
+            6.2073322174072265,
+            0.5127615781523287
+          ]
+        },
+        {
+          "seed": 101,
+          "official_spider_exact_match": 0.105,
+          "selected_samples": 500,
+          "selected_databases": 130,
+          "selection_or_scoring_seconds": 52.564279539859854,
+          "training_seconds": 175.98562850093003,
+          "evaluation_seconds": 332.0749391660793,
+          "end_to_end_seconds": 560.6259429990314,
+          "selected_arms": [
+            1,
+            0
+          ],
+          "raw_rewards": [
+            8.323978621673584,
+            0.5960641873955728
+          ]
+        },
+        {
+          "seed": 202,
+          "official_spider_exact_match": 0.134,
+          "selected_samples": 500,
+          "selected_databases": 114,
+          "selection_or_scoring_seconds": 50.229686790844426,
+          "training_seconds": 172.38229033304378,
+          "evaluation_seconds": 293.0647571249865,
+          "end_to_end_seconds": 515.6778208329342,
+          "selected_arms": [
+            1,
+            1
+          ],
+          "raw_rewards": [
+            8.323978621673584,
+            0.712360359493196
+          ]
+        }
+      ]
+    },
+    "Five-round Full Adaptation": {
+      "official_spider_exact_match": {
+        "mean": 0.1522,
+        "sample_std": 0.029642874354556103,
+        "min": 0.117,
+        "max": 0.189
+      },
+      "end_to_end_seconds": {
+        "mean": 605.010510849231,
+        "sample_std": 48.77114652356561,
+        "min": 555.3314562910236,
+        "max": 677.3663597069681
+      },
+      "selected_databases": {
+        "mean": 123.2,
+        "sample_std": 1.0954451150103321,
+        "min": 122.0,
+        "max": 124.0
+      },
+      "runs": [
+        {
+          "seed": 11,
+          "official_spider_exact_match": 0.117,
+          "random_exact_match": 0.165,
+          "two_round_iterative_exact_match": 0.153,
+          "full_data_exact_match": 0.224,
+          "difference_vs_random": -0.048,
+          "difference_vs_two_round_iterative": -0.03599999999999999,
+          "difference_vs_full_data": -0.107,
+          "selected_databases": 124,
+          "selected_arms": [
+            0,
+            1,
+            1,
+            0,
+            1
+          ],
+          "bounded_rewards": [
+            0.7162978701990245,
+            0.6804922979482336,
+            0.5745387853758405,
+            0.5909912109578894,
+            0.47570107332371875
+          ],
+          "selection_or_scoring_seconds": 134.2315891670296,
+          "training_seconds": 261.23053270892706,
+          "evaluation_seconds": 281.9021505420096,
+          "end_to_end_seconds": 677.3663597069681
+        },
+        {
+          "seed": 42,
+          "official_spider_exact_match": 0.162,
+          "random_exact_match": 0.164,
+          "two_round_iterative_exact_match": 0.135,
+          "full_data_exact_match": 0.251,
+          "difference_vs_random": -0.0020000000000000018,
+          "difference_vs_two_round_iterative": 0.026999999999999996,
+          "difference_vs_full_data": -0.089,
+          "selected_databases": 122,
+          "selected_arms": [
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "bounded_rewards": [
+            0.7162978701990245,
+            0.6643880320181471,
+            0.6470524366056555,
+            0.47091724711786564,
+            0.5528681762688057
+          ],
+          "selection_or_scoring_seconds": 119.36492070776876,
+          "training_seconds": 220.5182401241036,
+          "evaluation_seconds": 289.9669052500976,
+          "end_to_end_seconds": 629.8518225410953
+        },
+        {
+          "seed": 73,
+          "official_spider_exact_match": 0.127,
+          "random_exact_match": 0.144,
+          "two_round_iterative_exact_match": 0.151,
+          "full_data_exact_match": 0.224,
+          "difference_vs_random": -0.016999999999999987,
+          "difference_vs_two_round_iterative": -0.023999999999999994,
+          "difference_vs_full_data": -0.097,
+          "selected_databases": 122,
+          "selected_arms": [
+            0,
+            0,
+            1,
+            0,
+            1
+          ],
+          "bounded_rewards": [
+            0.7162978701990245,
+            0.6133345180130002,
+            0.6766016920552043,
+            0.5158786180914201,
+            0.4776536366037098
+          ],
+          "selection_or_scoring_seconds": 121.7951352900127,
+          "training_seconds": 216.17784012493212,
+          "evaluation_seconds": 248.97988787502982,
+          "end_to_end_seconds": 586.9543361660326
+        },
+        {
+          "seed": 101,
+          "official_spider_exact_match": 0.166,
+          "random_exact_match": 0.144,
+          "two_round_iterative_exact_match": 0.105,
+          "full_data_exact_match": 0.206,
+          "difference_vs_random": 0.02200000000000002,
+          "difference_vs_two_round_iterative": 0.06100000000000001,
+          "difference_vs_full_data": -0.03999999999999998,
+          "selected_databases": 124,
+          "selected_arms": [
+            1,
+            0,
+            1,
+            1,
+            0
+          ],
+          "bounded_rewards": [
+            0.7162978701990245,
+            0.655066688969192,
+            0.6040007661503618,
+            0.4431320496251363,
+            0.5049305207480316
+          ],
+          "selection_or_scoring_seconds": 116.52363791607786,
+          "training_seconds": 206.20234766509384,
+          "evaluation_seconds": 252.82138541690074,
+          "end_to_end_seconds": 575.548579541035
+        },
+        {
+          "seed": 202,
+          "official_spider_exact_match": 0.189,
+          "random_exact_match": 0.165,
+          "two_round_iterative_exact_match": 0.134,
+          "full_data_exact_match": 0.246,
+          "difference_vs_random": 0.023999999999999994,
+          "difference_vs_two_round_iterative": 0.05499999999999999,
+          "difference_vs_full_data": -0.056999999999999995,
+          "selected_databases": 124,
+          "selected_arms": [
+            1,
+            1,
+            0,
+            0,
+            1
+          ],
+          "bounded_rewards": [
+            0.7162978701990245,
+            0.6670898389802445,
+            0.658467906158758,
+            0.5616899056739045,
+            0.41674787290415255
+          ],
+          "selection_or_scoring_seconds": 129.27081129094586,
+          "training_seconds": 205.65148054168094,
+          "evaluation_seconds": 220.40781050000805,
+          "end_to_end_seconds": 555.3314562910236
+        }
+      ]
+    },
+    "Five-round IDU-only": {
+      "official_spider_exact_match": {
+        "mean": 0.1708,
+        "sample_std": 0.023857912733514636,
+        "min": 0.14,
+        "max": 0.199
+      },
+      "end_to_end_seconds": {
+        "mean": 527.2913204078097,
+        "sample_std": 13.415192749194873,
+        "min": 509.68624641606584,
+        "max": 539.2555617499165
+      },
+      "selected_databases": {
+        "mean": 119.2,
+        "sample_std": 1.9235384061671346,
+        "min": 117.0,
+        "max": 122.0
+      },
+      "runs": [
+        {
+          "seed": 11,
+          "official_spider_exact_match": 0.183,
+          "random_exact_match": 0.165,
+          "two_round_iterative_exact_match": 0.153,
+          "five_round_full_adaptation_exact_match": 0.117,
+          "full_data_exact_match": 0.224,
+          "difference_vs_random": 0.017999999999999988,
+          "difference_vs_two_round_iterative": 0.03,
+          "difference_vs_five_round_full_adaptation": 0.06599999999999999,
+          "difference_vs_full_data": -0.04100000000000001,
+          "selected_databases": 117,
+          "selection_or_scoring_seconds": 112.6911863728892,
+          "training_seconds": 189.71960604190826,
+          "evaluation_seconds": 236.59177845797967,
+          "end_to_end_seconds": 539.0039534569951
+        },
+        {
+          "seed": 42,
+          "official_spider_exact_match": 0.14,
+          "random_exact_match": 0.164,
+          "two_round_iterative_exact_match": 0.135,
+          "five_round_full_adaptation_exact_match": 0.162,
+          "full_data_exact_match": 0.251,
+          "difference_vs_random": -0.023999999999999994,
+          "difference_vs_two_round_iterative": 0.0050000000000000044,
+          "difference_vs_five_round_full_adaptation": -0.021999999999999992,
+          "difference_vs_full_data": -0.11099999999999999,
+          "selected_databases": 122,
+          "selection_or_scoring_seconds": 109.45514308381826,
+          "training_seconds": 183.70784783305135,
+          "evaluation_seconds": 216.52204708300997,
+          "end_to_end_seconds": 509.68624641606584
+        },
+        {
+          "seed": 73,
+          "official_spider_exact_match": 0.179,
+          "random_exact_match": 0.144,
+          "two_round_iterative_exact_match": 0.151,
+          "five_round_full_adaptation_exact_match": 0.127,
+          "full_data_exact_match": 0.224,
+          "difference_vs_random": 0.035,
+          "difference_vs_two_round_iterative": 0.027999999999999997,
+          "difference_vs_five_round_full_adaptation": 0.05199999999999999,
+          "difference_vs_full_data": -0.04500000000000001,
+          "selected_databases": 118,
+          "selection_or_scoring_seconds": 120.5493118338054,
+          "training_seconds": 196.3904923320515,
+          "evaluation_seconds": 214.76986966701224,
+          "end_to_end_seconds": 531.7109125410207
+        },
+        {
+          "seed": 101,
+          "official_spider_exact_match": 0.199,
+          "random_exact_match": 0.144,
+          "two_round_iterative_exact_match": 0.105,
+          "five_round_full_adaptation_exact_match": 0.166,
+          "full_data_exact_match": 0.206,
+          "difference_vs_random": 0.05500000000000002,
+          "difference_vs_two_round_iterative": 0.09400000000000001,
+          "difference_vs_five_round_full_adaptation": 0.033,
+          "difference_vs_full_data": -0.0069999999999999785,
+          "selected_databases": 119,
+          "selection_or_scoring_seconds": 113.84450854291208,
+          "training_seconds": 190.10958083288278,
+          "evaluation_seconds": 212.84460091614164,
+          "end_to_end_seconds": 516.7999278750503
+        },
+        {
+          "seed": 202,
+          "official_spider_exact_match": 0.153,
+          "random_exact_match": 0.165,
+          "two_round_iterative_exact_match": 0.134,
+          "five_round_full_adaptation_exact_match": 0.189,
+          "full_data_exact_match": 0.246,
+          "difference_vs_random": -0.01200000000000001,
+          "difference_vs_two_round_iterative": 0.01899999999999999,
+          "difference_vs_five_round_full_adaptation": -0.036000000000000004,
+          "difference_vs_full_data": -0.093,
+          "selected_databases": 120,
+          "selection_or_scoring_seconds": 116.3385880420683,
+          "training_seconds": 188.32117199886125,
+          "evaluation_seconds": 234.59417999896687,
+          "end_to_end_seconds": 539.2555617499165
+        }
+      ]
+    },
+    "Static Uncertainty": {
+      "official_spider_exact_match": {
+        "mean": 0.1382,
+        "sample_std": 0.023668544526438462,
+        "min": 0.102,
+        "max": 0.162
+      },
+      "end_to_end_seconds": {
+        "mean": 457.50425954901146,
+        "sample_std": 41.08266086785866,
+        "min": 406.2844556240598,
+        "max": 508.94456729106605
+      },
+      "selected_databases": {
+        "mean": 114.0,
+        "sample_std": 0.0,
+        "min": 114.0,
+        "max": 114.0
+      },
+      "runs": [
+        {
+          "seed": 11,
+          "official_spider_exact_match": 0.155,
+          "random_exact_match": 0.165,
+          "two_round_iterative_exact_match": 0.153,
+          "idu_only_exact_match": 0.183,
+          "full_data_exact_match": 0.224,
+          "difference_vs_random": -0.010000000000000009,
+          "difference_vs_two_round_iterative": 0.0020000000000000018,
+          "difference_vs_idu_only": -0.027999999999999997,
+          "difference_vs_full_data": -0.069,
+          "selected_databases": 114,
+          "selection_or_scoring_seconds": 18.413219582056627,
+          "training_seconds": 194.58141745708417,
+          "evaluation_seconds": 238.11787558405194,
+          "end_to_end_seconds": 451.13072995701805
+        },
+        {
+          "seed": 42,
+          "official_spider_exact_match": 0.13,
+          "random_exact_match": 0.164,
+          "two_round_iterative_exact_match": 0.135,
+          "idu_only_exact_match": 0.14,
+          "full_data_exact_match": 0.251,
+          "difference_vs_random": -0.034,
+          "difference_vs_two_round_iterative": -0.0050000000000000044,
+          "difference_vs_idu_only": -0.010000000000000009,
+          "difference_vs_full_data": -0.121,
+          "selected_databases": 114,
+          "selection_or_scoring_seconds": 18.408044875133783,
+          "training_seconds": 173.82260254200082,
+          "evaluation_seconds": 214.03553516697139,
+          "end_to_end_seconds": 406.2844556240598
+        },
+        {
+          "seed": 73,
+          "official_spider_exact_match": 0.102,
+          "random_exact_match": 0.144,
+          "two_round_iterative_exact_match": 0.151,
+          "idu_only_exact_match": 0.179,
+          "full_data_exact_match": 0.224,
+          "difference_vs_random": -0.041999999999999996,
+          "difference_vs_two_round_iterative": -0.049,
+          "difference_vs_idu_only": -0.077,
+          "difference_vs_full_data": -0.12200000000000001,
+          "selected_databases": 114,
+          "selection_or_scoring_seconds": 18.408406624919735,
+          "training_seconds": 188.64041529409587,
+          "evaluation_seconds": 301.877854750026,
+          "end_to_end_seconds": 508.94456729106605
+        },
+        {
+          "seed": 101,
+          "official_spider_exact_match": 0.142,
+          "random_exact_match": 0.144,
+          "two_round_iterative_exact_match": 0.105,
+          "idu_only_exact_match": 0.199,
+          "full_data_exact_match": 0.206,
+          "difference_vs_random": -0.0020000000000000018,
+          "difference_vs_two_round_iterative": 0.03699999999999999,
+          "difference_vs_idu_only": -0.05700000000000002,
+          "difference_vs_full_data": -0.064,
+          "selected_databases": 114,
+          "selection_or_scoring_seconds": 18.40893333288841,
+          "training_seconds": 173.68370541697368,
+          "evaluation_seconds": 241.8062377909664,
+          "end_to_end_seconds": 433.91605062398594
+        },
+        {
+          "seed": 202,
+          "official_spider_exact_match": 0.162,
+          "random_exact_match": 0.165,
+          "two_round_iterative_exact_match": 0.134,
+          "idu_only_exact_match": 0.153,
+          "full_data_exact_match": 0.246,
+          "difference_vs_random": -0.0030000000000000027,
+          "difference_vs_two_round_iterative": 0.027999999999999997,
+          "difference_vs_idu_only": 0.009000000000000008,
+          "difference_vs_full_data": -0.08399999999999999,
+          "selected_databases": 114,
+          "selection_or_scoring_seconds": 18.409369666012935,
+          "training_seconds": 206.41381816694047,
+          "evaluation_seconds": 262.40257200005,
+          "end_to_end_seconds": 487.24549424892757
+        }
+      ]
+    },
+    "Cluster-MAB Component": {
+      "official_spider_exact_match": {
+        "mean": 0.1424,
+        "sample_std": 0.011326958991715293,
+        "min": 0.132,
+        "max": 0.16
+      },
+      "end_to_end_seconds": {
+        "mean": 629.777192215994,
+        "sample_std": 24.757744684849964,
+        "min": 609.2900079570245,
+        "max": 663.2260209160158
+      },
+      "selected_databases": {
+        "mean": 120.2,
+        "sample_std": 2.6832815729997477,
+        "min": 118.0,
+        "max": 124.0
+      },
+      "runs": [
+        {
+          "seed": 11,
+          "official_spider_exact_match": 0.16,
+          "idu_only_exact_match": 0.183,
+          "full_adaptation_exact_match": 0.117,
+          "random_exact_match": 0.165,
+          "full_data_exact_match": 0.224,
+          "difference_vs_idu_only": -0.022999999999999993,
+          "difference_vs_full_adaptation": 0.043,
+          "difference_vs_random": -0.0050000000000000044,
+          "difference_vs_full_data": -0.064,
+          "selected_databases": 119,
+          "selection_or_scoring_seconds": 114.35112366697285,
+          "training_seconds": 208.94893304095604,
+          "evaluation_seconds": 289.1917052490171,
+          "end_to_end_seconds": 612.4930563749513
+        },
+        {
+          "seed": 42,
+          "official_spider_exact_match": 0.135,
+          "idu_only_exact_match": 0.14,
+          "full_adaptation_exact_match": 0.162,
+          "random_exact_match": 0.164,
+          "full_data_exact_match": 0.251,
+          "difference_vs_idu_only": -0.0050000000000000044,
+          "difference_vs_full_adaptation": -0.026999999999999996,
+          "difference_vs_random": -0.028999999999999998,
+          "difference_vs_full_data": -0.11599999999999999,
+          "selected_databases": 122,
+          "selection_or_scoring_seconds": 118.73932875215542,
+          "training_seconds": 211.70880074903835,
+          "evaluation_seconds": 278.84049195901025,
+          "end_to_end_seconds": 609.2900079570245
+        },
+        {
+          "seed": 73,
+          "official_spider_exact_match": 0.138,
+          "idu_only_exact_match": 0.179,
+          "full_adaptation_exact_match": 0.127,
+          "random_exact_match": 0.144,
+          "full_data_exact_match": 0.224,
+          "difference_vs_idu_only": -0.04099999999999998,
+          "difference_vs_full_adaptation": 0.01100000000000001,
+          "difference_vs_random": -0.005999999999999978,
+          "difference_vs_full_data": -0.086,
+          "selected_databases": 118,
+          "selection_or_scoring_seconds": 139.1857326249592,
+          "training_seconds": 230.81987050001044,
+          "evaluation_seconds": 279.3260199580109,
+          "end_to_end_seconds": 649.3331427070079
+        },
+        {
+          "seed": 101,
+          "official_spider_exact_match": 0.132,
+          "idu_only_exact_match": 0.199,
+          "full_adaptation_exact_match": 0.166,
+          "random_exact_match": 0.144,
+          "full_data_exact_match": 0.206,
+          "difference_vs_idu_only": -0.067,
+          "difference_vs_full_adaptation": -0.034,
+          "difference_vs_random": -0.011999999999999983,
+          "difference_vs_full_data": -0.07399999999999998,
+          "selected_databases": 118,
+          "selection_or_scoring_seconds": 126.18349587509874,
+          "training_seconds": 238.9597464989638,
+          "evaluation_seconds": 298.08065912500024,
+          "end_to_end_seconds": 663.2260209160158
+        },
+        {
+          "seed": 202,
+          "official_spider_exact_match": 0.147,
+          "idu_only_exact_match": 0.153,
+          "full_adaptation_exact_match": 0.189,
+          "random_exact_match": 0.165,
+          "full_data_exact_match": 0.246,
+          "difference_vs_idu_only": -0.006000000000000005,
+          "difference_vs_full_adaptation": -0.04200000000000001,
+          "difference_vs_random": -0.018000000000000016,
+          "difference_vs_full_data": -0.099,
+          "selected_databases": 124,
+          "selection_or_scoring_seconds": 126.55309270718135,
+          "training_seconds": 236.55077012488618,
+          "evaluation_seconds": 251.43812337401323,
+          "end_to_end_seconds": 614.5437331249705
+        }
+      ]
+    },
+    "Database-quota Component": {
+      "official_spider_exact_match": {
+        "mean": 0.1552,
+        "sample_std": 0.02038872237291978,
+        "min": 0.13,
+        "max": 0.177
+      },
+      "end_to_end_seconds": {
+        "mean": 582.2623152577784,
+        "sample_std": 38.21000047481401,
+        "min": 541.5085415409412,
+        "max": 628.7230309998849
+      },
+      "selected_databases": {
+        "mean": 111.0,
+        "sample_std": 0.0,
+        "min": 111.0,
+        "max": 111.0
+      },
+      "runs": [
+        {
+          "seed": 11,
+          "official_spider_exact_match": 0.158,
+          "idu_only_exact_match": 0.183,
+          "cluster_mab_only_exact_match": 0.16,
+          "full_adaptation_exact_match": 0.117,
+          "random_exact_match": 0.165,
+          "full_data_exact_match": 0.224,
+          "difference_vs_idu_only": -0.024999999999999994,
+          "difference_vs_cluster_mab_only": -0.0020000000000000018,
+          "difference_vs_full_adaptation": 0.040999999999999995,
+          "difference_vs_random": -0.007000000000000006,
+          "difference_vs_full_data": -0.066,
+          "selected_databases": 111,
+          "selection_or_scoring_seconds": 110.64408912404906,
+          "training_seconds": 206.05351208196953,
+          "evaluation_seconds": 224.80962041590828,
+          "end_to_end_seconds": 541.5085415409412
+        },
+        {
+          "seed": 42,
+          "official_spider_exact_match": 0.172,
+          "idu_only_exact_match": 0.14,
+          "cluster_mab_only_exact_match": 0.135,
+          "full_adaptation_exact_match": 0.162,
+          "random_exact_match": 0.164,
+          "full_data_exact_match": 0.251,
+          "difference_vs_idu_only": 0.03199999999999997,
+          "difference_vs_cluster_mab_only": 0.03699999999999998,
+          "difference_vs_full_adaptation": 0.009999999999999981,
+          "difference_vs_random": 0.00799999999999998,
+          "difference_vs_full_data": -0.07900000000000001,
+          "selected_databases": 111,
+          "selection_or_scoring_seconds": 120.5376232889248,
+          "training_seconds": 207.94570441613905,
+          "evaluation_seconds": 235.970186124905,
+          "end_to_end_seconds": 564.4547827490605
+        },
+        {
+          "seed": 73,
+          "official_spider_exact_match": 0.177,
+          "idu_only_exact_match": 0.179,
+          "cluster_mab_only_exact_match": 0.138,
+          "full_adaptation_exact_match": 0.127,
+          "random_exact_match": 0.144,
+          "full_data_exact_match": 0.224,
+          "difference_vs_idu_only": -0.0020000000000000018,
+          "difference_vs_cluster_mab_only": 0.03899999999999998,
+          "difference_vs_full_adaptation": 0.04999999999999999,
+          "difference_vs_random": 0.033,
+          "difference_vs_full_data": -0.047000000000000014,
+          "selected_databases": 111,
+          "selection_or_scoring_seconds": 131.37439004029147,
+          "training_seconds": 224.17139500007033,
+          "evaluation_seconds": 261.3158016670495,
+          "end_to_end_seconds": 616.8628119579516
+        },
+        {
+          "seed": 101,
+          "official_spider_exact_match": 0.139,
+          "idu_only_exact_match": 0.199,
+          "cluster_mab_only_exact_match": 0.132,
+          "full_adaptation_exact_match": 0.166,
+          "random_exact_match": 0.144,
+          "full_data_exact_match": 0.206,
+          "difference_vs_idu_only": -0.06,
+          "difference_vs_cluster_mab_only": 0.007000000000000006,
+          "difference_vs_full_adaptation": -0.026999999999999996,
+          "difference_vs_random": -0.004999999999999977,
+          "difference_vs_full_data": -0.06699999999999998,
+          "selected_databases": 111,
+          "selection_or_scoring_seconds": 115.65269183286,
+          "training_seconds": 196.76470916718245,
+          "evaluation_seconds": 247.34382529207505,
+          "end_to_end_seconds": 559.7624090410536
+        },
+        {
+          "seed": 202,
+          "official_spider_exact_match": 0.13,
+          "idu_only_exact_match": 0.153,
+          "cluster_mab_only_exact_match": 0.147,
+          "full_adaptation_exact_match": 0.189,
+          "random_exact_match": 0.165,
+          "full_data_exact_match": 0.246,
+          "difference_vs_idu_only": -0.022999999999999993,
+          "difference_vs_cluster_mab_only": -0.016999999999999987,
+          "difference_vs_full_adaptation": -0.059,
+          "difference_vs_random": -0.035,
+          "difference_vs_full_data": -0.11599999999999999,
+          "selected_databases": 111,
+          "selection_or_scoring_seconds": 131.51958712621126,
+          "training_seconds": 220.14437441679183,
+          "evaluation_seconds": 277.0577975830529,
+          "end_to_end_seconds": 628.7230309998849
+        }
+      ]
+    }
+  },
+  "paired_analysis": {
+    "Five-round IDU-only vs Random": {
+      "paired_differences": [
+        0.017999999999999988,
+        -0.023999999999999994,
+        0.035,
+        0.05500000000000002,
+        -0.01200000000000001
+      ],
+      "mean_difference": 0.014400000000000001,
+      "sample_std_of_difference": 0.032623611081546454,
+      "t_interval_95": [
+        -0.026101069410078545,
+        0.05490106941007855
+      ],
+      "exact_sign_flip_p_value": 0.4375,
+      "wins": 3,
+      "ties": 0,
+      "losses": 2,
+      "interpretation_boundary": "Descriptive paired analysis over five seeds. The interval is wide and the exact test has low power, so it does not establish statistical superiority."
+    },
+    "Five-round IDU-only vs Static Uncertainty": {
+      "paired_differences": [
+        0.027999999999999997,
+        0.010000000000000009,
+        0.077,
+        0.05700000000000002,
+        -0.009000000000000008
+      ],
+      "mean_difference": 0.032600000000000004,
+      "sample_std_of_difference": 0.034746222816300486,
+      "t_interval_95": [
+        -0.01053621746235986,
+        0.07573621746235987
+      ],
+      "exact_sign_flip_p_value": 0.125,
+      "wins": 4,
+      "ties": 0,
+      "losses": 1,
+      "interpretation_boundary": "Descriptive paired analysis over five seeds. The interval is wide and the exact test has low power, so it does not establish statistical superiority."
+    },
+    "Five-round IDU-only vs Five-round Full Adaptation": {
+      "paired_differences": [
+        0.06599999999999999,
+        -0.021999999999999992,
+        0.05199999999999999,
+        0.033,
+        -0.036000000000000004
+      ],
+      "mean_difference": 0.0186,
+      "sample_std_of_difference": 0.045274717006293916,
+      "t_interval_95": [
+        -0.03760697388189475,
+        0.07480697388189475
+      ],
+      "exact_sign_flip_p_value": 0.4375,
+      "wins": 3,
+      "ties": 0,
+      "losses": 2,
+      "interpretation_boundary": "Descriptive paired analysis over five seeds. The interval is wide and the exact test has low power, so it does not establish statistical superiority."
+    },
+    "Five-round IDU-only vs Full Data": {
+      "paired_differences": [
+        -0.04100000000000001,
+        -0.11099999999999999,
+        -0.04500000000000001,
+        -0.0069999999999999785,
+        -0.093
+      ],
+      "mean_difference": -0.059399999999999994,
+      "sample_std_of_difference": 0.04208087451562764,
+      "t_interval_95": [
+        -0.11164193040231188,
+        -0.007158069597688103
+      ],
+      "exact_sign_flip_p_value": 0.0625,
+      "wins": 0,
+      "ties": 0,
+      "losses": 5,
+      "interpretation_boundary": "Descriptive paired analysis over five seeds. The interval is wide and the exact test has low power, so it does not establish statistical superiority."
+    }
+  },
+  "official_difficulty_breakdown": {
+    "Full Data": {
+      "per_seed": {
+        "11": {
+          "easy": 0.516,
+          "medium": 0.173,
+          "hard": 0.155,
+          "extra": 0.0,
+          "all": 0.224
+        },
+        "42": {
+          "easy": 0.528,
+          "medium": 0.213,
+          "hard": 0.19,
+          "extra": 0.006,
+          "all": 0.251
+        },
+        "73": {
+          "easy": 0.5,
+          "medium": 0.177,
+          "hard": 0.167,
+          "extra": 0.0,
+          "all": 0.224
+        },
+        "101": {
+          "easy": 0.464,
+          "medium": 0.164,
+          "hard": 0.126,
+          "extra": 0.018,
+          "all": 0.206
+        },
+        "202": {
+          "easy": 0.528,
+          "medium": 0.204,
+          "hard": 0.172,
+          "extra": 0.012,
+          "all": 0.246
+        }
+      },
+      "mean": {
+        "easy": 0.5072,
+        "medium": 0.1862,
+        "hard": 0.162,
+        "extra": 0.0072,
+        "all": 0.2302
+      }
+    },
+    "Random": {
+      "per_seed": {
+        "11": {
+          "easy": 0.323,
+          "medium": 0.143,
+          "hard": 0.132,
+          "extra": 0.024,
+          "all": 0.165
+        },
+        "42": {
+          "easy": 0.351,
+          "medium": 0.132,
+          "hard": 0.115,
+          "extra": 0.024,
+          "all": 0.164
+        },
+        "73": {
+          "easy": 0.347,
+          "medium": 0.117,
+          "hard": 0.057,
+          "extra": 0.006,
+          "all": 0.144
+        },
+        "101": {
+          "easy": 0.359,
+          "medium": 0.117,
+          "hard": 0.046,
+          "extra": 0.0,
+          "all": 0.144
+        },
+        "202": {
+          "easy": 0.367,
+          "medium": 0.139,
+          "hard": 0.098,
+          "extra": 0.006,
+          "all": 0.165
+        }
+      },
+      "mean": {
+        "easy": 0.3494,
+        "medium": 0.1296,
+        "hard": 0.0896,
+        "extra": 0.012,
+        "all": 0.1564
+      }
+    },
+    "Five-round IDU-only": {
+      "per_seed": {
+        "11": {
+          "easy": 0.411,
+          "medium": 0.141,
+          "hard": 0.138,
+          "extra": 0.0,
+          "all": 0.183
+        },
+        "42": {
+          "easy": 0.306,
+          "medium": 0.146,
+          "hard": 0.023,
+          "extra": 0.0,
+          "all": 0.14
+        },
+        "73": {
+          "easy": 0.407,
+          "medium": 0.148,
+          "hard": 0.103,
+          "extra": 0.0,
+          "all": 0.179
+        },
+        "101": {
+          "easy": 0.415,
+          "medium": 0.175,
+          "hard": 0.144,
+          "extra": 0.0,
+          "all": 0.199
+        },
+        "202": {
+          "easy": 0.343,
+          "medium": 0.137,
+          "hard": 0.069,
+          "extra": 0.0,
+          "all": 0.153
+        }
+      },
+      "mean": {
+        "easy": 0.3764,
+        "medium": 0.1494,
+        "hard": 0.0954,
+        "extra": 0.0,
+        "all": 0.1708
+      }
+    }
+  },
+  "official_component_f1": {
+    "Full Data": {
+      "per_seed": {
+        "11": {
+          "select": 0.542,
+          "select(no AGG)": 0.55,
+          "where": 0.254,
+          "where(no OP)": 0.292,
+          "group(no Having)": 0.431,
+          "group": 0.387,
+          "order": 0.459,
+          "and/or": 0.959,
+          "IUEN": 1.0,
+          "keywords": 0.464
+        },
+        "42": {
+          "select": 0.566,
+          "select(no AGG)": 0.574,
+          "where": 0.304,
+          "where(no OP)": 0.347,
+          "group(no Having)": 0.492,
+          "group": 0.454,
+          "order": 0.5,
+          "and/or": 0.965,
+          "IUEN": 0.025,
+          "keywords": 0.524
+        },
+        "73": {
+          "select": 0.529,
+          "select(no AGG)": 0.535,
+          "where": 0.296,
+          "where(no OP)": 0.346,
+          "group(no Having)": 0.491,
+          "group": 0.443,
+          "order": 0.48,
+          "and/or": 0.966,
+          "IUEN": 0.046,
+          "keywords": 0.513
+        },
+        "101": {
+          "select": 0.478,
+          "select(no AGG)": 0.491,
+          "where": 0.252,
+          "where(no OP)": 0.304,
+          "group(no Having)": 0.448,
+          "group": 0.388,
+          "order": 0.383,
+          "and/or": 0.959,
+          "IUEN": 0.073,
+          "keywords": 0.445
+        },
+        "202": {
+          "select": 0.542,
+          "select(no AGG)": 0.562,
+          "where": 0.307,
+          "where(no OP)": 0.344,
+          "group(no Having)": 0.44,
+          "group": 0.405,
+          "order": 0.464,
+          "and/or": 0.959,
+          "IUEN": 0.094,
+          "keywords": 0.51
+        }
+      },
+      "mean": {
+        "select": 0.5314,
+        "select(no AGG)": 0.5424,
+        "where": 0.2826,
+        "where(no OP)": 0.3266,
+        "group(no Having)": 0.4604,
+        "group": 0.4154,
+        "order": 0.4572,
+        "and/or": 0.9616,
+        "IUEN": 0.2476,
+        "keywords": 0.4912
+      }
+    },
+    "Random": {
+      "per_seed": {
+        "11": {
+          "select": 0.428,
+          "select(no AGG)": 0.44,
+          "where": 0.274,
+          "where(no OP)": 0.324,
+          "group(no Having)": 0.427,
+          "group": 0.379,
+          "order": 0.399,
+          "and/or": 0.967,
+          "IUEN": 0.071,
+          "keywords": 0.438
+        },
+        "42": {
+          "select": 0.443,
+          "select(no AGG)": 0.449,
+          "where": 0.221,
+          "where(no OP)": 0.258,
+          "group(no Having)": 0.433,
+          "group": 0.377,
+          "order": 0.459,
+          "and/or": 0.958,
+          "IUEN": 1.0,
+          "keywords": 0.419
+        },
+        "73": {
+          "select": 0.424,
+          "select(no AGG)": 0.438,
+          "where": 0.194,
+          "where(no OP)": 0.242,
+          "group(no Having)": 0.204,
+          "group": 0.198,
+          "order": 0.243,
+          "and/or": 0.959,
+          "IUEN": 0.024,
+          "keywords": 0.309
+        },
+        "101": {
+          "select": 0.459,
+          "select(no AGG)": 0.47,
+          "where": 0.191,
+          "where(no OP)": 0.231,
+          "group(no Having)": 0.169,
+          "group": 0.163,
+          "order": 0.283,
+          "and/or": 0.962,
+          "IUEN": 1.0,
+          "keywords": 0.344
+        },
+        "202": {
+          "select": 0.474,
+          "select(no AGG)": 0.489,
+          "where": 0.211,
+          "where(no OP)": 0.266,
+          "group(no Having)": 0.409,
+          "group": 0.375,
+          "order": 0.423,
+          "and/or": 0.962,
+          "IUEN": 1.0,
+          "keywords": 0.422
+        }
+      },
+      "mean": {
+        "select": 0.4456,
+        "select(no AGG)": 0.4572,
+        "where": 0.2182,
+        "where(no OP)": 0.2642,
+        "group(no Having)": 0.32839999999999997,
+        "group": 0.2984,
+        "order": 0.3614,
+        "and/or": 0.9616,
+        "IUEN": 0.619,
+        "keywords": 0.38639999999999997
+      }
+    },
+    "Five-round IDU-only": {
+      "per_seed": {
+        "11": {
+          "select": 0.511,
+          "select(no AGG)": 0.525,
+          "where": 0.211,
+          "where(no OP)": 0.307,
+          "group(no Having)": 0.416,
+          "group": 0.349,
+          "order": 0.365,
+          "and/or": 0.963,
+          "IUEN": 0.116,
+          "keywords": 0.427
+        },
+        "42": {
+          "select": 0.432,
+          "select(no AGG)": 0.451,
+          "where": 0.223,
+          "where(no OP)": 0.264,
+          "group(no Having)": 0.174,
+          "group": 0.135,
+          "order": 0.254,
+          "and/or": 0.963,
+          "IUEN": 0.026,
+          "keywords": 0.325
+        },
+        "73": {
+          "select": 0.513,
+          "select(no AGG)": 0.52,
+          "where": 0.267,
+          "where(no OP)": 0.321,
+          "group(no Having)": 0.333,
+          "group": 0.272,
+          "order": 0.399,
+          "and/or": 0.965,
+          "IUEN": 0.051,
+          "keywords": 0.417
+        },
+        "101": {
+          "select": 0.508,
+          "select(no AGG)": 0.519,
+          "where": 0.241,
+          "where(no OP)": 0.313,
+          "group(no Having)": 0.446,
+          "group": 0.392,
+          "order": 0.411,
+          "and/or": 0.963,
+          "IUEN": 0.071,
+          "keywords": 0.422
+        },
+        "202": {
+          "select": 0.445,
+          "select(no AGG)": 0.455,
+          "where": 0.193,
+          "where(no OP)": 0.276,
+          "group(no Having)": 0.329,
+          "group": 0.311,
+          "order": 0.383,
+          "and/or": 0.961,
+          "IUEN": 0.068,
+          "keywords": 0.391
+        }
+      },
+      "mean": {
+        "select": 0.4818,
+        "select(no AGG)": 0.494,
+        "where": 0.227,
+        "where(no OP)": 0.2962,
+        "group(no Having)": 0.3396,
+        "group": 0.2918,
+        "order": 0.3624,
+        "and/or": 0.963,
+        "IUEN": 0.0664,
+        "keywords": 0.3964
+      }
+    }
+  },
+  "selection_analysis": {
+    "per_seed": [
+      {
+        "seed": 11,
+        "idu_databases": 117,
+        "random_databases": 128,
+        "selection_jaccard": 0.33511348464619495
+      },
+      {
+        "seed": 42,
+        "idu_databases": 122,
+        "random_databases": 125,
+        "selection_jaccard": 0.34589502018842533
+      },
+      {
+        "seed": 73,
+        "idu_databases": 118,
+        "random_databases": 125,
+        "selection_jaccard": 0.32100396301188905
+      },
+      {
+        "seed": 101,
+        "idu_databases": 119,
+        "random_databases": 129,
+        "selection_jaccard": 0.3477088948787062
+      },
+      {
+        "seed": 202,
+        "idu_databases": 120,
+        "random_databases": 127,
+        "selection_jaccard": 0.2936610608020699
+      }
+    ],
+    "mean_selection_jaccard_vs_random": 0.3286764847054571,
+    "mean_selected_databases": {
+      "Five-round IDU-only": 119.2,
+      "Random": 126.8
+    },
+    "complexity_counts_across_five_seeds": {
+      "Five-round IDU-only": {
+        "advanced": 1263,
+        "nested": 469,
+        "simple": 768
+      },
+      "Random": {
+        "nested": 414,
+        "advanced": 1401,
+        "simple": 685
+      }
+    },
+    "idu_round_means": {
+      "1": {
+        "databases": 49,
+        "mean_idu_proxy": 10.353878812789917,
+        "simple": 29,
+        "advanced": 53,
+        "nested": 18
+      },
+      "2": {
+        "databases": 55.2,
+        "mean_idu_proxy": 0.9573963232040406,
+        "simple": 32.2,
+        "advanced": 48.2,
+        "nested": 19.6
+      },
+      "3": {
+        "databases": 51.2,
+        "mean_idu_proxy": 1.6012786326926947,
+        "simple": 49.6,
+        "advanced": 33.2,
+        "nested": 17.2
+      },
+      "4": {
+        "databases": 54.4,
+        "mean_idu_proxy": 1.2244621893211605,
+        "simple": 19,
+        "advanced": 60.8,
+        "nested": 20.2
+      },
+      "5": {
+        "databases": 55.4,
+        "mean_idu_proxy": 1.3466092257749736,
+        "simple": 23.8,
+        "advanced": 57.4,
+        "nested": 18.8
+      }
+    }
+  },
+  "diagnostic_examples": {
+    "metric_boundary": "These examples use normalized string exact match for diagnosis only. Official Spider exact match remains the primary reported metric.",
+    "idu_advantage_examples": [
+      {
+        "id": "spider_000371_cre_Doc_Template_Mgt",
+        "db_id": "cre_Doc_Template_Mgt",
+        "complexity": "advanced",
+        "question": "List all document ids with at least two paragraphs.",
+        "idu_correct_seeds": 4,
+        "random_correct_seeds": 0,
+        "idu_minus_random_correct_seeds": 4
+      },
+      {
+        "id": "spider_000702_world_1",
+        "db_id": "world_1",
+        "complexity": "simple",
+        "question": "What are the names of all the countries that became independent after 1950?",
+        "idu_correct_seeds": 4,
+        "random_correct_seeds": 0,
+        "idu_minus_random_correct_seeds": 4
+      },
+      {
+        "id": "spider_000963_dog_kennels",
+        "db_id": "dog_kennels",
+        "complexity": "simple",
+        "question": "What are the emails of the professionals living in either the state of Hawaii or the state of Wisconsin?",
+        "idu_correct_seeds": 4,
+        "random_correct_seeds": 0,
+        "idu_minus_random_correct_seeds": 4
+      },
+      {
+        "id": "spider_000003_concert_singer",
+        "db_id": "concert_singer",
+        "complexity": "advanced",
+        "question": "What are the names, countries, and ages for every singer in descending order of age?",
+        "idu_correct_seeds": 3,
+        "random_correct_seeds": 0,
+        "idu_minus_random_correct_seeds": 3
+      },
+      {
+        "id": "spider_000274_employee_hire_evaluation",
+        "db_id": "employee_hire_evaluation",
+        "complexity": "advanced",
+        "question": "Sort all the shops by number products in descending order, and return the name, location and district of each shop.",
+        "idu_correct_seeds": 4,
+        "random_correct_seeds": 1,
+        "idu_minus_random_correct_seeds": 3
+      },
+      {
+        "id": "spider_000433_wta_1",
+        "db_id": "wta_1",
+        "complexity": "simple",
+        "question": "List the first name and birth date of all players from the country with code USA.",
+        "idu_correct_seeds": 3,
+        "random_correct_seeds": 0,
+        "idu_minus_random_correct_seeds": 3
+      },
+      {
+        "id": "spider_000456_wta_1",
+        "db_id": "wta_1",
+        "complexity": "advanced",
+        "question": "What are the full names of all players, sorted by birth date?",
+        "idu_correct_seeds": 3,
+        "random_correct_seeds": 0,
+        "idu_minus_random_correct_seeds": 3
+      },
+      {
+        "id": "spider_000513_student_transcripts_tracking",
+        "db_id": "student_transcripts_tracking",
+        "complexity": "simple",
+        "question": "What is the zip code of the address in the city Port Chelsea?",
+        "idu_correct_seeds": 3,
+        "random_correct_seeds": 0,
+        "idu_minus_random_correct_seeds": 3
+      }
+    ],
+    "random_advantage_examples": [
+      {
+        "id": "spider_000619_tvshow",
+        "db_id": "tvshow",
+        "complexity": "simple",
+        "question": "What is the air date of TV series with Episode \"A Love of a Lifetime\"?",
+        "idu_correct_seeds": 0,
+        "random_correct_seeds": 4,
+        "idu_minus_random_correct_seeds": -4
+      },
+      {
+        "id": "spider_000681_poker_player",
+        "db_id": "poker_player",
+        "complexity": "simple",
+        "question": "Show names of people whose nationality is not \"Russia\".",
+        "idu_correct_seeds": 0,
+        "random_correct_seeds": 4,
+        "idu_minus_random_correct_seeds": -4
+      },
+      {
+        "id": "spider_000300_cre_Doc_Template_Mgt",
+        "db_id": "cre_Doc_Template_Mgt",
+        "complexity": "simple",
+        "question": "What are the ids, names, and descriptions for all documents?",
+        "idu_correct_seeds": 2,
+        "random_correct_seeds": 5,
+        "idu_minus_random_correct_seeds": -3
+      },
+      {
+        "id": "spider_000320_cre_Doc_Template_Mgt",
+        "db_id": "cre_Doc_Template_Mgt",
+        "complexity": "simple",
+        "question": "What are the ids, version numbers, and type codes for each template?",
+        "idu_correct_seeds": 0,
+        "random_correct_seeds": 3,
+        "idu_minus_random_correct_seeds": -3
+      },
+      {
+        "id": "spider_000325_cre_Doc_Template_Mgt",
+        "db_id": "cre_Doc_Template_Mgt",
+        "complexity": "simple",
+        "question": "How many templates have template type code CV?",
+        "idu_correct_seeds": 0,
+        "random_correct_seeds": 3,
+        "idu_minus_random_correct_seeds": -3
+      },
+      {
+        "id": "spider_000622_tvshow",
+        "db_id": "tvshow",
+        "complexity": "simple",
+        "question": "What is the weekly rank for the episode \"A Love of a Lifetime\"?",
+        "idu_correct_seeds": 0,
+        "random_correct_seeds": 3,
+        "idu_minus_random_correct_seeds": -3
+      },
+      {
+        "id": "spider_001006_singer",
+        "db_id": "singer",
+        "complexity": "simple",
+        "question": "List the name of singers whose citizenship is not \"France\".",
+        "idu_correct_seeds": 0,
+        "random_correct_seeds": 3,
+        "idu_minus_random_correct_seeds": -3
+      },
+      {
+        "id": "spider_000027_concert_singer",
+        "db_id": "concert_singer",
+        "complexity": "advanced",
+        "question": "What is the year that had the most concerts?",
+        "idu_correct_seeds": 2,
+        "random_correct_seeds": 4,
+        "idu_minus_random_correct_seeds": -2
+      }
+    ]
+  },
+  "diagnostic_error_taxonomy": {
+    "boundary": "Heuristic multi-label taxonomy over normalized-string mismatches. It supports qualitative diagnosis but is not an official Spider metric.",
+    "methods": {
+      "Random": {
+        "incorrect_predictions": 4531,
+        "tag_counts": {
+          "other_identifier_value_or_structure": 686,
+          "projection_or_identifier": 3062,
+          "join": 2108,
+          "filtering": 810,
+          "aggregation": 1194,
+          "grouping": 972,
+          "limit": 386,
+          "ordering": 385,
+          "set_operation": 400,
+          "having": 308
+        },
+        "tag_rate_per_incorrect_prediction": {
+          "other_identifier_value_or_structure": 0.15140145663209004,
+          "projection_or_identifier": 0.6757890090487751,
+          "join": 0.46523946148753037,
+          "filtering": 0.17876848377841537,
+          "aggregation": 0.26351798719929376,
+          "grouping": 0.21452218053409844,
+          "limit": 0.0851909070845288,
+          "ordering": 0.0849702052527036,
+          "set_operation": 0.08828073273008166,
+          "having": 0.06797616420216288
+        }
+      },
+      "Five-round IDU-only": {
+        "incorrect_predictions": 4481,
+        "tag_counts": {
+          "filtering": 676,
+          "projection_or_identifier": 2969,
+          "grouping": 933,
+          "aggregation": 1159,
+          "having": 261,
+          "set_operation": 397,
+          "join": 2000,
+          "limit": 393,
+          "ordering": 371,
+          "other_identifier_value_or_structure": 717
+        },
+        "tag_rate_per_incorrect_prediction": {
+          "filtering": 0.15085918321803168,
+          "projection_or_identifier": 0.6625753180093729,
+          "grouping": 0.20821245257754967,
+          "aggregation": 0.2586476232983709,
+          "having": 0.05824592724838206,
+          "set_operation": 0.08859629546976121,
+          "join": 0.4463289444320464,
+          "limit": 0.08770363758089712,
+          "ordering": 0.08279401919214462,
+          "other_identifier_value_or_structure": 0.16000892657888863
+        }
+      }
+    }
+  }
+}

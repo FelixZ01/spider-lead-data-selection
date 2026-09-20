@@ -1,0 +1,330 @@
+{
+  "research_questions": {
+    "Q1": "Can selected data match or exceed full-data performance?",
+    "Q2": "Does iterative selection outperform random selection at budget 500?",
+    "Q3": "Does iterative selection improve the end-to-end performance-cost trade-off?"
+  },
+  "shared_setup": {
+    "model": "Salesforce/codet5-small",
+    "candidate_pool": 1000,
+    "selected_budget": 500,
+    "epochs": 3,
+    "development_examples": 1034,
+    "seeds": [
+      11,
+      42,
+      73,
+      101,
+      202
+    ]
+  },
+  "methods": {
+    "full_data": {
+      "runs": [
+        {
+          "seed": 11,
+          "official_spider_exact_match": 0.224,
+          "selected_samples": 1000,
+          "selected_databases": 137,
+          "selection_or_scoring_seconds": 0.009480500011704862,
+          "training_seconds": 350.19222908397205,
+          "evaluation_seconds": 252.09448095911648,
+          "end_to_end_seconds": 602.2961905431002
+        },
+        {
+          "seed": 42,
+          "official_spider_exact_match": 0.251,
+          "selected_samples": 1000,
+          "selected_databases": 137,
+          "selection_or_scoring_seconds": 0.009612791007384658,
+          "training_seconds": 416.291311457986,
+          "evaluation_seconds": 226.90185204113368,
+          "end_to_end_seconds": 643.2027762901271
+        },
+        {
+          "seed": 73,
+          "official_spider_exact_match": 0.224,
+          "selected_samples": 1000,
+          "selected_databases": 137,
+          "selection_or_scoring_seconds": 0.009584083105437458,
+          "training_seconds": 458.92760758299846,
+          "evaluation_seconds": 264.9222608760465,
+          "end_to_end_seconds": 723.8594525421504
+        },
+        {
+          "seed": 101,
+          "official_spider_exact_match": 0.206,
+          "selected_samples": 1000,
+          "selected_databases": 137,
+          "selection_or_scoring_seconds": 0.009301624959334731,
+          "training_seconds": 480.8219410419697,
+          "evaluation_seconds": 334.5115219160216,
+          "end_to_end_seconds": 815.3427645829506
+        },
+        {
+          "seed": 202,
+          "official_spider_exact_match": 0.246,
+          "selected_samples": 1000,
+          "selected_databases": 137,
+          "selection_or_scoring_seconds": 0.009582124999724329,
+          "training_seconds": 444.2313410419738,
+          "evaluation_seconds": 235.21781708404887,
+          "end_to_end_seconds": 679.4587402510224
+        }
+      ],
+      "aggregate": {
+        "official_spider_exact_match": {
+          "mean": 0.2302,
+          "sample_std": 0.01833575741549828,
+          "min": 0.206,
+          "max": 0.251
+        },
+        "selection_or_scoring_seconds": {
+          "mean": 0.009512224816717207,
+          "sample_std": 0.000127986299198571,
+          "min": 0.009301624959334731,
+          "max": 0.009612791007384658
+        },
+        "training_seconds": {
+          "mean": 430.09288604178,
+          "sample_std": 50.44643828023371,
+          "min": 350.19222908397205,
+          "max": 480.8219410419697
+        },
+        "evaluation_seconds": {
+          "mean": 262.7295865752734,
+          "sample_std": 42.7524372279128,
+          "min": 226.90185204113368,
+          "max": 334.5115219160216
+        },
+        "end_to_end_seconds": {
+          "mean": 692.8319848418702,
+          "sample_std": 81.86914401398077,
+          "min": 602.2961905431002,
+          "max": 815.3427645829506
+        }
+      },
+      "accuracy_difference_vs_full": 0.0,
+      "time_reduction_vs_full": 0.0
+    },
+    "random": {
+      "runs": [
+        {
+          "seed": 11,
+          "official_spider_exact_match": 0.165,
+          "selected_samples": 500,
+          "selected_databases": 128,
+          "selection_or_scoring_seconds": 0.007307042018510401,
+          "training_seconds": 194.19645883294288,
+          "evaluation_seconds": 269.172631500056,
+          "end_to_end_seconds": 463.3763973750174
+        },
+        {
+          "seed": 42,
+          "official_spider_exact_match": 0.164,
+          "selected_samples": 500,
+          "selected_databases": 125,
+          "selection_or_scoring_seconds": 0.007173000019975007,
+          "training_seconds": 231.74349766701926,
+          "evaluation_seconds": 270.80893162393477,
+          "end_to_end_seconds": 502.559602290974
+        },
+        {
+          "seed": 73,
+          "official_spider_exact_match": 0.144,
+          "selected_samples": 500,
+          "selected_databases": 125,
+          "selection_or_scoring_seconds": 0.006973291048780084,
+          "training_seconds": 212.34782362508122,
+          "evaluation_seconds": 286.95425216597505,
+          "end_to_end_seconds": 499.30904908210505
+        },
+        {
+          "seed": 101,
+          "official_spider_exact_match": 0.144,
+          "selected_samples": 500,
+          "selected_databases": 129,
+          "selection_or_scoring_seconds": 0.007375875022262335,
+          "training_seconds": 257.27662295801565,
+          "evaluation_seconds": 304.54624870908447,
+          "end_to_end_seconds": 561.8302475421224
+        },
+        {
+          "seed": 202,
+          "official_spider_exact_match": 0.165,
+          "selected_samples": 500,
+          "selected_databases": 127,
+          "selection_or_scoring_seconds": 0.0068930829875171185,
+          "training_seconds": 219.18935162504204,
+          "evaluation_seconds": 265.82067641709,
+          "end_to_end_seconds": 485.01692112511955
+        }
+      ],
+      "aggregate": {
+        "official_spider_exact_match": {
+          "mean": 0.1564,
+          "sample_std": 0.011326958991715307,
+          "min": 0.144,
+          "max": 0.165
+        },
+        "selection_or_scoring_seconds": {
+          "mean": 0.007144458219408989,
+          "sample_std": 0.0002081403194136467,
+          "min": 0.0068930829875171185,
+          "max": 0.007375875022262335
+        },
+        "training_seconds": {
+          "mean": 222.9507509416202,
+          "sample_std": 23.49977335971925,
+          "min": 194.19645883294288,
+          "max": 257.27662295801565
+        },
+        "evaluation_seconds": {
+          "mean": 279.46054808322805,
+          "sample_std": 16.218706566952314,
+          "min": 265.82067641709,
+          "max": 304.54624870908447
+        },
+        "end_to_end_seconds": {
+          "mean": 502.4184434830677,
+          "sample_std": 36.62835331262718,
+          "min": 463.3763973750174,
+          "max": 561.8302475421224
+        }
+      },
+      "accuracy_difference_vs_full": -0.07379999999999998,
+      "time_reduction_vs_full": 0.2748336472979981
+    },
+    "iterative_lead": {
+      "runs": [
+        {
+          "seed": 11,
+          "official_spider_exact_match": 0.153,
+          "selected_samples": 500,
+          "selected_databases": 130,
+          "selection_or_scoring_seconds": 49.91684195701964,
+          "training_seconds": 164.39716162602417,
+          "evaluation_seconds": 217.62753533397336,
+          "end_to_end_seconds": 431.94259604089893,
+          "selected_arms": [
+            0,
+            1
+          ],
+          "raw_rewards": [
+            6.2073322174072265,
+            0.814859692747593
+          ]
+        },
+        {
+          "seed": 42,
+          "official_spider_exact_match": 0.135,
+          "selected_samples": 500,
+          "selected_databases": 130,
+          "selection_or_scoring_seconds": 69.87528203986585,
+          "training_seconds": 223.42718466592487,
+          "evaluation_seconds": 313.993623833172,
+          "end_to_end_seconds": 607.2971798330545,
+          "selected_arms": [
+            1,
+            0
+          ],
+          "raw_rewards": [
+            8.323978621673584,
+            0.6133676651895047
+          ]
+        },
+        {
+          "seed": 73,
+          "official_spider_exact_match": 0.151,
+          "selected_samples": 500,
+          "selected_databases": 116,
+          "selection_or_scoring_seconds": 50.784953832044266,
+          "training_seconds": 174.27556133305188,
+          "evaluation_seconds": 211.0370917499531,
+          "end_to_end_seconds": 436.09870037506334,
+          "selected_arms": [
+            0,
+            0
+          ],
+          "raw_rewards": [
+            6.2073322174072265,
+            0.5127615781523287
+          ]
+        },
+        {
+          "seed": 101,
+          "official_spider_exact_match": 0.105,
+          "selected_samples": 500,
+          "selected_databases": 130,
+          "selection_or_scoring_seconds": 52.564279539859854,
+          "training_seconds": 175.98562850093003,
+          "evaluation_seconds": 332.0749391660793,
+          "end_to_end_seconds": 560.6259429990314,
+          "selected_arms": [
+            1,
+            0
+          ],
+          "raw_rewards": [
+            8.323978621673584,
+            0.5960641873955728
+          ]
+        },
+        {
+          "seed": 202,
+          "official_spider_exact_match": 0.134,
+          "selected_samples": 500,
+          "selected_databases": 114,
+          "selection_or_scoring_seconds": 50.229686790844426,
+          "training_seconds": 172.38229033304378,
+          "evaluation_seconds": 293.0647571249865,
+          "end_to_end_seconds": 515.6778208329342,
+          "selected_arms": [
+            1,
+            1
+          ],
+          "raw_rewards": [
+            8.323978621673584,
+            0.712360359493196
+          ]
+        }
+      ],
+      "aggregate": {
+        "official_spider_exact_match": {
+          "mean": 0.1356,
+          "sample_std": 0.019230184606498193,
+          "min": 0.105,
+          "max": 0.153
+        },
+        "selection_or_scoring_seconds": {
+          "mean": 54.674208831926805,
+          "sample_std": 8.559162466341068,
+          "min": 49.91684195701964,
+          "max": 69.87528203986585
+        },
+        "training_seconds": {
+          "mean": 182.09356529179496,
+          "sample_std": 23.52853444401045,
+          "min": 164.39716162602417,
+          "max": 223.42718466592487
+        },
+        "evaluation_seconds": {
+          "mean": 273.55958944163285,
+          "sample_std": 55.849946846918385,
+          "min": 211.0370917499531,
+          "max": 332.0749391660793
+        },
+        "end_to_end_seconds": {
+          "mean": 510.3284480161965,
+          "sample_std": 76.83714265576587,
+          "min": 431.94259604089893,
+          "max": 607.2971798330545
+        }
+      },
+      "accuracy_difference_vs_full": -0.09459999999999999,
+      "time_reduction_vs_full": 0.2634167313556226
+    }
+  },
+  "metric": "official Spider exact match",
+  "timing_boundary": "End-to-end time is the sum of selection or scoring, model training, generation evaluation, and official exact-match evaluation. The fixed pretrained pool-scoring cost is included for iterative selection.",
+  "method_boundary": "The iterative method is a two-round observed-loss-change adaptation with non-negative predicted-loss clipping, loss-quantile difficulty clusters, database-level task groups, and EXP3 scheduling. It is not the paper's inference-free gradient implementation."
+}

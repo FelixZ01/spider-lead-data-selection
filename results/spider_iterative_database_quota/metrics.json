@@ -1,0 +1,193 @@
+{
+  "question": "Does proportional database-group allocation improve five-round IDU selection when difficulty clustering and EXP3 are removed?",
+  "controlled_setup": {
+    "model": "Salesforce/codet5-small",
+    "candidate_pool": 1000,
+    "selected_budget": 500,
+    "selection_rounds": 5,
+    "budget_per_round": 100,
+    "training_mode": "cumulative_union",
+    "total_optimizer_steps": 1500,
+    "development_examples": 1034,
+    "seeds": [
+      11,
+      42,
+      73,
+      101,
+      202
+    ]
+  },
+  "runs": [
+    {
+      "seed": 11,
+      "official_spider_exact_match": 0.158,
+      "idu_only_exact_match": 0.183,
+      "cluster_mab_only_exact_match": 0.16,
+      "full_adaptation_exact_match": 0.117,
+      "random_exact_match": 0.165,
+      "full_data_exact_match": 0.224,
+      "difference_vs_idu_only": -0.024999999999999994,
+      "difference_vs_cluster_mab_only": -0.0020000000000000018,
+      "difference_vs_full_adaptation": 0.040999999999999995,
+      "difference_vs_random": -0.007000000000000006,
+      "difference_vs_full_data": -0.066,
+      "selected_databases": 111,
+      "selection_or_scoring_seconds": 110.64408912404906,
+      "training_seconds": 206.05351208196953,
+      "evaluation_seconds": 224.80962041590828,
+      "end_to_end_seconds": 541.5085415409412
+    },
+    {
+      "seed": 42,
+      "official_spider_exact_match": 0.172,
+      "idu_only_exact_match": 0.14,
+      "cluster_mab_only_exact_match": 0.135,
+      "full_adaptation_exact_match": 0.162,
+      "random_exact_match": 0.164,
+      "full_data_exact_match": 0.251,
+      "difference_vs_idu_only": 0.03199999999999997,
+      "difference_vs_cluster_mab_only": 0.03699999999999998,
+      "difference_vs_full_adaptation": 0.009999999999999981,
+      "difference_vs_random": 0.00799999999999998,
+      "difference_vs_full_data": -0.07900000000000001,
+      "selected_databases": 111,
+      "selection_or_scoring_seconds": 120.5376232889248,
+      "training_seconds": 207.94570441613905,
+      "evaluation_seconds": 235.970186124905,
+      "end_to_end_seconds": 564.4547827490605
+    },
+    {
+      "seed": 73,
+      "official_spider_exact_match": 0.177,
+      "idu_only_exact_match": 0.179,
+      "cluster_mab_only_exact_match": 0.138,
+      "full_adaptation_exact_match": 0.127,
+      "random_exact_match": 0.144,
+      "full_data_exact_match": 0.224,
+      "difference_vs_idu_only": -0.0020000000000000018,
+      "difference_vs_cluster_mab_only": 0.03899999999999998,
+      "difference_vs_full_adaptation": 0.04999999999999999,
+      "difference_vs_random": 0.033,
+      "difference_vs_full_data": -0.047000000000000014,
+      "selected_databases": 111,
+      "selection_or_scoring_seconds": 131.37439004029147,
+      "training_seconds": 224.17139500007033,
+      "evaluation_seconds": 261.3158016670495,
+      "end_to_end_seconds": 616.8628119579516
+    },
+    {
+      "seed": 101,
+      "official_spider_exact_match": 0.139,
+      "idu_only_exact_match": 0.199,
+      "cluster_mab_only_exact_match": 0.132,
+      "full_adaptation_exact_match": 0.166,
+      "random_exact_match": 0.144,
+      "full_data_exact_match": 0.206,
+      "difference_vs_idu_only": -0.06,
+      "difference_vs_cluster_mab_only": 0.007000000000000006,
+      "difference_vs_full_adaptation": -0.026999999999999996,
+      "difference_vs_random": -0.004999999999999977,
+      "difference_vs_full_data": -0.06699999999999998,
+      "selected_databases": 111,
+      "selection_or_scoring_seconds": 115.65269183286,
+      "training_seconds": 196.76470916718245,
+      "evaluation_seconds": 247.34382529207505,
+      "end_to_end_seconds": 559.7624090410536
+    },
+    {
+      "seed": 202,
+      "official_spider_exact_match": 0.13,
+      "idu_only_exact_match": 0.153,
+      "cluster_mab_only_exact_match": 0.147,
+      "full_adaptation_exact_match": 0.189,
+      "random_exact_match": 0.165,
+      "full_data_exact_match": 0.246,
+      "difference_vs_idu_only": -0.022999999999999993,
+      "difference_vs_cluster_mab_only": -0.016999999999999987,
+      "difference_vs_full_adaptation": -0.059,
+      "difference_vs_random": -0.035,
+      "difference_vs_full_data": -0.11599999999999999,
+      "selected_databases": 111,
+      "selection_or_scoring_seconds": 131.51958712621126,
+      "training_seconds": 220.14437441679183,
+      "evaluation_seconds": 277.0577975830529,
+      "end_to_end_seconds": 628.7230309998849
+    }
+  ],
+  "aggregate": {
+    "official_spider_exact_match": {
+      "mean": 0.1552,
+      "sample_std": 0.02038872237291978,
+      "min": 0.13,
+      "max": 0.177
+    },
+    "difference_vs_idu_only": {
+      "mean": -0.015600000000000003,
+      "sample_std": 0.03378313188560231,
+      "min": -0.06,
+      "max": 0.03199999999999997
+    },
+    "difference_vs_cluster_mab_only": {
+      "mean": 0.012799999999999995,
+      "sample_std": 0.024560130292813988,
+      "min": -0.016999999999999987,
+      "max": 0.03899999999999998
+    },
+    "difference_vs_full_adaptation": {
+      "mean": 0.0029999999999999944,
+      "sample_std": 0.045951060923552126,
+      "min": -0.059,
+      "max": 0.04999999999999999
+    },
+    "difference_vs_random": {
+      "mean": -0.001200000000000001,
+      "sample_std": 0.024722459424579908,
+      "min": -0.035,
+      "max": 0.033
+    },
+    "difference_vs_full_data": {
+      "mean": -0.075,
+      "sample_std": 0.02562225595063791,
+      "min": -0.11599999999999999,
+      "max": -0.047000000000000014
+    },
+    "selected_databases": {
+      "mean": 111.0,
+      "sample_std": 0.0,
+      "min": 111.0,
+      "max": 111.0
+    },
+    "selection_or_scoring_seconds": {
+      "mean": 121.94567628246732,
+      "sample_std": 9.352413469071612,
+      "min": 110.64408912404906,
+      "max": 131.51958712621126
+    },
+    "training_seconds": {
+      "mean": 211.01593901643065,
+      "sample_std": 11.1079242974649,
+      "min": 196.76470916718245,
+      "max": 224.17139500007033
+    },
+    "evaluation_seconds": {
+      "mean": 249.29944621659814,
+      "sample_std": 20.592256217057198,
+      "min": 224.80962041590828,
+      "max": 277.0577975830529
+    },
+    "end_to_end_seconds": {
+      "mean": 582.2623152577784,
+      "sample_std": 38.21000047481401,
+      "min": 541.5085415409412,
+      "max": 628.7230309998849
+    }
+  },
+  "wins_vs_idu_only": 1,
+  "wins_vs_cluster_mab_only": 3,
+  "wins_vs_full_adaptation": 3,
+  "wins_vs_random": 2,
+  "offline_pretrained_scoring_seconds": 18.369470415986143,
+  "metric": "official Spider exact match",
+  "timing_boundary": "End-to-end time includes shared pretrained pool scoring, online rescoring and selection, cumulative training, generation, and official exact-match evaluation.",
+  "method_boundary": "Five-round observed-loss-change utility with proportional database-group allocation over all remaining samples. Difficulty clustering and EXP3 allocation are removed; all other controlled settings match the full five-round adaptation."
+}

@@ -1,0 +1,100 @@
+{
+  "method": "simplified_iterative_lead",
+  "seeds": [
+    11,
+    42,
+    73,
+    101,
+    202
+  ],
+  "runs": [
+    {
+      "seed": 11,
+      "official_spider_exact_match": 0.14,
+      "diagnostic_normalized_exact_match": 0.11315280464216634,
+      "selected_databases": 130,
+      "total_seconds": 476.77331383305136,
+      "selected_arms": [
+        0,
+        1
+      ],
+      "raw_rewards": [
+        11.895025198560209,
+        -3.7962180813191457
+      ]
+    },
+    {
+      "seed": 42,
+      "official_spider_exact_match": 0.172,
+      "diagnostic_normalized_exact_match": 0.13539651837524178,
+      "selected_databases": 130,
+      "total_seconds": 461.15152495808434,
+      "selected_arms": [
+        1,
+        0
+      ],
+      "raw_rewards": [
+        15.947423439136148,
+        -1.9163682657195256
+      ]
+    },
+    {
+      "seed": 73,
+      "official_spider_exact_match": 0.174,
+      "diagnostic_normalized_exact_match": 0.14119922630560927,
+      "selected_databases": 116,
+      "total_seconds": 504.33205650001764,
+      "selected_arms": [
+        0,
+        0
+      ],
+      "raw_rewards": [
+        11.912550257449597,
+        -3.0323089401405863
+      ]
+    },
+    {
+      "seed": 101,
+      "official_spider_exact_match": 0.11,
+      "diagnostic_normalized_exact_match": 0.08897485493230174,
+      "selected_databases": 130,
+      "total_seconds": 464.10874279099517,
+      "selected_arms": [
+        1,
+        0
+      ],
+      "raw_rewards": [
+        16.000069999531657,
+        -2.142821070593074
+      ]
+    },
+    {
+      "seed": 202,
+      "official_spider_exact_match": 0.154,
+      "diagnostic_normalized_exact_match": 0.13056092843326886,
+      "selected_databases": 114,
+      "total_seconds": 505.5481700000819,
+      "selected_arms": [
+        1,
+        1
+      ],
+      "raw_rewards": [
+        16.080566336455195,
+        -4.3220435334846
+      ]
+    }
+  ],
+  "official_spider_exact_match": {
+    "mean": 0.15,
+    "sample_std": 0.026343879744638973,
+    "min": 0.11,
+    "max": 0.174
+  },
+  "absolute_gain_vs_existing_baselines": {
+    "random": -0.00360000000000002,
+    "uncertainty": 0.01479999999999998,
+    "uncertainty_schema_diverse": -0.020000000000000018
+  },
+  "metric": "official Spider exact match on all 1,034 development examples",
+  "method_boundary": "Two-round observed-loss-change adaptation with loss-quantile difficulty clusters and EXP3. It tests the LEAD workflow but does not reproduce the paper's inference-free gradient approximation or original task embeddings."
+}

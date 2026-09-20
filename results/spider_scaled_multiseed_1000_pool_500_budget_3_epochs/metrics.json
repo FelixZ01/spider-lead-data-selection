@@ -2,7 +2,9 @@
   "seeds": [
     11,
     42,
-    73
+    73,
+    101,
+    202
   ],
   "shared_setup": {
     "model": "Salesforce/codet5-small",
@@ -42,20 +44,38 @@
           "mean_train_loss": 0.9087814506193002,
           "diagnostic_normalized_exact_match": 0.085,
           "official_spider_exact_match": 0.105
+        },
+        {
+          "seed": 101,
+          "selected_databases": 129,
+          "selected_mean_pretrained_target_loss": 7.591829160690308,
+          "train_seconds": 175.59628900000826,
+          "mean_train_loss": 0.9207396994791925,
+          "diagnostic_normalized_exact_match": 0.105,
+          "official_spider_exact_match": 0.125
+        },
+        {
+          "seed": 202,
+          "selected_databases": 127,
+          "selected_mean_pretrained_target_loss": 7.55437136220932,
+          "train_seconds": 182.15040112496354,
+          "mean_train_loss": 0.8506278467997909,
+          "diagnostic_normalized_exact_match": 0.095,
+          "official_spider_exact_match": 0.115
         }
       ],
       "aggregate": {
         "selected_databases": {
-          "mean": 126.0,
-          "sample_std": 1.7320508075688772
+          "mean": 126.8,
+          "sample_std": 1.7888543819998317
         },
         "train_seconds": {
-          "mean": 241.90183736096756,
-          "sample_std": 64.89990417195963
+          "mean": 216.6904404415749,
+          "sample_std": 57.47299871599716
         },
         "official_spider_exact_match": {
           "mean": 0.12000000000000001,
-          "sample_std": 0.018027756377319955
+          "sample_std": 0.013228756555322959
         }
       }
     },
@@ -87,6 +107,24 @@
           "mean_train_loss": 0.9569615051175158,
           "diagnostic_normalized_exact_match": 0.09,
           "official_spider_exact_match": 0.1
+        },
+        {
+          "seed": 101,
+          "selected_databases": 114,
+          "selected_mean_pretrained_target_loss": 8.661808867454528,
+          "train_seconds": 164.49230200005695,
+          "mean_train_loss": 0.9380906829300026,
+          "diagnostic_normalized_exact_match": 0.135,
+          "official_spider_exact_match": 0.16
+        },
+        {
+          "seed": 202,
+          "selected_databases": 114,
+          "selected_mean_pretrained_target_loss": 8.661808867454528,
+          "train_seconds": 181.0591003750451,
+          "mean_train_loss": 0.9394438183351109,
+          "diagnostic_normalized_exact_match": 0.11,
+          "official_spider_exact_match": 0.115
         }
       ],
       "aggregate": {
@@ -95,12 +133,12 @@
           "sample_std": 0.0
         },
         "train_seconds": {
-          "mean": 257.3443693473625,
-          "sample_std": 46.66919686124659
+          "mean": 223.51690208343788,
+          "sample_std": 57.174051887056905
         },
         "official_spider_exact_match": {
-          "mean": 0.11,
-          "sample_std": 0.017320508075688773
+          "mean": 0.12100000000000001,
+          "sample_std": 0.025099800796022264
         }
       }
     },
@@ -132,6 +170,24 @@
           "mean_train_loss": 0.8832445019806425,
           "diagnostic_normalized_exact_match": 0.135,
           "official_spider_exact_match": 0.15
+        },
+        {
+          "seed": 101,
+          "selected_databases": 137,
+          "selected_mean_pretrained_target_loss": 8.081031275749206,
+          "train_seconds": 176.8401484580245,
+          "mean_train_loss": 0.8929717441673081,
+          "diagnostic_normalized_exact_match": 0.12,
+          "official_spider_exact_match": 0.13
+        },
+        {
+          "seed": 202,
+          "selected_databases": 137,
+          "selected_mean_pretrained_target_loss": 8.081031275749206,
+          "train_seconds": 189.11239470902365,
+          "mean_train_loss": 0.8838781627553205,
+          "diagnostic_normalized_exact_match": 0.08,
+          "official_spider_exact_match": 0.085
         }
       ],
       "aggregate": {
@@ -140,12 +196,12 @@
           "sample_std": 0.0
         },
         "train_seconds": {
-          "mean": 267.73175001400523,
-          "sample_std": 78.80194094061018
+          "mean": 233.82955864181275,
+          "sample_std": 72.65498116924455
         },
         "official_spider_exact_match": {
-          "mean": 0.15333333333333335,
-          "sample_std": 0.015275252316519468
+          "mean": 0.135,
+          "sample_std": 0.03162277660168379
         }
       }
     }

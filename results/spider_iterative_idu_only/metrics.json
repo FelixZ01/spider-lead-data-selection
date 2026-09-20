@@ -1,0 +1,176 @@
+{
+  "question": "Does iterative IDU updating alone explain performance, or do the clustering, EXP3, and database-group allocation components add value?",
+  "controlled_setup": {
+    "model": "Salesforce/codet5-small",
+    "candidate_pool": 1000,
+    "selected_budget": 500,
+    "selection_rounds": 5,
+    "budget_per_round": 100,
+    "training_mode": "cumulative_union",
+    "total_optimizer_steps": 1500,
+    "development_examples": 1034,
+    "seeds": [
+      11,
+      42,
+      73,
+      101,
+      202
+    ]
+  },
+  "runs": [
+    {
+      "seed": 11,
+      "official_spider_exact_match": 0.183,
+      "random_exact_match": 0.165,
+      "two_round_iterative_exact_match": 0.153,
+      "five_round_full_adaptation_exact_match": 0.117,
+      "full_data_exact_match": 0.224,
+      "difference_vs_random": 0.017999999999999988,
+      "difference_vs_two_round_iterative": 0.03,
+      "difference_vs_five_round_full_adaptation": 0.06599999999999999,
+      "difference_vs_full_data": -0.04100000000000001,
+      "selected_databases": 117,
+      "selection_or_scoring_seconds": 112.6911863728892,
+      "training_seconds": 189.71960604190826,
+      "evaluation_seconds": 236.59177845797967,
+      "end_to_end_seconds": 539.0039534569951
+    },
+    {
+      "seed": 42,
+      "official_spider_exact_match": 0.14,
+      "random_exact_match": 0.164,
+      "two_round_iterative_exact_match": 0.135,
+      "five_round_full_adaptation_exact_match": 0.162,
+      "full_data_exact_match": 0.251,
+      "difference_vs_random": -0.023999999999999994,
+      "difference_vs_two_round_iterative": 0.0050000000000000044,
+      "difference_vs_five_round_full_adaptation": -0.021999999999999992,
+      "difference_vs_full_data": -0.11099999999999999,
+      "selected_databases": 122,
+      "selection_or_scoring_seconds": 109.45514308381826,
+      "training_seconds": 183.70784783305135,
+      "evaluation_seconds": 216.52204708300997,
+      "end_to_end_seconds": 509.68624641606584
+    },
+    {
+      "seed": 73,
+      "official_spider_exact_match": 0.179,
+      "random_exact_match": 0.144,
+      "two_round_iterative_exact_match": 0.151,
+      "five_round_full_adaptation_exact_match": 0.127,
+      "full_data_exact_match": 0.224,
+      "difference_vs_random": 0.035,
+      "difference_vs_two_round_iterative": 0.027999999999999997,
+      "difference_vs_five_round_full_adaptation": 0.05199999999999999,
+      "difference_vs_full_data": -0.04500000000000001,
+      "selected_databases": 118,
+      "selection_or_scoring_seconds": 120.5493118338054,
+      "training_seconds": 196.3904923320515,
+      "evaluation_seconds": 214.76986966701224,
+      "end_to_end_seconds": 531.7109125410207
+    },
+    {
+      "seed": 101,
+      "official_spider_exact_match": 0.199,
+      "random_exact_match": 0.144,
+      "two_round_iterative_exact_match": 0.105,
+      "five_round_full_adaptation_exact_match": 0.166,
+      "full_data_exact_match": 0.206,
+      "difference_vs_random": 0.05500000000000002,
+      "difference_vs_two_round_iterative": 0.09400000000000001,
+      "difference_vs_five_round_full_adaptation": 0.033,
+      "difference_vs_full_data": -0.0069999999999999785,
+      "selected_databases": 119,
+      "selection_or_scoring_seconds": 113.84450854291208,
+      "training_seconds": 190.10958083288278,
+      "evaluation_seconds": 212.84460091614164,
+      "end_to_end_seconds": 516.7999278750503
+    },
+    {
+      "seed": 202,
+      "official_spider_exact_match": 0.153,
+      "random_exact_match": 0.165,
+      "two_round_iterative_exact_match": 0.134,
+      "five_round_full_adaptation_exact_match": 0.189,
+      "full_data_exact_match": 0.246,
+      "difference_vs_random": -0.01200000000000001,
+      "difference_vs_two_round_iterative": 0.01899999999999999,
+      "difference_vs_five_round_full_adaptation": -0.036000000000000004,
+      "difference_vs_full_data": -0.093,
+      "selected_databases": 120,
+      "selection_or_scoring_seconds": 116.3385880420683,
+      "training_seconds": 188.32117199886125,
+      "evaluation_seconds": 234.59417999896687,
+      "end_to_end_seconds": 539.2555617499165
+    }
+  ],
+  "aggregate": {
+    "official_spider_exact_match": {
+      "mean": 0.1708,
+      "sample_std": 0.023857912733514636,
+      "min": 0.14,
+      "max": 0.199
+    },
+    "difference_vs_random": {
+      "mean": 0.014400000000000001,
+      "sample_std": 0.032623611081546454,
+      "min": -0.023999999999999994,
+      "max": 0.05500000000000002
+    },
+    "difference_vs_two_round_iterative": {
+      "mean": 0.0352,
+      "sample_std": 0.034317633951075364,
+      "min": 0.0050000000000000044,
+      "max": 0.09400000000000001
+    },
+    "difference_vs_five_round_full_adaptation": {
+      "mean": 0.0186,
+      "sample_std": 0.045274717006293916,
+      "min": -0.036000000000000004,
+      "max": 0.06599999999999999
+    },
+    "difference_vs_full_data": {
+      "mean": -0.059399999999999994,
+      "sample_std": 0.04208087451562764,
+      "min": -0.11099999999999999,
+      "max": -0.0069999999999999785
+    },
+    "selected_databases": {
+      "mean": 119.2,
+      "sample_std": 1.9235384061671346,
+      "min": 117.0,
+      "max": 122.0
+    },
+    "selection_or_scoring_seconds": {
+      "mean": 114.57574757509865,
+      "sample_std": 4.156258782489119,
+      "min": 109.45514308381826,
+      "max": 120.5493118338054
+    },
+    "training_seconds": {
+      "mean": 189.64973980775102,
+      "sample_std": 4.547671170905816,
+      "min": 183.70784783305135,
+      "max": 196.3904923320515
+    },
+    "evaluation_seconds": {
+      "mean": 223.06449522462208,
+      "sample_std": 11.532255884847338,
+      "min": 212.84460091614164,
+      "max": 236.59177845797967
+    },
+    "end_to_end_seconds": {
+      "mean": 527.2913204078097,
+      "sample_std": 13.415192749194873,
+      "min": 509.68624641606584,
+      "max": 539.2555617499165
+    }
+  },
+  "wins_vs_random": 3,
+  "wins_vs_two_round_iterative": 5,
+  "wins_vs_five_round_full_adaptation": 3,
+  "offline_pretrained_scoring_seconds": 18.369470415986143,
+  "metric": "official Spider exact match",
+  "timing_boundary": "End-to-end time includes shared pretrained pool scoring, online rescoring and selection, cumulative training, generation, and official exact-match evaluation.",
+  "method_boundary": "Five-round observed-loss-change utility with global top-utility selection. Difficulty clustering, EXP3 allocation, and database-group quotas are removed; all other controlled settings match the five-round full adaptation."
+}

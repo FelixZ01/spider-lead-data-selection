@@ -11,9 +11,6 @@ budget="${BUDGET:-500}"
 epochs="${EPOCHS:-3}"
 eval_samples="${EVAL_SAMPLES:-200}"
 result_dir="${RESULT_DIR:-results/spider_scaled_multiseed_1000_pool_500_budget_3_epochs}"
-analysis_model="${ANALYSIS_MODEL:-gpt-6-astra}"
-analysis_reasoning="${ANALYSIS_REASONING:-high}"
-analyze_with_codex="${ANALYZE_WITH_CODEX:-1}"
 timestamp="$(date '+%Y%m%d_%H%M%S')"
 log_file="logs/unattended_${timestamp}.log"
 lock_dir=".cache/unattended_pipeline.lock"
@@ -57,21 +54,21 @@ for required_file in "${required_files[@]}"; do
   fi
 done
 
-echo "=== Step 1/6: tests ==="
+echo "=== Step 1/5: tests ==="
 "$python_bin" -m unittest discover -s tests -v
 
-echo "=== Step 2/6: train and evaluate missing seeds ==="
+echo "=== Step 2/5: train and evaluate missing seeds ==="
 SEEDS="$seeds" BUDGET="$budget" EPOCHS="$epochs" EVAL_SAMPLES="$eval_samples" \
   EXPERIMENT_DIR="$experiment_dir" \
   bash scripts/run_mac_scaled_multiseed_experiment.sh
 
-echo "=== Step 3/6: evaluate all missing models on the full development set ==="
+echo "=== Step 3/5: evaluate all missing models on the full development set ==="
 for seed in $seeds; do
   SEED="$seed" EXPERIMENT_DIR="$experiment_dir" \
     bash scripts/run_mac_full_dev_eval.sh
 done
 
-echo "=== Step 4/6: build machine-readable summaries ==="
+echo "=== Step 4/5: build machine-readable summaries ==="
 read -r -a seed_array <<< "$seeds"
 "$python_bin" src/analysis/summarize_multiseed.py \
   --experiment-dir "$experiment_dir" \
@@ -83,35 +80,13 @@ read -r -a seed_array <<< "$seeds"
   --seeds "${seed_array[@]}" \
   --output "$result_dir/full_dev_multiseed_metrics.json"
 
-echo "=== Step 5/6: build ChatGPT analysis handoff ==="
-"$python_bin" src/analysis/build_chatgpt_handoff.py \
+echo "=== Step 5/5: build experiment analysis brief ==="
+"$python_bin" src/analysis/build_analysis_handoff.py \
   --metrics "$result_dir/full_dev_multiseed_metrics.json" \
-  --output "$result_dir/CHATGPT_ANALYSIS_BRIEF.md"
+  --output "$result_dir/EXPERIMENT_ANALYSIS_BRIEF.md"
 
 touch "$result_dir/LOCAL_EXPERIMENT_COMPLETE"
 
-echo "=== Step 6/6: run final Codex analysis ==="
-if [[ "$analyze_with_codex" == "1" ]]; then
-  codex_bin="${CODEX_BIN:-$(command -v codex || true)}"
-  if [[ -z "$codex_bin" ]]; then
-    echo "Codex CLI was not found; the local experiment is complete, but final AI analysis was skipped." >&2
-  else
-    "$codex_bin" exec \
-      --ephemeral \
-      --skip-git-repo-check \
-      --cd "$project_dir" \
-      --model "$analysis_model" \
-      --config "model_reasoning_effort=\"$analysis_reasoning\"" \
-      --sandbox read-only \
-      --approve-for-me \
-      --output-last-message "$result_dir/FINAL_CODEX_ANALYSIS.md" \
-      - < notes/final_codex_analysis_prompt.md
-  fi
-else
-  echo "Final Codex analysis disabled with ANALYZE_WITH_CODEX=$analyze_with_codex."
-fi
-
 echo "Completed: $(date)"
-echo "Analysis brief: $result_dir/CHATGPT_ANALYSIS_BRIEF.md"
-echo "Final Codex analysis: $result_dir/FINAL_CODEX_ANALYSIS.md"
+echo "Analysis brief: $result_dir/EXPERIMENT_ANALYSIS_BRIEF.md"
 echo "Full log: $log_file"

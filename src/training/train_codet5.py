@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import random
 import time
 from pathlib import Path
@@ -62,6 +63,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--model", default="Salesforce/codet5-small")
     parser.add_argument("--max-samples", type=int, default=20)
     parser.add_argument("--epochs", type=int, default=1)
+    parser.add_argument(
+        "--max-steps",
+        type=int,
+        default=None,
+        help="Optional optimizer-step cap used for compute-matched comparisons.",
+    )
     parser.add_argument("--batch-size", type=int, default=1)
     parser.add_argument("--learning-rate", type=float, default=5e-5)
     parser.add_argument("--max-source-length", type=int, default=384)
@@ -83,6 +90,10 @@ def main() -> None:
     if args.sample_strategy == "random":
         random.shuffle(rows)
     rows = rows[: args.max_samples]
+    if args.epochs < 1:
+        raise ValueError("epochs must be positive")
+    if args.max_steps is not None and args.max_steps < 1:
+        raise ValueError("max-steps must be positive")
     device = choose_device(args.device)
     print(f"Loading {args.model} on {device}; training rows={len(rows)}")
     tokenizer = AutoTokenizer.from_pretrained(args.model)
@@ -95,7 +106,10 @@ def main() -> None:
     started = time.perf_counter()
     losses: list[float] = []
     model.train()
-    for epoch in range(args.epochs):
+    effective_epochs = args.epochs
+    if args.max_steps is not None:
+        effective_epochs = max(effective_epochs, math.ceil(args.max_steps / len(loader)))
+    for epoch in range(effective_epochs):
         for step, batch in enumerate(loader, start=1):
             batch = {key: value.to(device) for key, value in batch.items()}
             optimizer.zero_grad(set_to_none=True)
@@ -105,6 +119,10 @@ def main() -> None:
             losses.append(float(loss.detach().cpu()))
             if step == 1 or step % args.log_every == 0 or step == len(loader):
                 print(f"epoch={epoch + 1} step={step}/{len(loader)} loss={losses[-1]:.4f}")
+            if args.max_steps is not None and len(losses) >= args.max_steps:
+                break
+        if args.max_steps is not None and len(losses) >= args.max_steps:
+            break
 
     elapsed = time.perf_counter() - started
     args.output_dir.mkdir(parents=True, exist_ok=True)
@@ -115,6 +133,8 @@ def main() -> None:
         "device": str(device),
         "train_samples": len(rows),
         "epochs": args.epochs,
+        "effective_epochs": effective_epochs,
+        "max_steps": args.max_steps,
         "steps": len(losses),
         "initial_loss": losses[0],
         "final_loss": losses[-1],

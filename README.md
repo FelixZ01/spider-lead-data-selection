@@ -7,6 +7,32 @@ This repository contains two staged routes for a UQ Text-to-SQL mini-project:
 
 ## Current status
 
+### Five-round compute-matched iterative validation
+
+The current LEAD-style validation uses five selection rounds with a fixed total
+budget of 500 examples.  Each round adds 100 examples to a cumulative training
+set, while the optimizer-step budget is fixed at 1,500 steps in total (300 per
+round).  This keeps the training-step budget aligned with the 500-example,
+three-epoch random baseline while giving EXP3 multiple opportunities to update.
+
+Run the small end-to-end check first:
+
+```bash
+bash scripts/run_iterative_multiround_smoke.sh
+```
+
+Then run one formal seed before expanding to all seeds:
+
+```bash
+bash scripts/run_iterative_multiround_validation.sh
+```
+
+Check its progress with:
+
+```bash
+bash scripts/status_iterative_multiround_validation.sh
+```
+
 - Official LEAD source is tracked as a Git submodule in `external/LEAD`.
 - One real BIRD training example is stored in `data/sample/bird_sample.jsonl`.
 - A concise Chinese code guide is available in `notes/LEAD_CODE_GUIDE_CN.md`.
@@ -110,9 +136,8 @@ SEEDS="11 42 73" BUDGET=500 EPOCHS=3 EVAL_SAMPLES=200 \
 The unattended runner resumes completed work instead of repeating it. By
 default it keeps seeds 11, 42, and 73, adds seeds 101 and 202, runs full
 development-set evaluation, builds aggregate JSON files, and creates a concise
-handoff for external analysis. Waiting and model execution use local Python and
-do not call Codex. After the local experiment finishes, the runner invokes Codex
-once with `gpt-6-astra` and `high` reasoning to create `FINAL_CODEX_ANALYSIS.md`:
+experiment analysis brief. Waiting, model execution, and summary generation use
+local Python:
 
 ```bash
 bash scripts/start_unattended_mac_pipeline.sh
@@ -129,11 +154,46 @@ The runner uses `caffeinate` to prevent ordinary macOS sleep while it is active.
 Keep the Mac connected to power and leave the lid open. Logs are written under
 `logs/`; completed checkpoints and evaluation files are detected automatically.
 The monitor estimates the finish time from measured training and generation
-times in completed runs. Override the final analysis settings if needed:
+times in completed runs.
+
+## Final Spider study results
+
+The controlled study compares Full Data, Random, static uncertainty, two-round
+iterative selection, five-round IDU-only selection, and the clustering,
+bandit, and database-allocation ablations. All selected-data methods use the
+same 500-example budget; the five-round variants share the same cumulative
+training schedule and optimizer-step budget.
+
+The strongest selected-data method is five-round IDU-only, with 17.08% mean
+official Spider exact match across five seeds, compared with 15.64% for Random
+and 23.02% for Full Data. This is a promising but seed-sensitive result rather
+than a statistically conclusive superiority claim.
+
+Key artifacts:
+
+- `Spider_LEAD_Final_Experiment_Report.pdf`
+- `results/spider_final_analysis/REPORT.md`
+- `results/spider_final_analysis/analysis.json`
+- `results/spider_required_q1_q3/metrics.json`
+- `results/spider_iterative_idu_only/metrics.json`
+
+## Run the simplified iterative LEAD-style experiment
+
+The iterative route keeps the 1,000-example pool and 500-example total budget,
+but selects two batches of 250 examples. It uses two target-loss difficulty
+clusters, an EXP3 scheduler, observed loss changes as a transparent IDU proxy,
+and Spider database IDs as task groups. This tests the LEAD workflow locally;
+it is not the paper's inference-free gradient-based implementation.
 
 ```bash
-ANALYSIS_MODEL=gpt-6-astra ANALYSIS_REASONING=high \
-  bash scripts/start_unattended_mac_pipeline.sh
+bash scripts/start_iterative_lead_pipeline.sh
+bash scripts/monitor_iterative_lead_pipeline.sh
+```
+
+To leave a five-minute local watchdog running without starting final analysis:
+
+```bash
+bash scripts/monitor_iterative_lead_pipeline.sh --watch
 ```
 
 ## Run the CPU-only preprocessing demo

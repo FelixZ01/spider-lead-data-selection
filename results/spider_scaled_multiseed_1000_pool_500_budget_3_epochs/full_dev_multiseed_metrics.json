@@ -2,7 +2,9 @@
   "seeds": [
     11,
     42,
-    73
+    73,
+    101,
+    202
   ],
   "development_examples": 1034,
   "methods": {
@@ -25,11 +27,23 @@
           "official_spider_exact_match": 0.137,
           "diagnostic_normalized_exact_match": 0.11121856866537717,
           "generation_seconds": 307.17251654108986
+        },
+        {
+          "seed": 101,
+          "official_spider_exact_match": 0.155,
+          "diagnostic_normalized_exact_match": 0.13056092843326886,
+          "generation_seconds": 306.6688132919371
+        },
+        {
+          "seed": 202,
+          "official_spider_exact_match": 0.159,
+          "diagnostic_normalized_exact_match": 0.12572533849129594,
+          "generation_seconds": 249.9526142500108
         }
       ],
       "official_spider_exact_match": {
-        "mean": 0.15133333333333335,
-        "sample_std": 0.024826061575153897,
+        "mean": 0.15360000000000001,
+        "sample_std": 0.01788295277631744,
         "min": 0.137,
         "max": 0.18
       },
@@ -54,15 +68,27 @@
           "official_spider_exact_match": 0.131,
           "diagnostic_normalized_exact_match": 0.109284332688588,
           "generation_seconds": 264.3194345829543
+        },
+        {
+          "seed": 101,
+          "official_spider_exact_match": 0.154,
+          "diagnostic_normalized_exact_match": 0.12475822050290135,
+          "generation_seconds": 221.32503354200162
+        },
+        {
+          "seed": 202,
+          "official_spider_exact_match": 0.135,
+          "diagnostic_normalized_exact_match": 0.1102514506769826,
+          "generation_seconds": 221.54350770800374
         }
       ],
       "official_spider_exact_match": {
-        "mean": 0.129,
-        "sample_std": 0.002645751311064593,
+        "mean": 0.13520000000000001,
+        "sample_std": 0.010986355173577812,
         "min": 0.126,
-        "max": 0.131
+        "max": 0.154
       },
-      "absolute_gain_over_random": -0.022333333333333344
+      "absolute_gain_over_random": -0.0184
     },
     "uncertainty_schema_diverse": {
       "runs": [
@@ -83,15 +109,27 @@
           "official_spider_exact_match": 0.191,
           "diagnostic_normalized_exact_match": 0.16054158607350097,
           "generation_seconds": 235.77148295904044
+        },
+        {
+          "seed": 101,
+          "official_spider_exact_match": 0.164,
+          "diagnostic_normalized_exact_match": 0.1402321083172147,
+          "generation_seconds": 185.48654791607987
+        },
+        {
+          "seed": 202,
+          "official_spider_exact_match": 0.124,
+          "diagnostic_normalized_exact_match": 0.09864603481624758,
+          "generation_seconds": 271.8761884580599
         }
       ],
       "official_spider_exact_match": {
-        "mean": 0.18733333333333332,
-        "sample_std": 0.011930353445448865,
-        "min": 0.174,
+        "mean": 0.17,
+        "sample_std": 0.02888771365130858,
+        "min": 0.124,
         "max": 0.197
       },
-      "absolute_gain_over_random": 0.035999999999999976
+      "absolute_gain_over_random": 0.016399999999999998
     }
   },
   "metric": "official Spider exact match",

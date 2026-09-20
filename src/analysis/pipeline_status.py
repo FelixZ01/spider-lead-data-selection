@@ -33,7 +33,7 @@ def mean_or(values: list[float], default: float) -> float:
 def active_processes() -> str:
     command = (
         "pgrep -f 'run_unattended_mac_pipeline.sh|train_codet5.py|"
-        "evaluate_codet5.py|codex exec'"
+        "evaluate_codet5.py"
     )
     result = subprocess.run(command, shell=True, text=True, capture_output=True)
     process_ids = ",".join(result.stdout.split())
