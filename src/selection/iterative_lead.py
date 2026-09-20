@@ -105,6 +105,25 @@ def observed_idu_proxy(
     return (1.0 - smoothing) * predicted_next_loss + smoothing * previous_utility
 
 
+def training_gradient_idu_proxy(
+    training_loss: float,
+    predicted_loss_change: float,
+    previous_utility: float,
+    smoothing: float,
+) -> float:
+    """Update IDU from loss and a first-order training-time gradient estimate.
+
+    ``predicted_loss_change`` is the inner product between the current sample
+    gradient and the optimizer parameter update for a tracked parameter subset.
+    This quantity is collected during the ordinary backward/update pass, so the
+    update does not require rescoring the candidate pool after each round.
+    """
+    if not 0 <= smoothing < 1:
+        raise ValueError("smoothing must be in [0, 1)")
+    predicted_next_loss = max(0.0, training_loss + predicted_loss_change)
+    return (1.0 - smoothing) * predicted_next_loss + smoothing * previous_utility
+
+
 def proportional_task_select(
     rows: list[dict[str, Any]], budget: int, utility_key: str
 ) -> list[dict[str, Any]]:

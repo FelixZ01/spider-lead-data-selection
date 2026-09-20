@@ -1,0 +1,349 @@
+{
+  "research_question": "Under a fixed 500-example and 1,500-step budget, does the dynamic gradient-based LEAD adaptation provide stable gains for Spider Text-to-SQL, and which components explain its behaviour?",
+  "seeds": [
+    11,
+    42,
+    73,
+    101,
+    202
+  ],
+  "metric": "official Spider exact match",
+  "performance_by_difficulty": {
+    "dynamic_gradient_exp3_replay": {
+      "easy": {
+        "mean": 0.3574,
+        "sample_std": 0.0708187828192493,
+        "min": 0.262,
+        "max": 0.46
+      },
+      "medium": {
+        "mean": 0.1426,
+        "sample_std": 0.023744473041110013,
+        "min": 0.112,
+        "max": 0.168
+      },
+      "hard": {
+        "mean": 0.0722,
+        "sample_std": 0.02783343313355361,
+        "min": 0.034,
+        "max": 0.109
+      },
+      "extra": {
+        "mean": 0.0012000000000000001,
+        "sample_std": 0.0026832815729997475,
+        "min": 0.0,
+        "max": 0.006
+      },
+      "all": {
+        "mean": 0.15940000000000001,
+        "sample_std": 0.02316894473211933,
+        "min": 0.135,
+        "max": 0.195
+      }
+    },
+    "balanced_replay_control": {
+      "easy": {
+        "mean": 0.3,
+        "sample_std": 0.08254392769913484,
+        "min": 0.23,
+        "max": 0.403
+      },
+      "medium": {
+        "mean": 0.1514,
+        "sample_std": 0.03801052485825472,
+        "min": 0.087,
+        "max": 0.186
+      },
+      "hard": {
+        "mean": 0.0758,
+        "sample_std": 0.03810118108405565,
+        "min": 0.029,
+        "max": 0.109
+      },
+      "extra": {
+        "mean": 0.0012000000000000001,
+        "sample_std": 0.0026832815729997475,
+        "min": 0.0,
+        "max": 0.006
+      },
+      "all": {
+        "mean": 0.1502,
+        "sample_std": 0.030474579570520736,
+        "min": 0.11,
+        "max": 0.182
+      }
+    },
+    "random": {
+      "easy": {
+        "mean": 0.3494,
+        "sample_std": 0.01663730747446833,
+        "min": 0.323,
+        "max": 0.367
+      },
+      "medium": {
+        "mean": 0.1296,
+        "sample_std": 0.012157302332343302,
+        "min": 0.117,
+        "max": 0.143
+      },
+      "hard": {
+        "mean": 0.0896,
+        "sample_std": 0.03700405383197901,
+        "min": 0.046,
+        "max": 0.132
+      },
+      "extra": {
+        "mean": 0.012,
+        "sample_std": 0.011224972160321825,
+        "min": 0.0,
+        "max": 0.024
+      },
+      "all": {
+        "mean": 0.1564,
+        "sample_std": 0.011326958991715307,
+        "min": 0.144,
+        "max": 0.165
+      }
+    },
+    "full_data": {
+      "easy": {
+        "mean": 0.5072,
+        "sample_std": 0.026743223440714847,
+        "min": 0.464,
+        "max": 0.528
+      },
+      "medium": {
+        "mean": 0.1862,
+        "sample_std": 0.02113527856452334,
+        "min": 0.164,
+        "max": 0.213
+      },
+      "hard": {
+        "mean": 0.162,
+        "sample_std": 0.02373815494093844,
+        "min": 0.126,
+        "max": 0.19
+      },
+      "extra": {
+        "mean": 0.0072,
+        "sample_std": 0.007823042886243178,
+        "min": 0.0,
+        "max": 0.018
+      },
+      "all": {
+        "mean": 0.2302,
+        "sample_std": 0.01833575741549828,
+        "min": 0.206,
+        "max": 0.251
+      }
+    },
+    "observed_loss_idu": {
+      "easy": {
+        "mean": 0.3764,
+        "sample_std": 0.04923210334730783,
+        "min": 0.306,
+        "max": 0.415
+      },
+      "medium": {
+        "mean": 0.1494,
+        "sample_std": 0.014943225890014507,
+        "min": 0.137,
+        "max": 0.175
+      },
+      "hard": {
+        "mean": 0.0954,
+        "sample_std": 0.05043114117289039,
+        "min": 0.023,
+        "max": 0.144
+      },
+      "extra": {
+        "mean": 0.0,
+        "sample_std": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "all": {
+        "mean": 0.1708,
+        "sample_std": 0.023857912733514636,
+        "min": 0.14,
+        "max": 0.199
+      }
+    },
+    "previous_five_round": {
+      "easy": {
+        "mean": 0.3582,
+        "sample_std": 0.07348265101369167,
+        "min": 0.254,
+        "max": 0.44
+      },
+      "medium": {
+        "mean": 0.1236,
+        "sample_std": 0.013575713609236161,
+        "min": 0.112,
+        "max": 0.143
+      },
+      "hard": {
+        "mean": 0.0736,
+        "sample_std": 0.05028717530345088,
+        "min": 0.0,
+        "max": 0.126
+      },
+      "extra": {
+        "mean": 0.0024000000000000002,
+        "sample_std": 0.005366563145999495,
+        "min": 0.0,
+        "max": 0.012
+      },
+      "all": {
+        "mean": 0.1522,
+        "sample_std": 0.029642874354556103,
+        "min": 0.117,
+        "max": 0.189
+      }
+    }
+  },
+  "paired_comparisons_dynamic_minus_baseline": {
+    "balanced_replay_control": {
+      "differences": [
+        0.02500000000000001,
+        0.05000000000000002,
+        -0.011999999999999983,
+        0.01999999999999999,
+        -0.037000000000000005
+      ],
+      "mean_difference": 0.009200000000000005,
+      "sample_std": 0.033966159629843354,
+      "ci95": [
+        -0.03297455756961866,
+        0.05137455756961867
+      ],
+      "wins": 3,
+      "ties": 0,
+      "losses": 2,
+      "cohen_dz": 0.2708578214393334
+    },
+    "random": {
+      "differences": [
+        -0.03,
+        0.031,
+        0.02300000000000002,
+        0.01100000000000001,
+        -0.020000000000000018
+      ],
+      "mean_difference": 0.0030000000000000027,
+      "sample_std": 0.026767517628648353,
+      "ci95": [
+        -0.030236262960777312,
+        0.03623626296077732
+      ],
+      "wins": 3,
+      "ties": 0,
+      "losses": 2,
+      "cohen_dz": 0.11207613801248442
+    },
+    "observed_loss_idu": {
+      "differences": [
+        -0.04799999999999999,
+        0.05499999999999999,
+        -0.011999999999999983,
+        -0.04400000000000001,
+        -0.008000000000000007
+      ],
+      "mean_difference": -0.011399999999999999,
+      "sample_std": 0.041301331697658365,
+      "ci95": [
+        -0.06268237664685444,
+        0.03988237664685444
+      ],
+      "wins": 1,
+      "ties": 0,
+      "losses": 4,
+      "cohen_dz": -0.2760201555594474
+    },
+    "previous_five_round": {
+      "differences": [
+        0.018000000000000002,
+        0.033,
+        0.04000000000000001,
+        -0.01100000000000001,
+        -0.04400000000000001
+      ],
+      "mean_difference": 0.007199999999999998,
+      "sample_std": 0.034679965397906624,
+      "ci95": [
+        -0.03586086449353302,
+        0.050260864493533015
+      ],
+      "wins": 3,
+      "ties": 0,
+      "losses": 2,
+      "cohen_dz": 0.20761266389367877
+    },
+    "full_data": {
+      "differences": [
+        -0.089,
+        -0.055999999999999994,
+        -0.056999999999999995,
+        -0.05099999999999999,
+        -0.101
+      ],
+      "mean_difference": -0.0708,
+      "sample_std": 0.022609732417700132,
+      "ci95": [
+        -0.09887369075207886,
+        -0.042726309247921146
+      ],
+      "wins": 0,
+      "ties": 0,
+      "losses": 5,
+      "cohen_dz": -3.1313948653622234
+    }
+  },
+  "selection_behaviour": {
+    "dynamic_mean_pairwise_jaccard": 0.7999999999999999,
+    "balanced_mean_pairwise_jaccard": 1.0,
+    "dynamic_hard_cluster_rounds": {
+      "11": 3,
+      "42": 2,
+      "73": 2,
+      "101": 3,
+      "202": 3
+    },
+    "dynamic_selected_database_mean": 123.2,
+    "balanced_selected_database_mean": 122.0
+  },
+  "timing": {
+    "dynamic_end_to_end_seconds": {
+      "mean": 489.2489383409731,
+      "sample_std": 33.254189473064734,
+      "min": 435.67564187396783,
+      "max": 517.2402927909279
+    },
+    "balanced_end_to_end_seconds": {
+      "mean": 430.9330150659662,
+      "sample_std": 12.902622337426513,
+      "min": 414.89235529094003,
+      "max": 449.74514158291277
+    }
+  },
+  "interpretation": {
+    "supported": [
+      "Cumulative replay prevents the severe forgetting observed when each round trains only on the newest batch.",
+      "Dynamic EXP3 has a small average advantage over the matched balanced-cluster control, but the direction changes across seeds.",
+      "The dynamic method is competitive with Random under the same selected-data and optimizer-step budget."
+    ],
+    "not_supported": [
+      "A reliable improvement over Random, because the paired confidence interval includes zero.",
+      "A reliable improvement over observed-loss IDU, which has a higher mean in this five-seed study.",
+      "Parity with Full Data, which remains substantially stronger."
+    ],
+    "unexpected_result": "Seed 42 suggested a large EXP3 gain, but the five-seed paired analysis showed that this was not a stable general effect."
+  },
+  "limitations": [
+    "Only five seeds were used, so uncertainty intervals remain wide.",
+    "Difficulty clusters use pretrained target-loss quantiles rather than the paper's original semantic clustering pipeline.",
+    "The gradient proxy tracks the final decoder block of a fully fine-tuned CodeT5-small model rather than final-layer LoRA parameters of a causal language model.",
+    "EXP3 receives only five allocation decisions, limiting its opportunity to learn a stable policy.",
+    "Official exact match is strict and does not measure execution equivalence."
+  ]
+}

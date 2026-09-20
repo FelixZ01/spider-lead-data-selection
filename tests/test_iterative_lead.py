@@ -8,6 +8,7 @@ from src.selection.iterative_lead import (
     exp3_probabilities,
     observed_idu_proxy,
     proportional_task_select,
+    training_gradient_idu_proxy,
     update_exp3,
 )
 
@@ -51,6 +52,24 @@ class IterativeLeadTests(unittest.TestCase):
         before = observed_idu_proxy(1.0, 9.0, 9.0, 0.1)
         after = observed_idu_proxy(0.2, 1.0, before, 0.1)
         self.assertGreater(before - after, 0.0)
+
+    def test_training_gradient_idu_uses_first_order_change(self):
+        value = training_gradient_idu_proxy(
+            training_loss=4.0,
+            predicted_loss_change=-1.0,
+            previous_utility=5.0,
+            smoothing=0.25,
+        )
+        self.assertAlmostEqual(value, 3.5)
+
+    def test_training_gradient_idu_clips_predicted_loss(self):
+        value = training_gradient_idu_proxy(
+            training_loss=1.0,
+            predicted_loss_change=-3.0,
+            previous_utility=2.0,
+            smoothing=0.1,
+        )
+        self.assertAlmostEqual(value, 0.2)
 
     def test_exp3_update_accepts_negative_feedback(self):
         probabilities = exp3_probabilities([1.0, 1.0], 0.1)

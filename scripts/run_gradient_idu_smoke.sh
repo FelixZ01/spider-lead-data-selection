@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+project_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$project_dir"
+
+python_bin="${PYTHON_BIN:-.venv/bin/python}"
+output_dir="${OUTPUT_DIR:-outputs/spider_gradient_idu_smoke}"
+
+export HF_HOME="${HF_HOME:-$project_dir/.cache/huggingface}"
+export HF_HUB_OFFLINE="${HF_HUB_OFFLINE:-1}"
+export TRANSFORMERS_OFFLINE="${TRANSFORMERS_OFFLINE:-1}"
+export TOKENIZERS_PARALLELISM="${TOKENIZERS_PARALLELISM:-false}"
+export NLTK_DATA="${NLTK_DATA:-$project_dir/.cache/nltk}"
+
+"$python_bin" src/experiments/run_iterative_lead_spider.py \
+  --pool-file outputs/spider_multiseed_experiment/scored_pool.jsonl \
+  --eval-file data/processed/spider/dev.jsonl \
+  --output-dir "$output_dir" \
+  --pool-size 80 --budget 20 --rounds 2 --clusters 2 \
+  --training-mode new_batch --total-training-steps 20 \
+  --epochs-per-round 1 --eval-samples 20 --seed 42 \
+  --smoothing 0.1 --selection-policy gradient_idu --max-reuse 4 \
+  --device auto
+
+"$python_bin" src/analysis/validate_iterative_run.py --run-dir "$output_dir"

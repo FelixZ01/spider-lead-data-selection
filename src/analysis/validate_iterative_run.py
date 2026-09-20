@@ -49,7 +49,20 @@ def main() -> None:
     selected_ids = [row["id"] for row in selected_rows]
     if len(selected_ids) != summary["total_budget"]:
         raise ValueError("selected_all.jsonl does not match the total budget")
-    if len(set(selected_ids)) != len(selected_ids):
+    if summary.get("selection_policy") in (
+        "gradient_idu",
+        "gradient_lead",
+        "gradient_lead_replay",
+        "gradient_balanced_replay",
+    ):
+        counts: dict[str, int] = {}
+        for selected_id in selected_ids:
+            counts[selected_id] = counts.get(selected_id, 0) + 1
+        if max(counts.values(), default=0) > int(summary["max_reuse"]):
+            raise ValueError("gradient IDU exceeded the configured reuse limit")
+        if len(counts) != int(summary["unique_selected_samples"]):
+            raise ValueError("gradient IDU unique-sample count is inconsistent")
+    elif len(set(selected_ids)) != len(selected_ids):
         raise ValueError("duplicate selected example IDs found")
     if not (args.run_dir / "final_official" / "evaluation.txt").exists():
         raise FileNotFoundError("official exact-match evaluation is missing")

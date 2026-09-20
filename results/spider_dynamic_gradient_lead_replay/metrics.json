@@ -1,0 +1,253 @@
+{
+  "question": "Does cumulative replay make the dynamic gradient LEAD adaptation more accurate and stable than controlled baselines under the same 500-example and 1,500-step budget?",
+  "controlled_setup": {
+    "model": "Salesforce/codet5-small",
+    "candidate_pool": 1000,
+    "selected_budget": 500,
+    "selection_rounds": 5,
+    "budget_per_round": 100,
+    "training_mode": "cumulative_union",
+    "round_optimizer_steps": [
+      100,
+      200,
+      300,
+      400,
+      500
+    ],
+    "total_optimizer_steps": 1500,
+    "development_examples": 1034,
+    "seeds": [
+      11,
+      42,
+      73,
+      101,
+      202
+    ]
+  },
+  "runs": [
+    {
+      "seed": 11,
+      "official_spider_exact_match": 0.135,
+      "random_exact_match": 0.165,
+      "observed_loss_idu_exact_match": 0.183,
+      "previous_five_round_exact_match": 0.117,
+      "full_data_exact_match": 0.224,
+      "difference_vs_random": -0.03,
+      "difference_vs_observed_loss_idu": -0.04799999999999999,
+      "difference_vs_previous_five_round": 0.018000000000000002,
+      "difference_vs_full_data": -0.089,
+      "selected_databases": 124,
+      "selected_arms": [
+        0,
+        1,
+        1,
+        0,
+        1
+      ],
+      "bounded_rewards": [
+        0.5555925655201711,
+        0.6435957547027394,
+        0.6646064693373348,
+        0.6644499701268775,
+        0.6784293794274822
+      ],
+      "selection_or_scoring_seconds": 18.428606499102898,
+      "training_seconds": 284.12820679100696,
+      "evaluation_seconds": 133.11755920900032,
+      "end_to_end_seconds": 435.67564187396783
+    },
+    {
+      "seed": 42,
+      "official_spider_exact_match": 0.195,
+      "random_exact_match": 0.164,
+      "observed_loss_idu_exact_match": 0.14,
+      "previous_five_round_exact_match": 0.162,
+      "full_data_exact_match": 0.251,
+      "difference_vs_random": 0.031,
+      "difference_vs_observed_loss_idu": 0.05499999999999999,
+      "difference_vs_previous_five_round": 0.033,
+      "difference_vs_full_data": -0.055999999999999994,
+      "selected_databases": 122,
+      "selected_arms": [
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      "bounded_rewards": [
+        0.5660370287964123,
+        0.6376346806104053,
+        0.6553923677925535,
+        0.6645670071625762,
+        0.678193832704081
+      ],
+      "selection_or_scoring_seconds": 18.432022163062356,
+      "training_seconds": 318.6222972489195,
+      "evaluation_seconds": 150.86044241604395,
+      "end_to_end_seconds": 487.9168031249428
+    },
+    {
+      "seed": 73,
+      "official_spider_exact_match": 0.167,
+      "random_exact_match": 0.144,
+      "observed_loss_idu_exact_match": 0.179,
+      "previous_five_round_exact_match": 0.127,
+      "full_data_exact_match": 0.224,
+      "difference_vs_random": 0.02300000000000002,
+      "difference_vs_observed_loss_idu": -0.011999999999999983,
+      "difference_vs_previous_five_round": 0.04000000000000001,
+      "difference_vs_full_data": -0.056999999999999995,
+      "selected_databases": 122,
+      "selected_arms": [
+        0,
+        0,
+        1,
+        0,
+        1
+      ],
+      "bounded_rewards": [
+        0.554372616205045,
+        0.6431088055945622,
+        0.6579461440710174,
+        0.667490763986017,
+        0.6765909332275256
+      ],
+      "selection_or_scoring_seconds": 18.42975999985356,
+      "training_seconds": 330.68788050010335,
+      "evaluation_seconds": 139.34293437504675,
+      "end_to_end_seconds": 488.46181866596453
+    },
+    {
+      "seed": 101,
+      "official_spider_exact_match": 0.155,
+      "random_exact_match": 0.144,
+      "observed_loss_idu_exact_match": 0.199,
+      "previous_five_round_exact_match": 0.166,
+      "full_data_exact_match": 0.206,
+      "difference_vs_random": 0.01100000000000001,
+      "difference_vs_observed_loss_idu": -0.04400000000000001,
+      "difference_vs_previous_five_round": -0.01100000000000001,
+      "difference_vs_full_data": -0.05099999999999999,
+      "selected_databases": 124,
+      "selected_arms": [
+        1,
+        0,
+        1,
+        1,
+        0
+      ],
+      "bounded_rewards": [
+        0.5501672875902449,
+        0.6301763724737528,
+        0.6661420623835228,
+        0.6712280224559823,
+        0.6709250950433072
+      ],
+      "selection_or_scoring_seconds": 18.43398187600542,
+      "training_seconds": 344.5758199581178,
+      "evaluation_seconds": 154.2290782488417,
+      "end_to_end_seconds": 517.2402927909279
+    },
+    {
+      "seed": 202,
+      "official_spider_exact_match": 0.145,
+      "random_exact_match": 0.165,
+      "observed_loss_idu_exact_match": 0.153,
+      "previous_five_round_exact_match": 0.189,
+      "full_data_exact_match": 0.246,
+      "difference_vs_random": -0.020000000000000018,
+      "difference_vs_observed_loss_idu": -0.008000000000000007,
+      "difference_vs_previous_five_round": -0.04400000000000001,
+      "difference_vs_full_data": -0.101,
+      "selected_databases": 124,
+      "selected_arms": [
+        1,
+        1,
+        0,
+        0,
+        1
+      ],
+      "bounded_rewards": [
+        0.5589421287388555,
+        0.6445178905574723,
+        0.6515663128640152,
+        0.6634020406321002,
+        0.6776042602121035
+      ],
+      "selection_or_scoring_seconds": 18.432449790998362,
+      "training_seconds": 350.58599679206964,
+      "evaluation_seconds": 147.9302998338826,
+      "end_to_end_seconds": 516.9501352490624
+    }
+  ],
+  "aggregate": {
+    "official_spider_exact_match": {
+      "mean": 0.15940000000000001,
+      "sample_std": 0.02316894473211933,
+      "min": 0.135,
+      "max": 0.195
+    },
+    "difference_vs_random": {
+      "mean": 0.0030000000000000027,
+      "sample_std": 0.026767517628648353,
+      "min": -0.03,
+      "max": 0.031
+    },
+    "difference_vs_observed_loss_idu": {
+      "mean": -0.011399999999999999,
+      "sample_std": 0.041301331697658365,
+      "min": -0.04799999999999999,
+      "max": 0.05499999999999999
+    },
+    "difference_vs_previous_five_round": {
+      "mean": 0.007199999999999998,
+      "sample_std": 0.034679965397906624,
+      "min": -0.04400000000000001,
+      "max": 0.04000000000000001
+    },
+    "difference_vs_full_data": {
+      "mean": -0.0708,
+      "sample_std": 0.022609732417700132,
+      "min": -0.101,
+      "max": -0.05099999999999999
+    },
+    "selected_databases": {
+      "mean": 123.2,
+      "sample_std": 1.0954451150103321,
+      "min": 122.0,
+      "max": 124.0
+    },
+    "selection_or_scoring_seconds": {
+      "mean": 18.43136406580452,
+      "sample_std": 0.0021588204611645866,
+      "min": 18.428606499102898,
+      "max": 18.43398187600542
+    },
+    "training_seconds": {
+      "mean": 325.72004025804347,
+      "sample_std": 26.357134831453653,
+      "min": 284.12820679100696,
+      "max": 350.58599679206964
+    },
+    "evaluation_seconds": {
+      "mean": 145.09606281656306,
+      "sample_std": 8.678363585153495,
+      "min": 133.11755920900032,
+      "max": 154.2290782488417
+    },
+    "end_to_end_seconds": {
+      "mean": 489.2489383409731,
+      "sample_std": 33.254189473064734,
+      "min": 435.67564187396783,
+      "max": 517.2402927909279
+    }
+  },
+  "wins_vs_random": 3,
+  "wins_vs_observed_loss_idu": 1,
+  "wins_vs_previous_five_round": 3,
+  "offline_pretrained_scoring_seconds": 18.369470415986143,
+  "metric": "official Spider exact match",
+  "timing_boundary": "End-to-end time includes shared pretrained pool scoring, online selection and reward updates, cumulative training, generation, and official exact-match evaluation.",
+  "method_boundary": "Five-round Spider adaptation with training-time first-order gradient utility, loss-quantile difficulty clusters, database task groups, EXP3 allocation, and cumulative replay. This is a transparent task-specific adaptation rather than an exact reproduction of the original causal-language-model implementation."
+}

@@ -25,6 +25,7 @@ from src.selection.iterative_lead import (  # noqa: E402
     exp3_probabilities,
     observed_idu_proxy,
     proportional_task_select,
+    training_gradient_idu_proxy,
     update_exp3,
 )
 
@@ -90,6 +91,15 @@ def parse_args() -> argparse.Namespace:
         default=None,
         help="Optional fixed optimizer-step budget divided across all rounds.",
     )
+    parser.add_argument(
+        "--round-step-schedule",
+        default=None,
+        help=(
+            "Optional comma-separated optimizer-step budget for each round. "
+            "Its length must equal --rounds and its sum must equal "
+            "--total-training-steps when that argument is also supplied."
+        ),
+    )
     parser.add_argument("--eval-samples", type=int, default=1034)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--smoothing", type=float, default=0.1)
@@ -101,6 +111,10 @@ def parse_args() -> argparse.Namespace:
             "exp3_cluster_global",
             "task_idu",
             "global_idu",
+            "gradient_idu",
+            "gradient_lead",
+            "gradient_lead_replay",
+            "gradient_balanced_replay",
             "static_uncertainty",
         ),
         default="exp3_cluster_task",
@@ -112,6 +126,15 @@ def parse_args() -> argparse.Namespace:
         ),
     )
     parser.add_argument("--device", default="auto")
+    parser.add_argument(
+        "--max-reuse",
+        type=int,
+        default=4,
+        help=(
+            "Maximum selection count per example for training-time gradient IDU. "
+            "Other policies continue to select each example at most once."
+        ),
+    )
     return parser.parse_args()
 
 
@@ -127,11 +150,49 @@ def main() -> None:
     batch_budget = args.budget // args.rounds
     if args.total_training_steps is not None and args.total_training_steps < args.rounds:
         raise ValueError("total-training-steps must be at least the number of rounds")
-    round_step_budgets = (
-        allocate_evenly(args.total_training_steps, args.rounds)
-        if args.total_training_steps is not None
-        else [None] * args.rounds
-    )
+    if args.max_reuse < 1:
+        raise ValueError("max-reuse must be positive")
+    if (
+        args.selection_policy in ("gradient_idu", "gradient_lead")
+        and args.training_mode != "new_batch"
+    ):
+        raise ValueError(
+            "gradient_idu and gradient_lead require --training-mode new_batch; "
+            "use gradient_lead_replay for cumulative replay"
+        )
+    if (
+        args.selection_policy in (
+            "gradient_lead_replay",
+            "gradient_balanced_replay",
+        )
+        and args.training_mode != "cumulative_union"
+    ):
+        raise ValueError(
+            "gradient replay policies require --training-mode cumulative_union"
+        )
+    if args.round_step_schedule is not None:
+        round_step_budgets = [
+            int(value.strip())
+            for value in args.round_step_schedule.split(",")
+            if value.strip()
+        ]
+        if len(round_step_budgets) != args.rounds:
+            raise ValueError("round-step-schedule length must equal --rounds")
+        if any(value < 1 for value in round_step_budgets):
+            raise ValueError("round-step-schedule values must be positive")
+        if (
+            args.total_training_steps is not None
+            and sum(round_step_budgets) != args.total_training_steps
+        ):
+            raise ValueError(
+                "round-step-schedule sum must equal --total-training-steps"
+            )
+    else:
+        round_step_budgets = (
+            allocate_evenly(args.total_training_steps, args.rounds)
+            if args.total_training_steps is not None
+            else [None] * args.rounds
+        )
     rows = read_jsonl(args.pool_file)[: args.pool_size]
     if len(rows) < args.pool_size:
         raise ValueError("pool file contains fewer rows than pool-size")
@@ -150,6 +211,8 @@ def main() -> None:
         for row in rows
     }
     remaining = [dict(row, difficulty_cluster=cluster_by_id[row["id"]]) for row in rows]
+    base_rows_by_id = {row["id"]: dict(row) for row in remaining}
+    use_counts = {row["id"]: 0 for row in rows}
     selected_all: list[dict[str, Any]] = []
     selected_training_rows: list[dict[str, Any]] = []
     weights = [1.0] * args.clusters
@@ -171,7 +234,20 @@ def main() -> None:
         remaining_input = round_dir / "remaining_input.jsonl"
         write_jsonl(remaining, remaining_input)
 
-        if round_index == 1 or args.selection_policy == "static_uncertainty":
+        if args.selection_policy in (
+            "gradient_idu",
+            "gradient_lead",
+            "gradient_lead_replay",
+            "gradient_balanced_replay",
+        ):
+            scored_remaining = []
+            for row in remaining:
+                copied = dict(row)
+                copied["current_target_loss"] = state[row["id"]]["previous_loss"]
+                copied["idu_proxy"] = state[row["id"]]["previous_utility"]
+                copied["previous_selection_count"] = use_counts[row["id"]]
+                scored_remaining.append(copied)
+        elif round_index == 1 or args.selection_policy == "static_uncertainty":
             scored_remaining = []
             for row in remaining:
                 copied = dict(row)
@@ -197,7 +273,12 @@ def main() -> None:
         counts = Counter(int(row["difficulty_cluster"]) for row in scored_remaining)
         probabilities: list[float] | None = None
         arm: int | None = None
-        if args.selection_policy in ("exp3_cluster_task", "exp3_cluster_global"):
+        if args.selection_policy in (
+            "exp3_cluster_task",
+            "exp3_cluster_global",
+            "gradient_lead",
+            "gradient_lead_replay",
+        ):
             probabilities = exp3_probabilities(weights, args.gamma)
             eligible = [counts[index] >= batch_budget for index in range(args.clusters)]
             arm = choose_arm(probabilities, eligible, rng)
@@ -206,7 +287,11 @@ def main() -> None:
                 for row in scored_remaining
                 if int(row["difficulty_cluster"]) == arm
             ]
-            if args.selection_policy == "exp3_cluster_task":
+            if args.selection_policy in (
+                "exp3_cluster_task",
+                "gradient_lead",
+                "gradient_lead_replay",
+            ):
                 selected = proportional_task_select(
                     candidates, batch_budget, "idu_proxy"
                 )
@@ -215,6 +300,25 @@ def main() -> None:
                     candidates,
                     key=lambda row: (-float(row["idu_proxy"]), row["id"]),
                 )[:batch_budget]
+        elif args.selection_policy == "gradient_balanced_replay":
+            arm = (round_index - 1) % args.clusters
+            if counts[arm] < batch_budget:
+                eligible_arms = [
+                    index
+                    for index in range(args.clusters)
+                    if counts[index] >= batch_budget
+                ]
+                if not eligible_arms:
+                    raise ValueError("No balanced difficulty arm has enough samples")
+                arm = eligible_arms[0]
+            candidates = [
+                row
+                for row in scored_remaining
+                if int(row["difficulty_cluster"]) == arm
+            ]
+            selected = proportional_task_select(
+                candidates, batch_budget, "idu_proxy"
+            )
         elif args.selection_policy == "task_idu":
             selected = proportional_task_select(
                 scored_remaining, batch_budget, "idu_proxy"
@@ -252,6 +356,21 @@ def main() -> None:
             "--device", args.device,
             "--log-every", "100",
         ]
+        telemetry_path = round_dir / "training_gradient_telemetry.jsonl"
+        if args.selection_policy in (
+            "gradient_idu",
+            "gradient_lead",
+            "gradient_lead_replay",
+            "gradient_balanced_replay",
+        ):
+            training_command.extend(
+                [
+                    "--gradient-telemetry-output",
+                    str(telemetry_path),
+                    "--gradient-scope",
+                    "decoder_last",
+                ]
+            )
         round_step_budget = round_step_budgets[round_index - 1]
         if round_step_budget is not None:
             training_command.extend(["--max-steps", str(round_step_budget)])
@@ -261,7 +380,24 @@ def main() -> None:
         )
 
         reward_started = time.perf_counter()
-        if args.selection_policy == "static_uncertainty":
+        gradient_by_id: dict[str, dict[str, Any]] = {}
+        if args.selection_policy in (
+            "gradient_idu",
+            "gradient_lead",
+            "gradient_lead_replay",
+            "gradient_balanced_replay",
+        ):
+            gradient_by_id = {
+                row["id"]: row for row in read_jsonl(telemetry_path)
+            }
+            missing_telemetry = selected_ids - set(gradient_by_id)
+            if missing_telemetry:
+                raise RuntimeError(
+                    "Missing training-time gradient telemetry for selected IDs: "
+                    f"{sorted(missing_telemetry)[:5]}"
+                )
+            after_by_id = {}
+        elif args.selection_policy == "static_uncertainty":
             after_by_id: dict[str, dict[str, Any]] = {}
         else:
             after_rows = score_rows(
@@ -279,6 +415,30 @@ def main() -> None:
                 after_loss = None
                 after_utility = None
                 reductions.append(0.0)
+            elif args.selection_policy in (
+                "gradient_idu",
+                "gradient_lead",
+                "gradient_lead_replay",
+                "gradient_balanced_replay",
+            ):
+                telemetry = gradient_by_id[row["id"]]
+                training_loss = float(telemetry["mean_training_loss"])
+                predicted_change = float(
+                    telemetry["mean_predicted_loss_change"]
+                )
+                after_loss = max(0.0, training_loss + predicted_change)
+                after_utility = training_gradient_idu_proxy(
+                    training_loss,
+                    predicted_change,
+                    before_utility,
+                    args.smoothing,
+                )
+                reductions.append(before_utility - after_utility)
+                state[row["id"]] = {
+                    "previous_loss": training_loss,
+                    "previous_utility": after_utility,
+                }
+                use_counts[row["id"]] += 1
             else:
                 after_loss = float(after_by_id[row["id"]]["current_target_loss"])
                 after_utility = observed_idu_proxy(
@@ -289,6 +449,19 @@ def main() -> None:
             enriched["after_training_target_loss"] = after_loss
             enriched["after_training_idu_proxy"] = after_utility
             enriched["round_selected"] = round_index
+            enriched["selection_count"] = use_counts[row["id"]]
+            if args.selection_policy in (
+                "gradient_idu",
+                "gradient_lead",
+                "gradient_lead_replay",
+                "gradient_balanced_replay",
+            ):
+                enriched["mean_gradient_norm_squared"] = float(
+                    gradient_by_id[row["id"]]["mean_gradient_norm_squared"]
+                )
+                enriched["mean_predicted_loss_change"] = float(
+                    gradient_by_id[row["id"]]["mean_predicted_loss_change"]
+                )
             selected_all.append(enriched)
 
         raw_reward = sum(reductions) / len(reductions)
@@ -297,7 +470,12 @@ def main() -> None:
             sum(abs(float(row["idu_proxy"])) for row in selected) / len(selected),
         )
         bounded_reward = math.tanh(raw_reward / scale)
-        if args.selection_policy in ("exp3_cluster_task", "exp3_cluster_global"):
+        if args.selection_policy in (
+            "exp3_cluster_task",
+            "exp3_cluster_global",
+            "gradient_lead",
+            "gradient_lead_replay",
+        ):
             if arm is None or probabilities is None:
                 raise RuntimeError("EXP3 state was not initialised")
             weights = update_exp3(
@@ -305,16 +483,28 @@ def main() -> None:
             )
         reward_history.append(raw_reward)
 
-        next_remaining: list[dict[str, Any]] = []
-        for row in scored_remaining:
-            if row["id"] in selected_ids:
-                continue
-            state[row["id"]] = {
-                "previous_loss": float(row["current_target_loss"]),
-                "previous_utility": float(row["idu_proxy"]),
-            }
-            next_remaining.append(row)
-        remaining = next_remaining
+        if args.selection_policy in (
+            "gradient_idu",
+            "gradient_lead",
+            "gradient_lead_replay",
+            "gradient_balanced_replay",
+        ):
+            remaining = [
+                dict(base_rows_by_id[row_id])
+                for row_id, count in use_counts.items()
+                if count < args.max_reuse
+            ]
+        else:
+            next_remaining: list[dict[str, Any]] = []
+            for row in scored_remaining:
+                if row["id"] in selected_ids:
+                    continue
+                state[row["id"]] = {
+                    "previous_loss": float(row["current_target_loss"]),
+                    "previous_utility": float(row["idu_proxy"]),
+                }
+                next_remaining.append(row)
+            remaining = next_remaining
         current_model = str(model_dir)
 
         round_summary = {
@@ -331,6 +521,8 @@ def main() -> None:
                 if args.selection_policy in (
                     "exp3_cluster_task",
                     "exp3_cluster_global",
+                    "gradient_lead",
+                    "gradient_lead_replay",
                 )
                 else None
             ),
@@ -341,10 +533,36 @@ def main() -> None:
             "mean_selected_loss_after": (
                 None
                 if args.selection_policy == "static_uncertainty"
-                else sum(
-                    float(after_by_id[row["id"]]["current_target_loss"])
-                    for row in selected
-                ) / len(selected)
+                else (
+                    sum(
+                        max(
+                            0.0,
+                            float(gradient_by_id[row["id"]]["mean_training_loss"])
+                            + float(
+                                gradient_by_id[row["id"]][
+                                    "mean_predicted_loss_change"
+                                ]
+                            ),
+                        )
+                        for row in selected
+                    )
+                    / len(selected)
+                        if args.selection_policy in (
+                    "gradient_idu",
+                    "gradient_lead",
+                    "gradient_lead_replay",
+                    "gradient_balanced_replay",
+                        )
+                    else sum(
+                        float(after_by_id[row["id"]]["current_target_loss"])
+                        for row in selected
+                    )
+                    / len(selected)
+                )
+            ),
+            "unique_selected_total": len({row["id"] for row in selected_all}),
+            "reused_selection_events_total": (
+                len(selected_all) - len({row["id"] for row in selected_all})
             ),
         }
         round_summaries.append(round_summary)
@@ -398,6 +616,10 @@ def main() -> None:
             "exp3_cluster_global": "iterative_idu_cluster_mab",
             "task_idu": "iterative_idu_database_quota",
             "global_idu": "iterative_idu_only",
+            "gradient_idu": "training_time_gradient_idu",
+            "gradient_lead": "dynamic_gradient_lead_adaptation",
+            "gradient_lead_replay": "dynamic_gradient_lead_with_replay",
+            "gradient_balanced_replay": "gradient_balanced_replay_control",
             "static_uncertainty": "static_uncertainty_multiround_control",
         }[args.selection_policy],
         "scope_note": (
@@ -424,10 +646,46 @@ def main() -> None:
                             "database-group allocation are removed for component ablation."
                             if args.selection_policy == "global_idu"
                             else (
-                                "The initial pretrained-loss ranking remains fixed over "
-                                f"{args.rounds} rounds. No online rescoring or utility "
-                                "update is used; the cumulative training schedule matches "
-                                "the iterative controls."
+                                (
+                                    "Training-time first-order gradient utility with "
+                                    "historical smoothing and bounded sample reuse. Utility "
+                                    "is updated only from the ordinary backward/optimizer "
+                                    "pass, without rescoring the remaining pool."
+                                    if args.selection_policy == "gradient_idu"
+                                    else (
+                                        "Training-time first-order gradient IDU, loss-quantile "
+                                        "difficulty clusters, Spider database task groups, and "
+                                        "EXP3 allocation updated from IDU-reduction rewards. "
+                                        "Utility is updated during ordinary training without "
+                                        "rescoring the remaining pool."
+                                        if args.selection_policy == "gradient_lead"
+                                        else (
+                                            (
+                                                "Training-time first-order gradient IDU, loss-quantile "
+                                                "difficulty clusters, Spider database task groups, and "
+                                                "EXP3 allocation with cumulative replay. The round step "
+                                                "schedule covers the growing selected set while keeping "
+                                                "the total optimizer-step budget fixed."
+                                                if args.selection_policy == "gradient_lead_replay"
+                                                else (
+                                                    (
+                                                        "Training-time first-order gradient utility, fixed "
+                                                        "balanced difficulty-cluster scheduling, database task "
+                                                        "groups, and cumulative replay. This control removes "
+                                                        "EXP3 while preserving the selection and training budget."
+                                                        if args.selection_policy == "gradient_balanced_replay"
+                                                        else (
+                                                            "The initial pretrained-loss ranking remains fixed over "
+                                                            f"{args.rounds} rounds. No online rescoring or utility "
+                                                            "update is used; the cumulative training schedule matches "
+                                                            "the iterative controls."
+                                                        )
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
                             )
                         )
                     )
@@ -450,6 +708,17 @@ def main() -> None:
         "smoothing": args.smoothing,
         "gamma": args.gamma,
         "selection_policy": args.selection_policy,
+        "max_reuse": (
+            args.max_reuse
+            if args.selection_policy in (
+                "gradient_idu",
+                "gradient_lead",
+                "gradient_lead_replay",
+                "gradient_balanced_replay",
+            )
+            else 1
+        ),
+        "unique_selected_samples": len({row["id"] for row in selected_all}),
         "utility_boundary": "Predicted cross-entropy is clipped at zero.",
         "selected_databases_total": len({row["db_id"] for row in selected_all}),
         "round_summaries": round_summaries,

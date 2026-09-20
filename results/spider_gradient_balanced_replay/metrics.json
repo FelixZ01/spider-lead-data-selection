@@ -1,0 +1,191 @@
+{
+  "question": "Does adaptive EXP3 allocation outperform a fixed balanced difficulty schedule when gradient utility, database grouping, cumulative replay, data budget, and optimizer-step budget are held constant?",
+  "controlled_setup": {
+    "model": "Salesforce/codet5-small",
+    "candidate_pool": 1000,
+    "selected_budget": 500,
+    "selection_rounds": 5,
+    "balanced_arm_schedule": [
+      0,
+      1,
+      0,
+      1,
+      0
+    ],
+    "training_mode": "cumulative_union",
+    "round_optimizer_steps": [
+      100,
+      200,
+      300,
+      400,
+      500
+    ],
+    "total_optimizer_steps": 1500,
+    "development_examples": 1034,
+    "seeds": [
+      11,
+      42,
+      73,
+      101,
+      202
+    ]
+  },
+  "runs": [
+    {
+      "seed": 11,
+      "official_spider_exact_match": 0.11,
+      "dynamic_exp3_exact_match": 0.135,
+      "random_exact_match": 0.165,
+      "difference_vs_dynamic_exp3": -0.02500000000000001,
+      "difference_vs_random": -0.05500000000000001,
+      "selected_databases": 122,
+      "selected_arms": [
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "selection_or_scoring_seconds": 18.434054626035504,
+      "training_seconds": 296.4306332928827,
+      "evaluation_seconds": 114.92980287596583,
+      "end_to_end_seconds": 429.79599441599566
+    },
+    {
+      "seed": 42,
+      "official_spider_exact_match": 0.145,
+      "dynamic_exp3_exact_match": 0.195,
+      "random_exact_match": 0.164,
+      "difference_vs_dynamic_exp3": -0.05000000000000002,
+      "difference_vs_random": -0.019000000000000017,
+      "selected_databases": 122,
+      "selected_arms": [
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "selection_or_scoring_seconds": 18.43432741786819,
+      "training_seconds": 292.33090779103804,
+      "evaluation_seconds": 138.97853829106316,
+      "end_to_end_seconds": 449.74514158291277
+    },
+    {
+      "seed": 73,
+      "official_spider_exact_match": 0.179,
+      "dynamic_exp3_exact_match": 0.167,
+      "random_exact_match": 0.144,
+      "difference_vs_dynamic_exp3": 0.011999999999999983,
+      "difference_vs_random": 0.035,
+      "selected_databases": 122,
+      "selected_arms": [
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "selection_or_scoring_seconds": 18.431810250971466,
+      "training_seconds": 293.797448583995,
+      "evaluation_seconds": 112.78211866598576,
+      "end_to_end_seconds": 425.0126919989707
+    },
+    {
+      "seed": 101,
+      "official_spider_exact_match": 0.135,
+      "dynamic_exp3_exact_match": 0.155,
+      "random_exact_match": 0.144,
+      "difference_vs_dynamic_exp3": -0.01999999999999999,
+      "difference_vs_random": -0.00899999999999998,
+      "selected_databases": 122,
+      "selected_arms": [
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "selection_or_scoring_seconds": 18.43680941592902,
+      "training_seconds": 284.8618255420588,
+      "evaluation_seconds": 131.9188599579502,
+      "end_to_end_seconds": 435.2188920410117
+    },
+    {
+      "seed": 202,
+      "official_spider_exact_match": 0.182,
+      "dynamic_exp3_exact_match": 0.145,
+      "random_exact_match": 0.165,
+      "difference_vs_dynamic_exp3": 0.037000000000000005,
+      "difference_vs_random": 0.016999999999999987,
+      "selected_databases": 122,
+      "selected_arms": [
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "selection_or_scoring_seconds": 18.43458962382283,
+      "training_seconds": 287.03325408371165,
+      "evaluation_seconds": 109.42313049989752,
+      "end_to_end_seconds": 414.89235529094003
+    }
+  ],
+  "aggregate": {
+    "official_spider_exact_match": {
+      "mean": 0.1502,
+      "sample_std": 0.030474579570520736,
+      "min": 0.11,
+      "max": 0.182
+    },
+    "difference_vs_dynamic_exp3": {
+      "mean": -0.009200000000000005,
+      "sample_std": 0.033966159629843354,
+      "min": -0.05000000000000002,
+      "max": 0.037000000000000005
+    },
+    "difference_vs_random": {
+      "mean": -0.006200000000000002,
+      "sample_std": 0.03460057802985378,
+      "min": -0.05500000000000001,
+      "max": 0.035
+    },
+    "selected_databases": {
+      "mean": 122.0,
+      "sample_std": 0.0,
+      "min": 122.0,
+      "max": 122.0
+    },
+    "selection_or_scoring_seconds": {
+      "mean": 18.434318266925402,
+      "sample_std": 0.0017775820802274065,
+      "min": 18.431810250971466,
+      "max": 18.43680941592902
+    },
+    "training_seconds": {
+      "mean": 290.89081385873726,
+      "sample_std": 4.807324174200243,
+      "min": 284.8618255420588,
+      "max": 296.4306332928827
+    },
+    "evaluation_seconds": {
+      "mean": 121.6064900581725,
+      "sample_std": 13.028957796752366,
+      "min": 109.42313049989752,
+      "max": 138.97853829106316
+    },
+    "end_to_end_seconds": {
+      "mean": 430.9330150659662,
+      "sample_std": 12.902622337426513,
+      "min": 414.89235529094003,
+      "max": 449.74514158291277
+    }
+  },
+  "wins_vs_dynamic_exp3": 2,
+  "wins_vs_random": 2,
+  "offline_pretrained_scoring_seconds": 18.369470415986143,
+  "metric": "official Spider exact match",
+  "timing_boundary": "End-to-end time includes shared pretrained pool scoring, selection, cumulative training, generation, and official evaluation.",
+  "method_boundary": "This control removes EXP3 and fixes the difficulty-cluster sequence, while preserving every other component and budget of the dynamic gradient replay adaptation."
+}
