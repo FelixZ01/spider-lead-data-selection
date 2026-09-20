@@ -27,7 +27,10 @@ from reportlab.platypus import (
 
 ROOT = Path(__file__).resolve().parents[2]
 ANALYSIS = ROOT / "results/spider_final_analysis/analysis.json"
+DYNAMIC_METRICS = ROOT / "results/spider_dynamic_gradient_lead_replay/metrics.json"
+DYNAMIC_ANALYSIS = ROOT / "results/spider_dynamic_gradient_lead_replay/research_analysis.json"
 OUTPUT = ROOT / "Spider_LEAD_Final_Experiment_Report.pdf"
+WORKFLOW_FIGURE = ROOT / "Spider_LEAD_Method_Workflow.png"
 FIGURE_DIR = ROOT / "results/spider_final_analysis"
 
 NAVY = colors.HexColor("#183153")
@@ -208,7 +211,9 @@ class ReportDoc(BaseDocTemplate):
 
 
 def add_figure(story: list, filename: str, caption: str, width_mm: float, styles: dict) -> None:
-    path = FIGURE_DIR / filename
+    path = Path(filename)
+    if not path.is_absolute():
+        path = FIGURE_DIR / path
     probe = Image(str(path))
     draw_width = width_mm * mm
     draw_height = probe.imageHeight * draw_width / probe.imageWidth
@@ -216,12 +221,24 @@ def add_figure(story: list, filename: str, caption: str, width_mm: float, styles
     story.extend([image, paragraph(caption, styles["caption"])])
 
 
-def build_story(data: dict, styles: dict[str, ParagraphStyle]) -> list:
+def build_story(
+    data: dict,
+    dynamic_metrics: dict,
+    dynamic_analysis: dict,
+    styles: dict[str, ParagraphStyle],
+) -> list:
     methods = data["methods"]
     paired = data["paired_analysis"]["Five-round IDU-only vs Random"]
     difficulty = data["official_difficulty_breakdown"]
     components = data["official_component_f1"]
     selection = data["selection_analysis"]
+    dynamic_performance = dynamic_analysis["performance_by_difficulty"]
+    dynamic_paired = dynamic_analysis["paired_comparisons_dynamic_minus_baseline"]
+    dynamic_timing = dynamic_analysis["timing"]
+    dynamic_mean = dynamic_performance["dynamic_gradient_exp3_replay"]["all"]
+    balanced_mean = dynamic_performance["balanced_replay_control"]["all"]
+    if abs(dynamic_metrics["aggregate"]["official_spider_exact_match"]["mean"] - dynamic_mean["mean"]) > 1e-12:
+        raise ValueError("Dynamic metric sources disagree")
 
     story = [
         Spacer(1, 18 * mm),
@@ -231,31 +248,30 @@ def build_story(data: dict, styles: dict[str, ParagraphStyle]) -> list:
         Spacer(1, 8 * mm),
         paragraph(
             "This mini-project studies whether iterative model-aware data selection can improve Text-to-SQL "
-            "fine-tuning under a fixed 500-example budget. The study begins with static baselines, adapts the "
-            "IDU and allocation ideas from LEAD to Spider, and evaluates all methods using five fixed seeds and "
-            "the official Spider exact-match evaluator.",
+            "fine-tuning under a fixed 500-example budget. It evaluates both an observed-loss IDU adaptation "
+            "and a training-time gradient IDU adaptation with EXP3 and cumulative replay. All principal methods "
+            "use five fixed seeds and the official Spider exact-match evaluator.",
             styles["callout"],
         ),
         paragraph("Executive summary", styles["h1"]),
         paragraph(
-            "Five-round IDU-only achieved the strongest selected-data result: <b>17.08% mean official exact "
-            "match</b>, compared with 15.64% for Random and 13.82% for static uncertainty. It won against "
-            "Random in three of five seeds. The paired mean gain was +1.44 percentage points, but the 95% "
-            "paired interval (-2.61, +5.49) crossed zero; the result is promising rather than statistically "
-            "conclusive.",
+            "Observed-loss IDU achieved the strongest selected-data mean at <b>17.08%</b>, compared with "
+            "15.64% for Random. The closer-to-LEAD training-time gradient adaptation achieved <b>15.94%</b> "
+            "with EXP3 and cumulative replay. It exceeded Random in three of five seeds, but its paired 95% "
+            "interval also crossed zero. Neither adaptive result supports a claim of stable superiority.",
             styles["body"],
         ),
         paragraph(
-            "Full-data training remained clearly stronger at 23.02%. IDU-only reduced mean end-to-end time by "
-            "23.9% relative to Full Data in the local setup, while losing 5.94 percentage points. The result "
-            "therefore demonstrates a cost-quality trade-off, not full-data parity.",
+            "Full-data training remained clearly stronger at 23.02%. The dynamic gradient method required "
+            "489.2 seconds end to end, 29.4% less than Full Data, while losing 7.08 percentage points. The "
+            "evidence therefore demonstrates a measurable cost-quality trade-off, not full-data parity.",
             styles["body"],
         ),
         paragraph("1. Research questions", styles["h1"]),
         paragraph("Q1. Can a 500-example selected subset match or exceed training on all 1,000 candidate examples?", styles["bullet"]),
         paragraph("Q2. Does iterative model-aware selection outperform Random under the same selected-data and optimizer-step budget?", styles["bullet"]),
         paragraph("Q3. Does the iterative method improve the end-to-end performance-cost trade-off?", styles["bullet"]),
-        paragraph("Q4. Which LEAD-inspired components help in this small Text-to-SQL setting, and which components introduce instability or unnecessary cost?", styles["bullet"]),
+        paragraph("Q4. Does iterative selection help relative to a fixed subset, and do gradient IDU and EXP3 provide stable gains?", styles["bullet"]),
         paragraph("2. Experimental design", styles["h1"]),
     ]
 
@@ -283,20 +299,38 @@ def build_story(data: dict, styles: dict[str, ParagraphStyle]) -> list:
         paragraph(
             "LEAD uses iterative model feedback, Instance-Level Dynamic Uncertainty (IDU), and coarse-to-fine "
             "allocation with a multi-armed bandit. This project implements a transparent, computationally "
-            "manageable adaptation rather than a faithful inference-free reproduction.",
+            "manageable Spider adaptation and explicitly separates the paper-aligned components from the "
+            "task-specific approximations.",
             styles["body"],
         ),
         paragraph("- Static uncertainty ranks examples once by pretrained target loss and does not update utility.", styles["bullet"]),
-        paragraph("- Five-round IDU-only selects 100 examples per round, trains on the cumulative selected set, measures observed target-loss change, updates the utility of remaining examples, and selects the next global top-utility batch.", styles["bullet"]),
-        paragraph("- The full adaptation adds loss-quantile difficulty clusters, EXP3 cluster scheduling, and Spider database IDs as task groups.", styles["bullet"]),
-        paragraph("- Component ablations separately test fixed static ranking, cluster-MAB allocation, and proportional database-group quotas.", styles["bullet"]),
+        paragraph("- Observed-loss IDU selects 100 examples per round, trains on the cumulative selected set, rescales utility from measured target-loss change, and then selects the next batch.", styles["bullet"]),
+        paragraph("- Gradient IDU estimates first-order loss change during ordinary training from the final CodeT5 decoder block, applies historical smoothing, and avoids a separate remaining-pool rescoring pass.", styles["bullet"]),
+        paragraph("- The dynamic method adds loss-quantile difficulty clusters, Spider database task groups, EXP3 allocation from bounded IDU-reduction rewards, and cumulative replay across five rounds.", styles["bullet"]),
+        paragraph("- A balanced-cluster replay control keeps gradient IDU, grouping, replay, budget, and optimizer steps fixed but replaces EXP3 with the fixed schedule 0, 1, 0, 1, 0.", styles["bullet"]),
         paragraph(
-            "Method boundary: observed loss change is used as a practical IDU proxy. It does not reproduce "
-            "LEAD's full gradient-based, inference-free utility estimator.",
+            "Gradient update: u_i(r) = (1-beta) max[0, L_i + g_i^T dtheta] + beta u_i(r-1). "
+            "The tracked gradient/update inner product is a first-order proxy for the next loss; cross-entropy "
+            "is clipped at zero before historical smoothing.",
             styles["small"],
         ),
-        paragraph("4. Main performance and cost results", styles["h1"]),
+        paragraph("Focused hypothesis and competing explanation", styles["h2"]),
+        paragraph(
+            "Hypothesis: training-time gradient IDU with EXP3 will improve the performance-cost trade-off over "
+            "Random and a fixed cluster schedule. Competing explanation: any gain may come from cumulative replay "
+            "and repeated exposure rather than adaptive bandit allocation. The balanced replay control isolates "
+            "this explanation while preserving the remaining training design.",
+            styles["body"],
+        ),
     ])
+    add_figure(
+        story,
+        str(WORKFLOW_FIGURE),
+        "Figure 1. Five-round dynamic gradient LEAD adaptation and matched evaluation boundary.",
+        165,
+        styles,
+    )
+    story.append(paragraph("4. Main performance and cost results", styles["h1"]))
 
     order = [
         "Full Data",
@@ -317,13 +351,33 @@ def build_story(data: dict, styles: dict[str, ParagraphStyle]) -> list:
             f"{row['end_to_end_seconds']['mean']:.1f} s",
             f"{row['selected_databases']['mean']:.1f}",
         ])
+    result_table.extend([
+        [
+            "Dynamic Gradient + EXP3",
+            f"{pct(dynamic_mean['mean'])} +/- {100 * dynamic_mean['sample_std']:.2f} pp",
+            f"{dynamic_timing['dynamic_end_to_end_seconds']['mean']:.1f} s",
+            f"{dynamic_analysis['selection_behaviour']['dynamic_selected_database_mean']:.1f}",
+        ],
+        [
+            "Balanced Gradient Control",
+            f"{pct(balanced_mean['mean'])} +/- {100 * balanced_mean['sample_std']:.2f} pp",
+            f"{dynamic_timing['balanced_end_to_end_seconds']['mean']:.1f} s",
+            f"{dynamic_analysis['selection_behaviour']['balanced_selected_database_mean']:.1f}",
+        ],
+    ])
     result_grid = table(result_table, [62 * mm, 43 * mm, 35 * mm, 29 * mm], font_size=7.25)
-    result_grid.setStyle(TableStyle([("BACKGROUND", (0, 5), (-1, 5), colors.HexColor("#E5F4ED")), ("TEXTCOLOR", (0, 5), (-1, 5), GREEN), ("FONTNAME", (0, 5), (-1, 5), "Helvetica-Bold")]))
+    result_grid.setStyle(TableStyle([
+        ("BACKGROUND", (0, 5), (-1, 5), colors.HexColor("#E5F4ED")),
+        ("TEXTCOLOR", (0, 5), (-1, 5), GREEN),
+        ("FONTNAME", (0, 5), (-1, 5), "Helvetica-Bold"),
+        ("BACKGROUND", (0, 9), (-1, 9), colors.HexColor("#EAF1FA")),
+        ("FONTNAME", (0, 9), (-1, 9), "Helvetica-Bold"),
+    ]))
     story.extend([
         result_grid,
         Spacer(1, 3 * mm),
     ])
-    add_figure(story, "performance_cost.png", "Figure 1. Mean official exact match against measured end-to-end time.", 150, styles)
+    add_figure(story, "performance_cost.png", "Figure 2. Mean official exact match against measured end-to-end time for the initial comparison set.", 150, styles)
     story.extend([
         paragraph("Paired seed analysis", styles["h2"]),
         paragraph(
@@ -335,12 +389,12 @@ def build_story(data: dict, styles: dict[str, ParagraphStyle]) -> list:
         ),
         paragraph("Answers to Q1-Q3", styles["h2"]),
         paragraph("Q1: No. The best selected-data method remains 5.94 percentage points below Full Data.", styles["bullet"]),
-        paragraph("Q2: Partly. IDU-only has the highest selected-data mean and wins three seeds, but the paired interval crosses zero.", styles["bullet"]),
-        paragraph("Q3: Yes as a trade-off, not as dominance. IDU-only is faster than Full Data but slightly slower than Random while producing a higher observed mean.", styles["bullet"]),
+        paragraph("Q2: Partly. Observed-loss IDU has the highest selected-data mean; dynamic gradient selection is only 0.30 percentage points above Random and is not reliably superior.", styles["bullet"]),
+        paragraph("Q3: Yes as a trade-off, not as dominance. Dynamic gradient selection is substantially faster than Full Data, but the accuracy gap remains large and its small timing difference from Random should not be overinterpreted.", styles["bullet"]),
         PageBreak(),
         paragraph("5. Difficulty and SQL-component analysis", styles["h1"]),
     ])
-    add_figure(story, "difficulty_breakdown.png", "Figure 2. Mean official exact match by Spider difficulty.", 150, styles)
+    add_figure(story, "difficulty_breakdown.png", "Figure 3. Mean official exact match by Spider difficulty.", 150, styles)
 
     diff_rows = [["Method", "Easy", "Medium", "Hard", "Extra", "All"]]
     for name in ("Full Data", "Random", "Five-round IDU-only"):
@@ -355,7 +409,7 @@ def build_story(data: dict, styles: dict[str, ParagraphStyle]) -> list:
             styles["body"],
         ),
     ])
-    add_figure(story, "component_f1_difference.png", "Figure 3. IDU-only minus Random in official partial-match F1; sparse IUEN is excluded from the plot.", 148, styles)
+    add_figure(story, "component_f1_difference.png", "Figure 4. IDU-only minus Random in official partial-match F1; sparse IUEN is excluded from the plot.", 148, styles)
     story.extend([
         paragraph(
             "The largest stable positive differences are SELECT without aggregation (+3.68 pp), SELECT "
@@ -394,7 +448,47 @@ def build_story(data: dict, styles: dict[str, ParagraphStyle]) -> list:
             "updated subset.",
             styles["body"],
         ),
-        paragraph("7. Manually verified qualitative cases", styles["h1"]),
+        paragraph("7. Gradient-based LEAD validation", styles["h1"]),
+    ])
+
+    gradient_rows = [["Comparison", "Mean difference", "95% paired interval", "Wins"]]
+    for label, key in (
+        ("Dynamic vs Balanced", "balanced_replay_control"),
+        ("Dynamic vs Random", "random"),
+        ("Dynamic vs Observed IDU", "observed_loss_idu"),
+        ("Dynamic vs Full Data", "full_data"),
+    ):
+        item = dynamic_paired[key]
+        gradient_rows.append([
+            label,
+            pp(item["mean_difference"]),
+            f"[{pp(item['ci95'][0])}, {pp(item['ci95'][1])}]",
+            f"{item['wins']}/5",
+        ])
+    story.extend([
+        table(gradient_rows, [51 * mm, 32 * mm, 57 * mm, 25 * mm], font_size=7.4),
+        paragraph(
+            "Cumulative replay is the clearest successful design change. For seed 42, the gradient method rose "
+            "from 10.3% without replay to 19.5% with replay. This single-seed contrast motivated the multi-seed "
+            "validation; it should not be treated as an average effect.",
+            styles["callout"],
+        ),
+        paragraph(
+            "Across five seeds, dynamic gradient + EXP3 obtained 15.94% +/- 2.32 pp. Its mean was 0.92 points "
+            "above the matched balanced control and 0.30 points above Random, but both paired intervals crossed "
+            "zero. It was 1.14 points below observed-loss IDU. The correct interpretation is competitive but "
+            "unstable performance, not reliable superiority.",
+            styles["body"],
+        ),
+        paragraph(
+            f"Dynamic selections had mean pairwise Jaccard overlap {dynamic_analysis['selection_behaviour']['dynamic_mean_pairwise_jaccard']:.2f}, "
+            f"compared with {dynamic_analysis['selection_behaviour']['balanced_mean_pairwise_jaccard']:.2f} for the fixed schedule. "
+            "EXP3 therefore changed the selected path, but five allocation decisions were insufficient to learn "
+            "a consistently better policy. Rewards also increased mainly with training round, suggesting that "
+            "round progress and difficulty-arm value were not cleanly separated.",
+            styles["body"],
+        ),
+        paragraph("8. Manually verified qualitative cases", styles["h1"]),
         paragraph("IDU-only advantage: grouping and HAVING", styles["h2"]),
         paragraph(
             "For 'List all document ids with at least two paragraphs', IDU-only generated the correct "
@@ -426,53 +520,49 @@ def build_story(data: dict, styles: dict[str, ParagraphStyle]) -> list:
             "official aggregate metric.",
             styles["small"],
         ),
-        PageBreak(),
-        paragraph("8. Limitations", styles["h1"]),
+        paragraph("9. Limitations", styles["h1"]),
         paragraph("- Five seeds expose instability but are insufficient for a strong statistical superiority claim.", styles["bullet"]),
         paragraph("- CodeT5-small has limited capacity and all methods remain weak on Extra queries.", styles["bullet"]),
-        paragraph("- The observed-loss-change utility is a practical IDU proxy, not LEAD's full gradient-based inference-free estimator.", styles["bullet"]),
-        paragraph("- MAB and quota variants may be disadvantaged by the small candidate pool, five rounds, and coarse two-cluster grouping.", styles["bullet"]),
+        paragraph("- The gradient proxy tracks only the final decoder block of fully fine-tuned CodeT5-small rather than LoRA final-layer geometry used by the original implementation.", styles["bullet"]),
+        paragraph("- Difficulty groups use pretrained-loss quantiles rather than LEAD's IFD and semantic K-means pipeline.", styles["bullet"]),
+        paragraph("- EXP3 receives only five decisions, which limits policy learning and makes its reward sensitive to training-round effects.", styles["bullet"]),
         paragraph("- End-to-end timing is measured on one Apple MPS environment and should not be treated as hardware-independent throughput.", styles["bullet"]),
         paragraph("- Exact match is strict and does not directly measure execution equivalence; auxiliary normalized-string diagnostics are more formatting-sensitive.", styles["bullet"]),
-        paragraph("9. Conclusion", styles["h1"]),
+        paragraph("10. Conclusion", styles["h1"]),
         paragraph(
-            "Under a fixed 500-example budget, five-round IDU-only produced the best selected-data mean at "
-            "17.08%, 1.44 percentage points above Random. The study provides preliminary evidence that updating "
-            "sample utility as the model changes is more useful than a fixed uncertainty ranking. However, the "
-            "advantage is seed-sensitive and does not close the gap to Full Data. The complete cluster-MAB and "
-            "database-allocation variants do not improve the result in this setting.",
+            "Under a fixed 500-example budget, observed-loss IDU produced the best selected-data mean at 17.08%, "
+            "while the more paper-aligned training-time gradient adaptation achieved 15.94%, close to Random at "
+            "15.64%. The experiment supports iterative utility updating and cumulative replay as useful design "
+            "elements, but it does not show a stable accuracy benefit from the present gradient proxy or EXP3 "
+            "allocation. Full Data remains clearly stronger at 23.02%.",
             styles["body"],
         ),
         paragraph(
-            "The most defensible outcome is therefore a controlled negative-and-positive finding: iterative "
-            "utility updating is promising, while the additional allocation mechanisms require better cluster "
-            "definitions, reward design, or larger-scale validation before they can be claimed to help Text-to-SQL.",
+            "The most defensible outcome is a controlled positive-and-negative finding: cumulative replay prevents "
+            "severe forgetting and dynamic selection changes the chosen data, while the current EXP3 reward and "
+            "coarse difficulty clusters do not yield a reliable generalisation gain. This directly identifies when "
+            "the LEAD adaptation helps and where its assumptions become weak in small-scale Text-to-SQL.",
             styles["callout"],
         ),
-        paragraph("10. Recommended next work", styles["h1"]),
-        paragraph("1. Manually classify a larger sample of official errors, focusing on negation, literals, joins, GROUP/HAVING, and set operations.", styles["bullet"]),
-        paragraph("2. If additional compute is available, repeat IDU-only with more seeds or one larger model before adding further selector complexity.", styles["bullet"]),
-        paragraph("3. For a closer LEAD reproduction, replace the observed-loss-change proxy with the paper's gradient-based IDU estimator and redesign clusters around Text-to-SQL structure rather than only loss quantiles.", styles["bullet"]),
+        paragraph("11. Justified next work", styles["h1"]),
+        paragraph("1. Redesign the EXP3 reward to separate difficulty-arm value from the general effect of later training rounds, then test it against the same balanced control.", styles["bullet"]),
+        paragraph("2. Increase allocation frequency or the number of rounds without changing the total unique-data and optimizer-step budgets, giving the bandit more feedback decisions.", styles["bullet"]),
+        paragraph("3. Replace loss-quantile clusters with Text-to-SQL-aware groups based on schema and SQL structure; use additional seeds or a larger model only after this targeted design test.", styles["bullet"]),
         paragraph("References", styles["h1"]),
         paragraph("[1] T. Yu et al. Spider: A Large-Scale Human-Labeled Dataset for Complex and Cross-Domain Semantic Parsing and Text-to-SQL Task. EMNLP, 2018.", styles["small"]),
         paragraph("[2] Y. Wang et al. CodeT5: Identifier-aware Unified Pre-trained Encoder-Decoder Models for Code Understanding and Generation. EMNLP, 2021.", styles["small"]),
         paragraph("[3] X. Lin et al. LEAD: Iterative Data Selection for Efficient LLM Instruction Tuning. PVLDB 19(3):426-439, 2025. doi:10.14778/3778092.3778103.", styles["small"]),
-        Spacer(1, 3 * mm),
-        paragraph(
-            "Evidence boundary: all numerical results in this report come from completed local experiments. "
-            "The work is a simplified LEAD-style adaptation and does not claim faithful reproduction of the "
-            "paper's full estimator or large-scale results.",
-            styles["small"],
-        ),
     ])
     return story
 
 
 def main() -> None:
     data = json.loads(ANALYSIS.read_text(encoding="utf-8"))
+    dynamic_metrics = json.loads(DYNAMIC_METRICS.read_text(encoding="utf-8"))
+    dynamic_analysis = json.loads(DYNAMIC_ANALYSIS.read_text(encoding="utf-8"))
     styles = make_styles()
     doc = ReportDoc(str(OUTPUT), styles)
-    doc.build(build_story(data, styles))
+    doc.build(build_story(data, dynamic_metrics, dynamic_analysis, styles))
     print(OUTPUT)
 
 
