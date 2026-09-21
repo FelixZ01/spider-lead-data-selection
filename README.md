@@ -1,6 +1,10 @@
-# BIRD + LEAD Mini Project
+# Spider LEAD Data Selection
 
-This repository contains two staged routes for a UQ Text-to-SQL mini-project:
+This repository studies efficient training-data selection for Text-to-SQL using
+Spider 1.0 and CodeT5-small, with controlled random, uncertainty, iterative
+utility, and LEAD-style dynamic selection experiments.
+
+The repository currently contains:
 
 1. A Mac-feasible Spider 1.0 + CodeT5-small baseline.
 2. A later BIRD + Qwen3 + LEAD extension when suitable GPU compute is available.

@@ -387,10 +387,11 @@ def build_story(
             "with meaningful seed sensitivity.",
             styles["body"],
         ),
-        paragraph("Answers to Q1-Q3", styles["h2"]),
+        paragraph("Answers to Q1-Q4", styles["h2"]),
         paragraph("Q1: No. The best selected-data method remains 5.94 percentage points below Full Data.", styles["bullet"]),
         paragraph("Q2: Partly. Observed-loss IDU has the highest selected-data mean; dynamic gradient selection is only 0.30 percentage points above Random and is not reliably superior.", styles["bullet"]),
         paragraph("Q3: Yes as a trade-off, not as dominance. Dynamic gradient selection is substantially faster than Full Data, but the accuracy gap remains large and its small timing difference from Random should not be overinterpreted.", styles["bullet"]),
+        paragraph("Q4: Partly. Observed-loss IDU beats the fixed static control, so iterative utility updates can help. However, gradient IDU + EXP3 is only +0.30 pp versus Random and +0.92 pp versus the balanced control, with both paired 95% intervals crossing zero. It changes selection, but does not yield a stable gain.", styles["bullet"]),
         PageBreak(),
         paragraph("5. Difficulty and SQL-component analysis", styles["h1"]),
     ])
