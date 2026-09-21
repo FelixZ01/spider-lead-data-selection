@@ -191,7 +191,7 @@ class ReportDoc(BaseDocTemplate):
             rightMargin=18 * mm,
             topMargin=17 * mm,
             bottomMargin=17 * mm,
-            title="Final Experiment Report - Iterative Data Selection for Spider Text-to-SQL",
+            title="Experiment Report - Iterative Data Selection for Spider Text-to-SQL",
             author="Zhanfei Zhang",
         )
         self.report_styles = styles
@@ -242,12 +242,12 @@ def build_story(
 
     story = [
         Spacer(1, 18 * mm),
-        paragraph("Final Experiment Report", styles["title"]),
+        paragraph("Experiment Report", styles["title"]),
         paragraph("Iterative Data Selection for Spider Text-to-SQL", styles["subtitle"]),
         paragraph("Spider 1.0 + CodeT5-small | 21 September 2026", styles["subtitle"]),
         Spacer(1, 8 * mm),
         paragraph(
-            "This mini-project studies whether iterative model-aware data selection can improve Text-to-SQL "
+            "This study investigates whether iterative model-aware data selection can improve Text-to-SQL "
             "fine-tuning under a fixed 500-example budget. It evaluates both an observed-loss IDU adaptation "
             "and a training-time gradient IDU adaptation with EXP3 and cumulative replay. All principal methods "
             "use five fixed seeds and the official Spider exact-match evaluator.",
